@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'flyer',
+        'date',
+        'doors',
+        'begin',
+        'location_id'
+    ];
+
+    public function location() {
+        return $this->hasOne(Location::class);
+    }
+
+    public function watchlists() {
+        return $this->hasMany(Watchlist::class);
+    }
+
+    public function artists() {
+        return $this->belongsToMany(Artist::class)->as('lineup');
+    }
 }

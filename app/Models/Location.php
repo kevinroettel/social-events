@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address',
+        'website',
+        'parking',
+        'barrierFree',
+        'description'
+    ];
+
+    public function events() {
+        return $this->belongsToMany(Event::class);
+    }
 }

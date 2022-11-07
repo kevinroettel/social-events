@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Watchlist extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'event_id',
+        'interested'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function event() {
+        return $this->belongsTo(Event::class);
+    }
 }
