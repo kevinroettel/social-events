@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('artist_tag', function (Blueprint $table) {
             $table->id();
-            $table->index('artist_id');
-            $table->foreign('artist_id')->references('id')->on('artists');
-            $table->index('tag_id');
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->unsignedBigInteger('artist_id');
+            // $table->foreign('artist_id')->references('id')->on('artists');
+            $table->unsignedBigInteger('tag_id');
+            // $table->foreign('tag_id')->references('id')->on('tags');
             $table->timestamps();
         });
     }

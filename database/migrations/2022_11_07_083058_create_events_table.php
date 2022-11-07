@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('date');
             $table->timestamp('doors');
             $table->timestamp('begin');
-            $table->index('location_id');
-            $table->foreign('location_id')->references('id')->on('locations');
+            $table->unsignedBigInteger('location_id');
+            // $table->foreign('location_id')->references('id')->on('locations');
             $table->timestamps();
         });
     }
