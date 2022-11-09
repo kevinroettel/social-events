@@ -43,4 +43,4 @@ Route::post('/tags', [TagController::class, 'createTag']);
 Route::post('/users', [UserController::class, 'register']);
 Route::post('/users/{userId}', [UserController::class, 'updateProfile']);
 
-Route::patch('/users/{userId}/watchlist/{eventId}/{status}', [WatchlistController::class, 'thinkAboutAGoodName']);
+Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'thinkAboutAGoodName']);
