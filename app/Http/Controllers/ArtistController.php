@@ -48,10 +48,12 @@ class ArtistController extends Controller
     }
 
     public function addTagToArtist($artistId, $tagId) {
-
+        $artist = Artist::find($artistId)->first();
+        $artist->tags()->attach($tagId);
     }
 
     public function removeTagFromArtist($artistId, $tagId) {
-
+        $artist = Artist::find($artistId)->first();
+        $artist->tags()->detach($tagId);
     }
 }

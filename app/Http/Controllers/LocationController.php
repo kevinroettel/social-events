@@ -35,6 +35,27 @@ class LocationController extends Controller
     }
 
     public function updateLocation(Request $request, $locationId) {
+        $location = Location::find($locationId)->first();
 
+        if (empty($location)) return false;
+
+        $request = $request->validate([
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'website' => 'nullable|string',
+            'parking' => 'required|boolean',
+            'barrierFree' => 'required|boolean',
+            'description' => 'nullable|string'
+        ]);
+
+        $location->name = $request['name'];
+        $location->address = $request['address'];
+        $location->website = $request['website'];
+        $location->parking = $request['parking'];
+        $location->barrierFree = $request['barrierFree'];
+        $location->description = $request['description'];
+        $location->save();
+
+        return $location;
     }
 }
