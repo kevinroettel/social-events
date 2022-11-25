@@ -1,2 +1,67 @@
 @import "normalize.css";
 @import "~bootstrap/scss/bootstrap";
+
+body {
+
+    
+    .navbar {
+        
+        .nav-link {
+            cursor: pointer;
+        }
+    }
+
+    .guest-page {
+        background-image: url("../img/crowd.webp");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        height: 100vh;
+
+        .login-and-registration-forms {
+            grid-area: 1 / 1 / 2 / 2;
+            position: relative;
+
+            .card {
+                position: absolute;
+                width: 70%;
+                left: 15%;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
+        }
+
+        .guest-page-teaser {
+            grid-area: 1 / 2 / 2 / 4;
+            background-color: rgba(68, 68, 68, 0.5);
+            position: relative;
+
+            .teaser-text {
+                position: absolute;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                left: 50%;
+                -ms-transform: translateX(-50%);
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    .website-content {
+        .main-content {
+            padding: 50px;
+
+            .event-teaser-card {
+                display: inline-block;
+                margin-right: 25px;
+            }
+        }
+    }
+}

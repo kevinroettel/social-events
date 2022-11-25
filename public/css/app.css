@@ -11202,3 +11202,47 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+body .navbar .nav-link {
+  cursor: pointer;
+}
+body .guest-page {
+  background-image: url(/images/crowd.webp?af182112674a0da0548732110e9b5c04);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  height: 100vh;
+}
+body .guest-page .login-and-registration-forms {
+  grid-area: 1/1/2/2;
+  position: relative;
+}
+body .guest-page .login-and-registration-forms .card {
+  position: absolute;
+  width: 70%;
+  left: 15%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+body .guest-page .guest-page-teaser {
+  grid-area: 1/2/2/4;
+  background-color: rgba(68, 68, 68, 0.5);
+  position: relative;
+}
+body .guest-page .guest-page-teaser .teaser-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+}
+body .website-content .main-content {
+  padding: 50px;
+}
+body .website-content .main-content .event-teaser-card {
+  display: inline-block;
+  margin-right: 25px;
+}

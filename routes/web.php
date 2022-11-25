@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WatchlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,5 +50,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/tags', [TagController::class, 'createTag']);
     
     Route::post('/users/{userId}', [UserController::class, 'updateProfile']);
+    Route::get('/users/{userId}/watchlists', [WatchlistController::class, 'getUserWatchlistEntries']);
     Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'updateEntryStatus']);
 });
