@@ -15,16 +15,18 @@ class LocationController extends Controller
     public function createLocation(Request $request) {
         $request = $request->validate([
             'name' => 'required|string',
-            'address' => 'required|string',
+            'streetAndNumber' => 'nullable|string',
+            'city' => 'required|string',
             'website' => 'nullable|string',
-            'parking' => 'required|boolean',
-            'barrierFree' => 'required|boolean',
+            'parking' => 'required|string',
+            'barrierFree' => 'required|string',
             'description' => 'nullable|string'
         ]);
 
         $location = Location::create([
             'name' => $request['name'],
-            'address' => $request['address'],
+            'streetAndNumber' => $request['streetAndNumber'],
+            'city' => $request['city'],
             'website' => $request['website'],
             'parking' => $request['parking'],
             'barrierFree' => $request['barrierFree'],
@@ -41,15 +43,17 @@ class LocationController extends Controller
 
         $request = $request->validate([
             'name' => 'required|string',
-            'address' => 'required|string',
+            'streetAndNumber' => 'nullable|string',
+            'city' => 'required|string',
             'website' => 'nullable|string',
-            'parking' => 'required|boolean',
-            'barrierFree' => 'required|boolean',
+            'parking' => 'required|string',
+            'barrierFree' => 'required|string',
             'description' => 'nullable|string'
         ]);
 
         $location->name = $request['name'];
-        $location->address = $request['address'];
+        $location->streetAndNumber = $request['streetAndNumber'];
+        $location->city = $request['city'];
         $location->website = $request['website'];
         $location->parking = $request['parking'];
         $location->barrierFree = $request['barrierFree'];
