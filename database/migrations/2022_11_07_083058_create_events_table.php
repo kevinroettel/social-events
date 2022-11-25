@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->longText('flyer');
+            $table->longText('flyer')->nullable();
             $table->date('date');
             $table->timestamp('doors');
             $table->timestamp('begin');
             $table->unsignedBigInteger('location_id');
-            // $table->foreign('location_id')->references('id')->on('locations');
             $table->timestamps();
         });
     }

@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('artist_event', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('artist_id');
-            // $table->foreign('artist_id')->references('id')->on('artists');
             $table->unsignedBigInteger('event_id');
-            // $table->foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });
     }

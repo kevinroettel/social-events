@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->string('website');
-            $table->boolean('parking');
-            $table->boolean('barrierFree');
-            $table->text('description');
+            $table->string('streetAndNumber')->nullable();
+            $table->string('city');
+            $table->string('website')->nullable();
+            $table->string('parking');
+            $table->string('barrierFree');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
