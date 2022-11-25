@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('content')
+@section('login-and-registration-forms')
     <div>
         <div class="card">
             <div class="card-header">
