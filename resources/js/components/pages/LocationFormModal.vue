@@ -3,90 +3,91 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>New Location</h3>
+                    <h3>Neue Venue</h3>
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="name-input-label">Location Name *</span>
-                        <input type="text" :class="`form-control ${errorClass('name')}`" aria-label="Location Name" aria-describedby="name-input-label" v-model="newLocation.name">
+                        <span class="input-group-text" id="name-input-label">Name *</span>
+                        <input type="text" :class="`form-control ${errorClass('name')}`" aria-label="Name" aria-describedby="name-input-label" v-model="newLocation.name">
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="street-input-label">Street/Number</span>
-                        <input type="text" class="form-control" aria-label="Street/Number" aria-describedby="street-input-label" v-model="newLocation.streetAndNumber">
+                        <span class="input-group-text" id="street-input-label">Straße und Hausnummer</span>
+                        <input type="text" class="form-control" aria-label="Straße und Hausnummer" aria-describedby="street-input-label" v-model="newLocation.streetAndNumber">
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="city-input-label">City *</span>
-                        <input type="text" :class="`form-control ${errorClass('city')}`" aria-label="City" aria-describedby="city-input-label" v-model="newLocation.city">
+                        <span class="input-group-text" id="city-input-label">Stadt *</span>
+                        <input type="text" :class="`form-control ${errorClass('city')}`" aria-label="Stadt" aria-describedby="city-input-label" v-model="newLocation.city">
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="website-input-label">Website</span>
-                        <input type="text" class="form-control" aria-label="Website" aria-describedby="website-input-label" v-model="newLocation.website">
+                        <span class="input-group-text" id="website-input-label">Webseite</span>
+                        <input type="text" class="form-control" aria-label="Webseite" aria-describedby="website-input-label" v-model="newLocation.website">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="radio-group-label form-check-inline">
-                            How is the parking situation at the venue? *
+                            Gibt es ausreichend Parkplätze vor Ort? *
                         </div>
                         
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-parking-radios" id="location-parking-radios-1" value="unknown" v-model="newLocation.parking">
                             <label class="form-check-label" for="location-parking-radios-1">
-                                Parking Situation unknwon
+                                Nicht bekannt
                             </label>
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-parking-radios" id="location-parking-radios-2" value="possible" v-model="newLocation.parking">
                             <label class="form-check-label" for="location-parking-radios-2">
-                                Parking is possible
+                                Genug Parkplätze vorhanden
                             </label>
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-parking-radios" id="location-parking-radios-3" value="impossible" v-model="newLocation.parking">
                             <label class="form-check-label" for="location-parking-radios-3">
-                                Parking not possible
+                                Keine Parkplätze vorhanden
                             </label>
                         </div>
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="radio-group-label form-check-inline">
-                            Is the venue barrier free? *
+                            Ist die Venue barrierefrei? *
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-barrierfree-radios" id="location-barrierfree-radios-1" value="unknown" v-model="newLocation.barrierFree">
                             <label class="form-check-label" for="location-barrierfree-radios-1">
-                                Barrier-Free unknown
+                                Nicht bekannt
                             </label>
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-barrierfree-radios" id="location-barrierfree-radios-2" value="possible" v-model="newLocation.barrierFree">
                             <label class="form-check-label" for="location-barrierfree-radios-2">
-                                Venue is Barrier-Free
+                                Venue ist barrierefrei
                             </label>
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="location-barrierfree-radios" id="location-barrierfree-radios-3" value="impossible" v-model="newLocation.barrierFree">
                             <label class="form-check-label" for="location-barrierfree-radios-3">
-                                Venue is not Barrier-Free
+                                Venue ist nicht barrierefrei
                             </label>
                         </div>
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Description</span>
+                        <span class="input-group-text">Beschreibung **</span>
                         <textarea class="form-control" aria-label="Description" v-model="newLocation.description"></textarea>
                     </div>
 
                     <div class="input-group mb-3">
-                        * Required
+                        <p>* Benötigt</p>
+                        <p>** Eventuelle Erörterungen zu Parkplätzen und Barrierefreiheit.</p>
                     </div>
 
                     <div class="input-group mb-3">
@@ -102,6 +103,8 @@
 <script setup>
 import { inject, reactive, ref } from "vue";
 import { Modal } from 'bootstrap';
+import { useLocationStore } from '../../stores/LocationStore.js';
+const store = useLocationStore();
 
 const axios = inject('axios');
 
@@ -126,12 +129,25 @@ const hasError = reactive({
 
 const modal = ref(null);
 
+const resetForm = () => {
+    newLocation.name = null;
+    newLocation.streetAndNumber = null,
+    newLocation.city = null,
+    newLocation.website = null,
+    newLocation.parking = "unknown",
+    newLocation.barrierFree = "unknown",
+    newLocation.description = null
+
+    hasError.name = false;
+    hasError.city = false;
+}
+
 const errorClass = (input) => {
     return hasError[input] ? 'is-invalid' : '';
 }
 
 const checkInputs = () => {
-    const allInputsOkay = true;
+    let allInputsOkay = true;
 
     for (let [key, val] of Object.entries(hasError)) {
         if (newLocation[key] == null) {
@@ -140,9 +156,7 @@ const checkInputs = () => {
         } else hasError[key] = false;
     }
 
-    if (allInputsOkay) {
-        saveLocation();
-    }
+    if (allInputsOkay) saveLocation();
 }
 
 const saveLocation = () => {
@@ -150,8 +164,10 @@ const saveLocation = () => {
         '/locations', 
         newLocation
     ).then((response) => {
-        emit('location-saved', response.data);
+        store.addNewLocation(response.data);
+        emit('location-saved');
         Modal.getInstance(modal.value).hide();
+        resetForm();
     }).catch((error) =>  {
         console.warn(error)
     })

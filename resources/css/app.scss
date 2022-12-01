@@ -3,7 +3,10 @@
 
 body {
 
-    
+    .pre-wrap {
+        white-space: pre-wrap;
+    }
+
     .navbar {
         
         .nav-link {
@@ -61,6 +64,53 @@ body {
             .event-teaser-card {
                 display: inline-block;
                 margin-right: 25px;
+
+                &:hover {
+                    background-color: lightgray;
+                    transform: scale(1.05);
+                    transition: .5s;
+                    cursor: pointer;
+                }
+
+                .card-text-headline {
+                    font-weight: bold;
+                    font-size: 20px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* number of lines to show */
+                            line-clamp: 1; 
+                    -webkit-box-orient: vertical;
+                }
+            }
+        }
+    }
+
+    .small-flyer-overflow {
+        height: 125px;
+        overflow: hidden;
+    }
+
+    .flyer-overflow {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .big-flyer-overflow {
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .image-modal {
+        .modal-dialog {
+            display: table;
+
+            .modal-content{
+                width: fit-content;
+                
+                .full-size-image {
+                    height: 90vh;
+                }
             }
         }
     }

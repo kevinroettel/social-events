@@ -5,14 +5,16 @@
                 Watchlist
             </div>
             <div class="card-body">
-                <div v-if="props.watchlist.length == 0">
+                <div v-if="eventStore.isWatchlistEmpty">
                     <p>Zurzeit befinden sich keine Einträge in deiner Watchlist. Füge welche hinzu!</p>
                 </div>
 
                 <EventTeaser 
-                    v-for="entry in props.watchlist"
-                    :key="entry.id"
-                    :event="entry"
+                    v-for="(entry, index) in eventStore.getWatchlist"
+                    :key="index"
+                    :status="entry.status"
+                    :event="entry.event"
+                    @show-event-page="showEventPage($event)"
                 />
             </div>
         </div>
@@ -23,17 +25,10 @@
             </div>
             <div class="card-body">
                 <EventTeaser 
-                    :event="{
-                        title: 'Band 1 in Location 1',
-                        description: 'Band 1 sind wieder in Europa. Lasst euch dieses Spektakel nicht entgehen!'
-                    }"
-                />
-
-                <EventTeaser 
-                    :event="{
-                        title: 'Band 2 in Location 2',
-                        description: 'Band 2 sind wieder in Europa. Lasst euch dieses Spektakel nicht entgehen!'
-                    }"
+                    v-for="(event, index) in eventStore.getAllEvents"
+                    :key="index"
+                    :event="event"
+                    @show-event-page="showEventPage($event)"
                 />
             </div>
         </div>
@@ -41,14 +36,14 @@
 </template>
 <script setup>
 import EventTeaser from '../layouts/EventTeaser.vue'
+import { useEventStore } from '../../stores/EventStore.js';
+const eventStore = useEventStore();
 
-const props = defineProps({
-    watchlist: {
-        required: true,
-        type: Array,
-        default: []
-    },
-});
+const emit = defineEmits([
+    'show-event-page'
+]);
 
-
+const showEventPage = (eventId) => {
+    emit('show-event-page', eventId);
+}
 </script>

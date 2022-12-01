@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <span class="navbar-brand">Navbar</span>
+            <span class="navbar-brand">social-events</span>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -16,9 +16,9 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
-                    <a :class="`nav-link ${props.currentPage == 'events' ? 'active' : ''}`" @click="changePage('events')">Events</a>
-                    <a :class="`nav-link ${props.currentPage == 'artists' ? 'active' : ''}`" @click="changePage('artists')">Artists</a>
-                    <a :class="`nav-link ${props.currentPage == 'locations' ? 'active' : ''}`" @click="changePage('locations')">Locations</a>
+                    <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
+                    <a :class="`nav-link ${props.currentPage == 'artists' ? 'active' : ''}`" @click="changePage('artists')">Künstler</a>
+                    <a :class="`nav-link ${props.currentPage == 'locations' ? 'active' : ''}`" @click="changePage('locations')">Venues</a>
 
                     <div class="logout-link">
                         <a 

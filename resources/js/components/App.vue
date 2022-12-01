@@ -8,21 +8,25 @@
         <div class="main-content">
             <Dashboard
                 v-if="currentPage == 'home'"
-                :watchlist="watchlist"
+                @show-event-page="showEventPage($event)"
             />
 
-            <Events
-                v-else-if="currentPage == 'events'"
+            <Event
+                v-else-if="currentPage == 'event'"
+                :eventId="showEvent"
+            />
+
+            <EventForm
+                v-else-if="currentPage == 'eventform'"
+                @event-created="addEvent($event)"
             />
 
             <Artists
                 v-else-if="currentPage == 'artists'"
-                :artistsData="artists"
             />
 
             <Locations
                 v-else-if="currentPage == 'locations'"
-                :locationsData="locations"
             />
         </div>
     </div>
@@ -31,9 +35,19 @@
 import { reactive, onMounted, ref, inject } from 'vue';
 import Navbar from './layouts/Navbar.vue';
 import Dashboard from './pages/Dashboard.vue';
-import Events from './pages/Events.vue';
+import EventForm from './pages/EventForm.vue';
+import Event from './pages/Event.vue';
 import Artists from './pages/Artists.vue';
 import Locations from './pages/Locations.vue';
+
+import { useLocationStore } from '../stores/LocationStore.js';
+import { useArtistStore } from '../stores/ArtistStore.js';
+import { useUserStore } from '../stores/UserStore.js';
+import { useEventStore } from '../stores/EventStore.js';
+const locationStore = useLocationStore();
+const artistStore = useArtistStore();
+const userStore = useUserStore();
+const eventStore = useEventStore();
 
 const axios = inject('axios');
 
@@ -47,26 +61,38 @@ const props = defineProps({
 
 const currentPage = ref("home");
 
-const user = reactive({
-    id: null,
-    name: null,
-    email: null,
-    profilePicture: null
-});
-
-const watchlist = ref([]);
-const locations = ref([]);
-const artists = ref([]);
+const showEvent = ref(null);
 
 const changePage = (page) => {
     currentPage.value = page;
 }
 
+const showEventPage= (eventId) => {
+    currentPage.value = "event";
+    showEvent.value = eventId;
+}
+
+const getEvents = () => {
+    axios.get(
+        '/events'
+    ).then((response) => {
+        eventStore.initializeEvents(response.data);
+        getWatchlistEntries();
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+const addEvent = (event) => {
+    currentPage.value = "home";
+    eventStore.addNewEvent(event);
+}
+
 const getWatchlistEntries = () => {
     axios.get(
-        `/users/${user.id}/watchlists`
+        `/users/${userStore.getUserId}/watchlists`
     ).then((response) => {
-        watchlist.value = response.data;
+        eventStore.initializeWatchlist(response.data);
     }).catch((error) => {
         console.log(error);
     })
@@ -76,7 +102,7 @@ const getLocations = () => {
     axios.get(
         '/locations'
     ).then((response) => {
-        locations.value = response.data;
+        locationStore.initializeLocations(response.data);
     }).catch((error) => {
         console.log(error);
     })
@@ -86,20 +112,17 @@ const getArtists = () => {
     axios.get(
         '/artists'
     ).then((response) => {
-        artists.value = response.data;
+        artistStore.initializeArtists(response.data);
     }).catch((error) => {
         console.log(error);
     })
 }
 
 onMounted(() => {
-    let u = JSON.parse(props.currentuser);
-    user.id = u.id;
-    user.name = u.username;
-    user.email = u.email;
-    user.profilePicture = u.profile_picture;
+    let user = JSON.parse(props.currentuser);
+    userStore.initializeUser(user)
 
-    getWatchlistEntries();
+    getEvents();
     getLocations();
     getArtists();
 })

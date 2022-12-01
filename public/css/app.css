@@ -11202,6 +11202,9 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+body .pre-wrap {
+  white-space: pre-wrap;
+}
 body .navbar .nav-link {
   cursor: pointer;
 }
@@ -11245,4 +11248,42 @@ body .website-content .main-content {
 body .website-content .main-content .event-teaser-card {
   display: inline-block;
   margin-right: 25px;
+}
+body .website-content .main-content .event-teaser-card:hover {
+  background-color: lightgray;
+  transform: scale(1.05);
+  transition: 0.5s;
+  cursor: pointer;
+}
+body .website-content .main-content .event-teaser-card .card-text-headline {
+  font-weight: bold;
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+body .small-flyer-overflow {
+  height: 125px;
+  overflow: hidden;
+}
+body .flyer-overflow {
+  height: 200px;
+  overflow: hidden;
+}
+body .big-flyer-overflow {
+  height: 400px;
+  overflow: hidden;
+}
+body .image-modal .modal-dialog {
+  display: table;
+}
+body .image-modal .modal-dialog .modal-content {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+body .image-modal .modal-dialog .modal-content .full-size-image {
+  height: 90vh;
 }

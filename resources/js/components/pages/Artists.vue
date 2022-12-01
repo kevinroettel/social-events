@@ -1,30 +1,35 @@
 <template>
     <div>
-        <h3>Artists</h3>
+        <h3>Künstler</h3>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample">
-            New Artist
+            Neuer Künstler
         </button>
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="name-input-label">Artist Name *</span>
-                    <input type="text" :class="`form-control ${errorClass('name')}`" aria-label="Artist Name" aria-describedby="name-input-label" v-model="newArtist.name">
-                </div>
+                <div class="row">
+                    <div class="input-group col">
+                        <span class="input-group-text" id="name-input-label">Name *</span>
+                        <input type="text" :class="`form-control`" aria-label="Name" aria-describedby="name-input-label" v-model="newArtist.name">
+                    </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="website-input-label">Website</span>
-                    <input type="text" :class="`form-control`" aria-label="Website" aria-describedby="website-input-label" v-model="newArtist.website">
+                    <div class="input-group col">
+                        <span class="input-group-text" id="website-input-label">Webseite</span>
+                        <input type="text" :class="`form-control`" aria-label="Webseite" aria-describedby="website-input-label" v-model="newArtist.website">
+                    </div>
+
+                    <div class="input-group col">
+                        <button class="btn btn-primary" type="button" @click="saveArtist()">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Website</th>
-                    <th>Type</th>
+                    <th>Webseite</th>
+                    <th>Aktionen</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,27 +39,58 @@
                 >
                     <td>{{ artist.name }}</td>
                     <td><a :href="artist.website" target="_blank">{{ artist.website }}</a></td>
-                    <td>{{ artist.type }}</td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            @click="openTagModal()"
+                        >
+                            Tags
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
+import { useArtistStore } from '../../stores/ArtistStore.js';
 
+const store = useArtistStore();
 
-const props = defineProps({
-    artistsData: {
-        required: true,
-        type: Array,
-        default: []
-    },
-});
+const axios = inject('axios');
 
 const artists = ref([]);
 
+const newArtist = reactive({
+    name: null,
+    website: null,
+});
+
+const resetForm = () => {
+    newArtist.name = null;
+    newArtist.website = null;
+}
+
+const saveArtist = () => {
+    axios.post(
+        '/artists',
+        newArtist
+    ).then((response) => {
+        store.addNewArtist(response.data);
+        resetForm();
+        getArtists();
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
+const getArtists = () => {
+    artists.value = store.getArtists;
+}
+
 onMounted(() => {
-    artists.value = props.artistsData;
+    getArtists();
 });
 </script>
