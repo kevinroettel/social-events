@@ -11,8 +11,7 @@ class Artist extends Model
 
     protected $fillable = [
         'name',
-        'website',
-        'type'
+        'website'
     ];
 
     public function tags() {

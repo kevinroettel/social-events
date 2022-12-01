@@ -31,6 +31,6 @@ class WatchlistController extends Controller
     }
 
     public function getUserWatchlistEntries($userId) {
-        return Watchlist::where('user_id', $userId)->with('events')->get();
+        return Watchlist::where('user_id', $userId)->get();
     }
 }

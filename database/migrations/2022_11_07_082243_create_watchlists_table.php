@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
-            $table->string('interested');
+            $table->string('status');
             $table->timestamps();
         });
     }

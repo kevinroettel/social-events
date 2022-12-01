@@ -15,12 +15,14 @@ class EventController extends Controller
     public function createEvent(Request $request) {
         $request = $request->validate([
             'name' => 'required|string',
-            'description' => 'nullable|text',
-            'flyer' => 'nullable|text',
+            'description' => 'nullable|string',
+            'flyer' => 'nullable|string',
             'date' => 'required|date',
             'doors' => 'nullable|string',
             'begin' => 'required|string',
-            'location_id' => 'required|numeric|min:1'
+            'location' => 'required|integer|min:1',
+            'artists' => 'required|array|min:1',
+            'artists.*' => 'integer|min:1'
         ]);
 
         $event = Event::create([
@@ -30,8 +32,12 @@ class EventController extends Controller
             'date' => $request['date'],
             'doors' => $request['doors'],
             'begin' => $request['begin'],
-            'location_id' => $request['location_id']
+            'location_id' => $request['location']
         ]);
+
+        foreach ($request['artists'] as $artist) {
+            $event->artists()->attach($artist);
+        }
 
         return $event;
     }
@@ -43,12 +49,12 @@ class EventController extends Controller
 
         $request = $request->validate([
             'name' => 'required|string',
-            'description' => 'nullable|text',
-            'flyer' => 'nullable|text',
+            'description' => 'nullable|string',
+            'flyer' => 'nullable|string',
             'date' => 'required|date',
             'doors' => 'nullable|string',
             'begin' => 'required|string',
-            'location_id' => 'required|numeric|min:1'
+            'location' => 'required|numeric|min:1'
         ]);
 
         $event->name = $request['name'];
@@ -57,7 +63,7 @@ class EventController extends Controller
         $event->date = $request['date'];
         $event->doors = $request['doors'];
         $event->begin = $request['begin'];
-        $event->location_id = $request['location_id'];
+        $event->location_id = $request['location'];
         $event->save();
 
         return $event;

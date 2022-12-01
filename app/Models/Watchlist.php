@@ -12,7 +12,7 @@ class Watchlist extends Model
     protected $fillable = [
         'user_id',
         'event_id',
-        'interested'
+        'status'
     ];
 
     public function user() {

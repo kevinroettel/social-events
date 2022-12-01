@@ -15,14 +15,12 @@ class ArtistController extends Controller
     public function createArtist(Request $request) {
         $request = $request->validate([
             'name' => 'required|string',
-            'website' => 'nullable|string',
-            'type' => 'required|string'
+            'website' => 'nullable|string'
         ]);
 
-        $artist = Arist::create([
+        $artist = Artist::create([
             'name' => $request['name'],
-            'website' => $request['website'],
-            'type' => $request['type']
+            'website' => $request['website']
         ]);
 
         return $artist;
@@ -35,13 +33,11 @@ class ArtistController extends Controller
 
         $request = $request->validate([
             'name' => 'required|string',
-            'website' => 'nullable|string',
-            'type' => 'required|string'
+            'website' => 'nullable|string'
         ]);
 
         $artist->name = $request['name'];
         $artist->website = $request['website'];
-        $artist->type = $request['type'];
         $artist->save();
 
         return $artist;
