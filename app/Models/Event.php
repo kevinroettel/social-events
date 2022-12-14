@@ -16,6 +16,7 @@ class Event extends Model
         'date',
         'doors',
         'begin',
+        'ticketLink',
         'location_id'
     ];
 
@@ -28,6 +29,6 @@ class Event extends Model
     }
 
     public function artists() {
-        return $this->belongsToMany(Artist::class)->as('lineup');
+        return $this->belongsToMany(Artist::class);
     }
 }

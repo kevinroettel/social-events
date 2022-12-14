@@ -2,7 +2,7 @@
     <div class="card event-teaser-card" style="width: 18rem;">
         <div @click="showEventPage()">
             <div class="small-flyer-overflow">
-                <img class="card-img-top" :src="event.flyer" alt="Card image cap">
+                <img class="card-img-top" :src="'/storage' + event.flyer" alt="Card image cap">
             </div>
             <div class="card-body">
                 <div class="card-text-headline">{{ event.name }}</div>
@@ -11,44 +11,15 @@
             </div>
         </div>
         <div class="card-footer">
-            <button 
-                v-if="status != 'interested'"
-                class="btn btn-primary" 
-                type="button" 
-                @click="changeStatus('interested')"
-            >
-                Interessiert
-            </button>
-            <button
-                v-else
-                class="btn btn-danger"
-                type="button"
-                @click="changeStatus('delete')"
-            >
-                X Interessiert
-            </button>
-            
-            <button 
-                v-if="status != 'attending'"
-                class="btn btn-primary ml-1" 
-                type="button" 
-                @click="changeStatus('attending')"
-            >
-                Zusagen
-            </button>
-            <button
-                v-else
-                class="btn btn-danger ml-1"
-                type="button"
-                @click="changeStatus('delete')"
-            >
-                X Zusage
-            </button>
-            
+            <EventStatusButtons
+                :event="event.id"
+                :status="status"
+            />
         </div>
     </div>
 </template>
 <script setup>
+import EventStatusButtons from './EventStatusButtons.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
 import { inject, onMounted, ref } from '@vue/runtime-core';
 import { useLocationStore } from '../../stores/LocationStore.js';
@@ -82,17 +53,6 @@ const location = ref(null)
 
 const showEventPage = () => {
     emit('show-event-page', props.event.id);
-}
-
-const changeStatus = (status) => {
-    axios.patch(
-        `/users/${userStore.getUserId}/watchlists/${props.event.id}/${status}`
-    ).then((response) => {
-        if (status == "delete") eventStore.removeFromWatchlist(props.event.id);
-        else eventStore.updateWatchlist(response.data);
-    }).catch((error) => {
-        console.log(error);
-    })
 }
 
 onMounted(() => {

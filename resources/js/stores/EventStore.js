@@ -4,7 +4,10 @@ export const useEventStore = defineStore('events', {
     state: () => ({
         events: [],
 
+        oldEvents: [],
+
         watchlist: [],
+
     }),
 
     getters: {
@@ -23,7 +26,14 @@ export const useEventStore = defineStore('events', {
 
     actions: {
         initializeEvents(data) {
-            this.events = data;
+            let today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            data.forEach((event) => {
+                let eventDate = new Date(event.date);
+                if (eventDate < today) this.oldEvents.push(event);
+                else this.events.push(event);
+            })
         },
 
         initializeWatchlist(data) {
@@ -31,7 +41,8 @@ export const useEventStore = defineStore('events', {
 
             this.watchlist.forEach((entry, index) => {
                 let event = this.removeEventById(entry.event_id);
-                this.watchlist[index].event = event[0];
+                if (event == null) this.watchlist.splice(index, 1);
+                else this.watchlist[index].event = event[0];
             })
         },
 
@@ -40,6 +51,7 @@ export const useEventStore = defineStore('events', {
                 return event.id == id;
             });
 
+            if (index == -1) return null;
             return this.events.splice(index, 1);
         },
 

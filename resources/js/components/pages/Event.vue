@@ -1,28 +1,39 @@
 <template>
     <div v-if="event != null">
-        <ImageModal :image="event.flyer" />
+        <ImageModal :image="'/storage' + event.flyer" :name="event.name + '-flyer'" />
 
         <div class="card w-50 mx-auto">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
-                <img :src="event.flyer" class="card-img-top">
+                <img :src="'/storage' + event.flyer" class="card-img-top">
             </div>
             <div class="card-body">
-                <h3>{{ event.name  }}</h3>
+                <h3 class="text-center">{{ event.name  }}</h3>
 
                 <div class="row">
-                    <span v-if="event.date">{{ getFormattedDate(event.date) }}</span>
-                    <span v-if="event.doors">Einlass: {{ event.doors }}</span>
-                    <span v-if="event.begin">Beginn: {{ event.begin }}</span>
-                </div>
+                    <div class="col">
+                        <span>{{ getFormattedDate(event.date) }}</span><br>
+                        <span v-if="event.doors">Einlass: {{ event.doors }}</span><br>
+                        <span>Beginn: {{ event.begin }}</span><br>
+                        <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}</span><br>
+                        <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a></span><br><hr>
+                    </div>
+                    <div class="col">
+                        <EventStatusButtons
+                            :event="event.id"
+                            :status="watchlistStatus"
+                            @status-updated="watchlistStatus = $event"
+                        />
 
-                <p v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}</p>
+                        <br><span>{{ interestedCount }} Personen sind interessiert.</span><br>
+                        <span>{{ attendingCount }} Personen nehmen teil.</span><br><hr>
+                    </div>
+                </div>
                 
-                <p v-if="event.name != null">Name1 und zwei weitere Freunde sind an der Veranstaltung interessiert.</p>
                 <div class="row">
                     <div class="col pre-wrap">{{ event.description }}</div>
                     <div class="col">
                         Artists
-                        <!-- <p v-if="event.artists.length != 0">Line-up:</p>
+                        <p v-if="event.artists.length != 0">Line-up:</p>
                         <ul>
                             <li 
                                 v-for="(artist, index) in event.artists"
@@ -30,7 +41,7 @@
                             >
                                 {{ artist.name }}
                             </li>
-                        </ul> -->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -40,9 +51,14 @@
 <script setup>
 import { onMounted, ref, watch } from '@vue/runtime-core';
 import ImageModal from '../layouts/ImageModal.vue';
+import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
 import { useEventStore } from '../../stores/EventStore.js';
+import { useLocationStore } from '../../stores/LocationStore.js';
+import { useArtistStore } from '../../stores/ArtistStore.js';
 const eventStore = useEventStore();
+const locationStore = useLocationStore();
+const artistStore = useArtistStore();
 
 const props = defineProps({
     eventId: {
@@ -55,6 +71,8 @@ const props = defineProps({
 const event = ref(null);
 const watchlistStatus = ref(null);
 const showFullImage = ref(false);
+const interestedCount = ref(0);
+const attendingCount = ref(0);
 
 const getEventData = () =>  {
     let eventFromStore = eventStore.getEventById(props.eventId);
@@ -64,13 +82,34 @@ const getEventData = () =>  {
     } else {
         event.value = eventFromStore;
     }
+
+    getLocation()
+    getArtists()
+}
+
+const getLocation = () => {
+    event.value.location = locationStore.getLocationById(event.value.location_id);
+}
+
+const getArtists = () => {
+    event.value.artists.forEach((artistId, index) => {
+        event.value.artists[index] = artistStore.getArtistById(artistId);
+    });
 }
 
 const toggleImage = () => {
     showFullImage.value = !showFullImage.value
 }
 
+const getWatchlistEntriesCount = () => {
+    event.value.watchlists.forEach((entry) => {
+        if (entry.status == 'interested') interestedCount.value++;
+        else if (entry.status == 'attending') attendingCount.value++;
+    });
+}
+
 onMounted(() => {
     if (props.eventId != null) getEventData();
+    getWatchlistEntriesCount()
 })
 </script>

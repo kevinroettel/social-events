@@ -6,6 +6,11 @@ import "vue-select/dist/vue-select.css";
 
 import * as Vue from 'vue'
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+library.add(faCircleUser);
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import { createPinia } from "pinia";
 
 import axios from 'axios';
@@ -20,6 +25,7 @@ if (document.getElementById('app')) {
     const pinia = createPinia();
 
     app.component('app', App);
+    app.component('FontAwesomeIcon', FontAwesomeIcon);
     app.component('v-select', vSelect);
     app.use(pinia);
     app.use(VueAxios, axios);

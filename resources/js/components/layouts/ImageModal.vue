@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <img class="full-size-image" :src="props.image">
+                    <img class="full-size-image" :src="props.image" :alt="name">
                 </div>
             </div>
         </div>
@@ -15,6 +15,12 @@ const props = defineProps({
         required: true,
         type: String,
         default: null
+    },
+
+    name: {
+        required: false,
+        type: String,
+        default: "event-flyer"
     }
 });
 </script>

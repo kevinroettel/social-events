@@ -15,28 +15,39 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
-                    <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
-                    <a :class="`nav-link ${props.currentPage == 'artists' ? 'active' : ''}`" @click="changePage('artists')">Künstler</a>
-                    <a :class="`nav-link ${props.currentPage == 'locations' ? 'active' : ''}`" @click="changePage('locations')">Venues</a>
+                    <div class="display-contents navbar-left">
+                        <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
+                        <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
+                        <a :class="`nav-link ${props.currentPage == 'artists' ? 'active' : ''}`" @click="changePage('artists')">Künstler</a>
+                        <a :class="`nav-link ${props.currentPage == 'locations' ? 'active' : ''}`" @click="changePage('locations')">Venues</a>
+                        <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a>
+                    </div>
 
-                    <div class="logout-link">
-                        <a 
-                            class="nav-link"
-                            @click="submitLogoutForm($event)"
-                        >
-                            Logout
+                    <div class="display-contents navbar-right d-flex">
+                        <a :class="`nav-link account-link ${props.currentPage == 'account' ? 'active' : ''}`" @click="changePage('account')">
+                            <FontAwesomeIcon class="navbar-profile-picture" v-if="userStore.getUserPicture == null" icon="fa-solid fa-circle-user" />
+                            <img class="navbar-profile-picture" v-else :src="'/storage' + userStore.getUserPicture">
                         </a>
 
-                        <form 
-                            id="logout-form" 
-                            action="/logout"
-                            method="POST"
-                            style="display:none;"
-                        >
-                            <input type="hidden" name="_token" :value="csrf">
-                        </form>
+                        <div class="logout-link">
+                            <a 
+                                class="nav-link"
+                                @click="submitLogoutForm($event)"
+                            >
+                                Logout
+                            </a>
+
+                            <form 
+                                id="logout-form" 
+                                action="/logout"
+                                method="POST"
+                                style="display:none;"
+                            >
+                                <input type="hidden" name="_token" :value="csrf">
+                            </form>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -44,6 +55,9 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from '../../stores/UserStore.js';
+
+const userStore = useUserStore();
 
 const props = defineProps({
     currentPage: {
@@ -54,8 +68,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-    'page-change',
-    'logout-user'
+    'page-change'
 ]);
 
 const currentPage = ref("home");

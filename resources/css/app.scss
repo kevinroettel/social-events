@@ -11,7 +11,23 @@ body {
         
         .nav-link {
             cursor: pointer;
+
+            &.account-link {
+                padding: 0;
+
+                .navbar-profile-picture {
+                    height: 40px;
+                }
+            }
         }
+
+        .navbar-profile-picture {
+            border-radius: 50%;
+        }
+    }
+
+    .display-contents {
+        display: contents;
     }
 
     .guest-page {
@@ -86,6 +102,16 @@ body {
         }
     }
 
+    .toast-container {
+        
+    }
+
+    .user-box {
+        display: flex; 
+        flex-direction: row; 
+        align-items: center;
+    }
+
     .small-flyer-overflow {
         height: 125px;
         overflow: hidden;
@@ -99,6 +125,15 @@ body {
     .big-flyer-overflow {
         height: 400px;
         overflow: hidden;
+    }
+
+    .profile-picture {
+        height: 200px;
+    }
+
+    .small-profile-picture {
+        height: 50px;
+        border-radius: 50%;
     }
 
     .image-modal {

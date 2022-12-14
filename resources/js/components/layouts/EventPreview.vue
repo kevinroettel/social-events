@@ -1,7 +1,11 @@
 <template>
     <div class="card">
         <div class="flyer-overflow">
-            <img :src="event.flyer" class="card-img-top">
+            <img 
+                v-if="flyer != null"
+                :src="flyer" 
+                class="card-img-top"
+            >
         </div>
         <div class="card-body">
             <h3>{{ event.name }}</h3>
@@ -40,6 +44,12 @@ const props = defineProps({
         required: true,
         type: Object,
         default: null
+    },
+
+    flyer: {
+        required: false,
+        type: String,
+        default: null,
     }
 })
 </script>

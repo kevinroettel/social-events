@@ -6,6 +6,7 @@
         />
 
         <div class="main-content">
+
             <Dashboard
                 v-if="currentPage == 'home'"
                 @show-event-page="showEventPage($event)"
@@ -28,17 +29,30 @@
             <Locations
                 v-else-if="currentPage == 'locations'"
             />
+
+            <Friends
+                v-else-if="currentPage == 'friends'"
+            />
+
+            <Account
+                v-else-if="currentPage == 'account'"
+            />
+
+            <Toast />
         </div>
     </div>
 </template>
 <script setup>
 import { reactive, onMounted, ref, inject } from 'vue';
 import Navbar from './layouts/Navbar.vue';
+import Toast from './layouts/Toast.vue';
 import Dashboard from './pages/Dashboard.vue';
 import EventForm from './pages/EventForm.vue';
 import Event from './pages/Event.vue';
 import Artists from './pages/Artists.vue';
 import Locations from './pages/Locations.vue';
+import Friends from './pages/Friends.vue';
+import Account from './pages/Account.vue';
 
 import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';
@@ -118,6 +132,16 @@ const getArtists = () => {
     })
 }
 
+const getFriends = () => {
+    axios.get(
+        `/users/${userStore.getUserId}/friends`
+    ).then((response) => {
+        userStore.initializeFriends(response.data);
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
 onMounted(() => {
     let user = JSON.parse(props.currentuser);
     userStore.initializeUser(user)
@@ -125,5 +149,6 @@ onMounted(() => {
     getEvents();
     getLocations();
     getArtists();
+    getFriends();
 })
 </script>

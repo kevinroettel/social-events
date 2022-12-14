@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('doors')->nullable();
             $table->string('begin');
+            $table->string('ticketLink')->nullable();
             $table->unsignedBigInteger('location_id');
             $table->timestamps();
         });

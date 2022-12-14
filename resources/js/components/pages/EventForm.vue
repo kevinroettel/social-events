@@ -15,10 +15,10 @@
                     <textarea type="text" :class="`form-control`" aria-label="Beschreibung" aria-describedby="description-input-label" v-model="newEvent.description"></textarea>
                 </div>
 
-                <!-- fyler -->
+                <!-- flyer -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="flyer-input-label">Flyer</span>
-                    <input type="file" :class="`form-control`" aria-label="Fyler" aria-describedby="flyer-input-label" @change="handleFile($event)">
+                    <input type="file" ref="flyerInput" :class="`form-control`" aria-label="Fyler" aria-describedby="flyer-input-label" @change="handleFile($event)">
                 </div>
 
                 <!-- date -->
@@ -37,6 +37,11 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="begin-input-label">Beginn *</span>
                     <input type="time" :class="`form-control ${errorClass('begin')}`" aria-label="Beginn" aria-describedby="begin-input-label" v-model="newEvent.begin">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="ticket-input-label">Ticket Link</span>
+                    <input type="text" class="form-control" aria-label="Ticketlink" aria-describedby="ticket-input-label" v-model="newEvent.ticketLink">
                 </div>
 
                 <!-- location id -->
@@ -67,13 +72,14 @@
                 <h3>Vorschau</h3>
                 <EventPreview
                     :event="newEvent"
+                    :flyer="flyerUrl"
                 />
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { inject, onMounted, reactive } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
 import EventPreview from '../layouts/EventPreview.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
@@ -87,6 +93,8 @@ const emit = defineEmits([
     'event-created'
 ]);
 
+const flyerUrl = ref(null);
+
 const newEvent = reactive({
     name: null,
     description: null,
@@ -94,6 +102,7 @@ const newEvent = reactive({
     date: null,
     doors: null,
     begin: null,
+    ticketLink: null,
     location: null,
     artists: [],
 });
@@ -107,13 +116,10 @@ const hasError = reactive({
 });
 
 const handleFile = (input) => {
-    var file = input.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        newEvent.flyer = reader.result;
-    }
-
-    reader.readAsDataURL(file);
+    setTimeout(() => {
+        newEvent.flyer = input.target.files[0];
+        flyerUrl.value = URL.createObjectURL(newEvent.flyer);
+    }, 1);
 }
 
 const selectArtist = (artist) => {
@@ -124,7 +130,6 @@ const deselectArtist = (artist) => {
     newEvent.artists.forEach((a, i) => {
         if (a.id == artist.id) {
             newEvent.artists.splice(i, 1);
-            console.log('oi')
             return;
         }
     })
@@ -144,13 +149,20 @@ const checkInputs = () => {
 }
 
 const saveEvent = () => {
-    let event = newEvent;
-    event.location = newEvent.location.id;
-    event.artists = newEvent.artists.map(a => a.id);
+    let formData = new FormData();
+    formData.append('name', newEvent.name);
+    formData.append('description', newEvent.description);
+    formData.append('flyer', newEvent.flyer);
+    formData.append('date', newEvent.date);
+    formData.append('doors', newEvent.doors);
+    formData.append('begin', newEvent.begin);
+    formData.append('ticketLink', newEvent.ticketLink);
+    formData.append('location', newEvent.location.id);
+    formData.append('artists', JSON.stringify(newEvent.artists.map(a => a.id)));
 
     axios.post(
         '/events',
-        newEvent
+        formData
     ).then((response) => {
         console.log(response.data)
         emit('event-created', response.data);
@@ -162,9 +174,5 @@ const saveEvent = () => {
 const errorClass = (input) => {
     return hasError[input] ? 'is-invalid' : '';
 }
-
-// onMounted(() => {
-
-// });
 
 </script>

@@ -11208,6 +11208,18 @@ body .pre-wrap {
 body .navbar .nav-link {
   cursor: pointer;
 }
+body .navbar .nav-link.account-link {
+  padding: 0;
+}
+body .navbar .nav-link.account-link .navbar-profile-picture {
+  height: 40px;
+}
+body .navbar .navbar-profile-picture {
+  border-radius: 50%;
+}
+body .display-contents {
+  display: contents;
+}
 body .guest-page {
   background-image: url(/images/crowd.webp?af182112674a0da0548732110e9b5c04);
   background-repeat: no-repeat;
@@ -11265,6 +11277,11 @@ body .website-content .main-content .event-teaser-card .card-text-headline {
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+body .user-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 body .small-flyer-overflow {
   height: 125px;
   overflow: hidden;
@@ -11276,6 +11293,13 @@ body .flyer-overflow {
 body .big-flyer-overflow {
   height: 400px;
   overflow: hidden;
+}
+body .profile-picture {
+  height: 200px;
+}
+body .small-profile-picture {
+  height: 50px;
+  border-radius: 50%;
 }
 body .image-modal .modal-dialog {
   display: table;
