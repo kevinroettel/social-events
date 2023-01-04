@@ -63,16 +63,6 @@ const axios = inject('axios');
 const searchUser = ref("");
 const possibleUsers = ref(null);
 
-const getUsers = () => {
-    axios.get(
-        '/users'
-    ).then((response) => {
-        userStore.initializeUsers(response.data);
-    }).catch((error) => {
-        console.log(error)
-    })
-}
-
 const getFriendRequests = () => {
     axios.get(
         `/users/${userStore.getUserId}/friendrequests`
@@ -90,7 +80,6 @@ const filterUsers = () => {
 }
  
 onMounted(() => {
-    getUsers();
     getFriendRequests();
 });
 </script>

@@ -47,22 +47,35 @@
                 <!-- location id -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="location-select-label">Venue *</span>
-                    <v-select :class="`form-control ${errorClass('location')}`" aria-label="Venue" aria-describedby="location-select-label" :options="locationStore.locations" label="name" v-model="newEvent.location"></v-select>
+                    <v-select 
+                        :class="`form-control ${errorClass('location')}`" 
+                        aria-label="Venue" 
+                        aria-describedby="location-select-label" 
+                        :options="locationStore.locations" 
+                        label="name" 
+                        v-model="newEvent.location"
+                    ></v-select>
                 </div>
 
                 <!-- artists -->
+                <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
                         multiple
+                        taggable 
                         :class="`form-control ${errorClass('artists')}`" 
                         aria-label="Künstler" 
                         aria-describedby="artist-select-label" 
                         :options="artistStore.artists" 
                         label="name" 
+                        
                         v-model="newEvent.artists"
+                        @option:created="showNotifcation = true"
                     ></v-select>
                 </div>
+
+                <p>* Benötigte Eingaben</p>
 
                 <button type="button" class="btn btn-primary" @click="checkInputs()">
                     Event Speichern
@@ -94,6 +107,7 @@ const emit = defineEmits([
 ]);
 
 const flyerUrl = ref(null);
+const showNotifcation = ref(false);
 
 const newEvent = reactive({
     name: null,
@@ -122,19 +136,6 @@ const handleFile = (input) => {
     }, 1);
 }
 
-const selectArtist = (artist) => {
-    newEvent.artists.push(artist);
-}
-
-const deselectArtist = (artist) => {
-    newEvent.artists.forEach((a, i) => {
-        if (a.id == artist.id) {
-            newEvent.artists.splice(i, 1);
-            return;
-        }
-    })
-}
-
 const checkInputs = () => {
     let allInputsOkay = true;
 
@@ -151,14 +152,14 @@ const checkInputs = () => {
 const saveEvent = () => {
     let formData = new FormData();
     formData.append('name', newEvent.name);
-    formData.append('description', newEvent.description);
-    formData.append('flyer', newEvent.flyer);
+    if (newEvent.description != null) formData.append('description', newEvent.description);
+    if (newEvent.flyer != null) formData.append('flyer', newEvent.flyer);
     formData.append('date', newEvent.date);
-    formData.append('doors', newEvent.doors);
+    if (newEvent.doors != null) formData.append('doors', newEvent.doors);
     formData.append('begin', newEvent.begin);
-    formData.append('ticketLink', newEvent.ticketLink);
+    if (newEvent.ticketLink != null) formData.append('ticketLink', newEvent.ticketLink);
     formData.append('location', newEvent.location.id);
-    formData.append('artists', JSON.stringify(newEvent.artists.map(a => a.id)));
+    formData.append('artists', JSON.stringify(newEvent.artists.map(a => a.id != undefined ? a.id : a.name)));
 
     axios.post(
         '/events',

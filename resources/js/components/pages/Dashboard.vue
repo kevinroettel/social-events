@@ -24,10 +24,7 @@
                 Vorschläge (erstmal Platzhalter, soll aber schonmal im Dashboard zu sehen sein)
             </div>
             <div class="card-body">
-                <EventTeaser 
-                    v-for="(event, index) in eventStore.getAllEvents"
-                    :key="index"
-                    :event="event"
+                <EventTeaserCarousel 
                     @show-event-page="showEventPage($event)"
                 />
             </div>
@@ -35,6 +32,7 @@
     </div>
 </template>
 <script setup>
+import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import EventTeaser from '../layouts/EventTeaser.vue'
 import { useEventStore } from '../../stores/EventStore.js';
 const eventStore = useEventStore();

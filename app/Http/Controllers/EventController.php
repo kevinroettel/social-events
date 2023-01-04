@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Http\Controllers\ArtistController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -43,12 +44,12 @@ class EventController extends Controller
             'ticketLink' => 'nullable|string',
             'location' => 'required|integer|min:1',
             'artists' => 'required|array|min:1',
-            'artists.*' => 'integer|min:1'
+            // 'artists.*' => 'integer|min:1'
         ]);
 
         $name = null;
 
-        if ($request['flyer'] != null) {
+        if (isset($request['flyer'])) {
             $file = $request['flyer'];
             $name = "/flyers/flyer-" . $request['name'] . "." . $file->extension();
             $file->storePubliclyAs('public', $name);
@@ -56,17 +57,22 @@ class EventController extends Controller
 
         $event = Event::create([
             'name' => $request['name'],
-            'description' => $request['description'],
+            'description' => (array_key_exists('description', $request) ? $request['description'] : null),
             'flyer' => $name,
             'date' => $request['date'],
-            'doors' => $request['doors'],
+            'doors' => (array_key_exists('doors', $request) ? $request['doors'] : null),
             'begin' => $request['begin'],
-            'ticketLink' => $request['ticketLink'],
+            'ticketLink' => (array_key_exists('ticketLink', $request) ? $request['ticketLink'] : null),
             'location_id' => $request['location']
         ]);
 
         foreach ($request['artists'] as $artist) {
-            $event->artists()->attach($artist);
+            if (is_numeric($artist)) {
+                $event->artists()->attach($artist);
+            } else {
+                $newArtist = ArtistController::createArtistFromNewEvent($artist);
+                $event->artists()->attach($newArtist->id);
+            }
         }
 
         return $event;

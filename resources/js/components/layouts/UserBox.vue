@@ -1,53 +1,59 @@
 <template>
-    <div v-if="user != null" class="user-box my-2">
-        <FontAwesomeIcon 
-            v-if="user.profile_picture == null" 
-            icon="fa-solid fa-circle-user" 
-            class="small-profile-picture"
-        />
+    <div v-if="user != null" class="user-container">
+        
+        <div class="user-box">
+            <FontAwesomeIcon 
+                v-if="user.profile_picture == null" 
+                icon="fa-solid fa-circle-user" 
+                class="small-profile-picture"
+            />
 
-        <img 
-            v-else 
-            class="small-profile-picture" 
-            :src="'/storage' + user.profile_picture"
-        >
+            <img 
+                v-else 
+                class="small-profile-picture" 
+                :src="'/storage' + user.profile_picture"
+            >
 
-        <p class="d-inline mx-2">{{ user.username }}</p>
+            <p class="d-inline mx-2">{{ user.username }}</p>
+        </div>
 
-        <button 
-            v-if="friendStatus == 'friend'"
-            class="btn btn-danger" 
-            type="button" 
-            @click="changeFriendStatus('remove', removeFriendHandling)"
-        >
-            Freund entfernen
-        </button>
-
-        <div v-else-if="friendStatus == 'pending'">
+        <div v-if="withButtons">
             <button 
+                v-if="friendStatus == 'friend'"
                 class="btn btn-danger" 
                 type="button" 
-                @click="changeFriendStatus('accept', acceptRequestHandling)"
+                @click="changeFriendStatus('remove', removeFriendHandling)"
             >
-                Annehmen
+                Freund entfernen
             </button>
 
-            <button 
-                class="btn btn-danger" 
+            <div v-else-if="friendStatus == 'pending'">
+                <button 
+                    class="btn btn-danger" 
+                    type="button" 
+                    @click="changeFriendStatus('accept', acceptRequestHandling)"
+                >
+                    Annehmen
+                </button>
+
+                <button 
+                    class="btn btn-danger" 
+                    type="button" 
+                    @click="changeFriendStatus('deny', denyRequestHandling)"
+                >
+                    Ignorieren
+                </button>
+            </div>
+
+            <button v-else-if="friendStatus == 'unknown'"
+                class="btn btn-primary" 
                 type="button" 
-                @click="changeFriendStatus('deny', denyRequestHandling)"
+                @click="changeFriendStatus('request', requestFriendHandling)"
             >
-                Ignorieren
+                Freundschaftsanfrage Senden
             </button>
         </div>
 
-        <button v-else-if="friendStatus == 'unknown'"
-            class="btn btn-primary" 
-            type="button" 
-            @click="changeFriendStatus('request', requestFriendHandling)"
-        >
-            Freundschaftsanfrage Senden
-        </button>
     </div>
 </template>
 <script setup>
@@ -69,6 +75,12 @@ const props = defineProps({
         required: false,
         type: String,
         default: 'unknown'
+    },
+
+    withButtons: {
+        required: false,
+        type: Boolean,
+        default: true
     }
 });
 

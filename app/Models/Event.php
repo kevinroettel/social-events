@@ -31,4 +31,8 @@ class Event extends Model
     public function artists() {
         return $this->belongsToMany(Artist::class);
     }
+
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
 }

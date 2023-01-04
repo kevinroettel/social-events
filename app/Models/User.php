@@ -78,4 +78,8 @@ class User extends Authenticatable
                 return $friend->only($userAttributes);
             });
     }
+
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
 }

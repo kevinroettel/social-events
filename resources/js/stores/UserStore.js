@@ -52,6 +52,32 @@ export const useUserStore = defineStore('user', {
             );
         },
 
+        getUserById(id) {
+            let user = this.users.filter(user => user.id == id);
+            if (user.length != 0) {
+                return {
+                    username: user[0].username,
+                    profile_picture: user[0].profile_picture,
+                    isFriend: false,
+                }
+            }
+
+            let friend = this.friends.filter(friend => friend.id == id);
+            if (friend.length != 0) {
+                return {
+                    username: friend[0].username,
+                    profile_picture: friend[0].profile_picture,
+                    isFriend: true,
+                }
+            }
+
+            return {
+                username: this.user.username,
+                profile_picture: this.user.profile_picture,
+                isFriend: false
+            }
+        },
+
         moveUserToRequested(userId) {
             this.users = this.users.filter(user => user.id != userId);
         },

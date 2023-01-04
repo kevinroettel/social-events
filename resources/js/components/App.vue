@@ -132,6 +132,16 @@ const getArtists = () => {
     })
 }
 
+const getUsers = () => {
+    axios.get(
+        '/users'
+    ).then((response) => {
+        userStore.initializeUsers(response.data);
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+
 const getFriends = () => {
     axios.get(
         `/users/${userStore.getUserId}/friends`
@@ -149,6 +159,7 @@ onMounted(() => {
     getEvents();
     getLocations();
     getArtists();
+    getUsers();
     getFriends();
 })
 </script>

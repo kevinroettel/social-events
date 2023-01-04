@@ -2,7 +2,7 @@
     <div class="card event-teaser-card" style="width: 18rem;">
         <div @click="showEventPage()">
             <div class="small-flyer-overflow">
-                <img class="card-img-top" :src="'/storage' + event.flyer" alt="Card image cap">
+                <img class="card-img-top" :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" alt="Card image cap">
             </div>
             <div class="card-body">
                 <div class="card-text-headline">{{ event.name }}</div>

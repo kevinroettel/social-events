@@ -1,10 +1,10 @@
 <template>
     <div v-if="event != null">
-        <ImageModal :image="'/storage' + event.flyer" :name="event.name + '-flyer'" />
+        <ImageModal :image="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" :name="event.name + '-flyer'" />
 
         <div class="card w-50 mx-auto">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
-                <img :src="'/storage' + event.flyer" class="card-img-top">
+                <img :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" class="card-img-top">
             </div>
             <div class="card-body">
                 <h3 class="text-center">{{ event.name  }}</h3>
@@ -44,6 +44,20 @@
                         </ul>
                     </div>
                 </div>
+
+                <hr>
+
+                <div class="row user-posts">
+                    <CreatePost 
+                        :eventId="event.id"
+                        @created-post="addPost($event)"
+                    />
+
+                    <Posts
+                        v-if="posts != null"
+                        :postsData="posts"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -52,6 +66,8 @@
 import { onMounted, ref, watch } from '@vue/runtime-core';
 import ImageModal from '../layouts/ImageModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
+import CreatePost from '../layouts/CreatePost.vue';
+import Posts from '../layouts/Posts.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
@@ -69,6 +85,7 @@ const props = defineProps({
 });
 
 const event = ref(null);
+const posts = ref(null);
 const watchlistStatus = ref(null);
 const showFullImage = ref(false);
 const interestedCount = ref(0);
@@ -83,8 +100,23 @@ const getEventData = () =>  {
         event.value = eventFromStore;
     }
 
+    getEventPosts()
     getLocation()
     getArtists()
+}
+
+const getEventPosts = () => {
+    axios.get(
+        `/events/${props.eventId}/posts`
+    ).then((response) => {
+        posts.value = response.data;
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
+const addPost = (newPost) => {
+    posts.value.unshift(newPost);
 }
 
 const getLocation = () => {
@@ -110,6 +142,6 @@ const getWatchlistEntriesCount = () => {
 
 onMounted(() => {
     if (props.eventId != null) getEventData();
-    getWatchlistEntriesCount()
+    getWatchlistEntriesCount();
 })
 </script>

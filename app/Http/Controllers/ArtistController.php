@@ -26,6 +26,11 @@ class ArtistController extends Controller
         return $artist;
     }
 
+    public static function createArtistFromNewEvent($artistName) {
+        $artist = Artist::create(['name' => $artistName]);
+        return $artist;
+    }
+
     public function updateArtist(Request $request, $artistId) {
         $artist = Artist::find($artistId)->first();
         

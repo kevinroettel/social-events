@@ -3,6 +3,7 @@ require('./bootstrap');
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "vue-select/dist/vue-select.css";
+import "vue3-carousel/dist/carousel.css";
 
 import * as Vue from 'vue'
 

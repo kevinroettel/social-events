@@ -11220,6 +11220,15 @@ body .navbar .navbar-profile-picture {
 body .display-contents {
   display: contents;
 }
+body .display-inline {
+  display: inline;
+}
+body .display-inline-flex {
+  display: inline-flex;
+}
+body .display-grid {
+  display: grid;
+}
 body .guest-page {
   background-image: url(/images/crowd.webp?af182112674a0da0548732110e9b5c04);
   background-repeat: no-repeat;
@@ -11259,11 +11268,11 @@ body .website-content .main-content {
 }
 body .website-content .main-content .event-teaser-card {
   display: inline-block;
-  margin-right: 25px;
+  background-color: white;
+  transition: 0.5s;
 }
 body .website-content .main-content .event-teaser-card:hover {
   background-color: lightgray;
-  transform: scale(1.05);
   transition: 0.5s;
   cursor: pointer;
 }
@@ -11277,10 +11286,19 @@ body .website-content .main-content .event-teaser-card .card-text-headline {
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
-body .user-box {
+body .user-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+body .main-post-content {
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 15px;
+}
+body .main-post-content .time-foot-note {
+  margin-bottom: 0;
+  font-size: 10px;
 }
 body .small-flyer-overflow {
   height: 125px;

@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\WatchlistController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +41,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/events', [EventController::class, 'getEvents']);
     Route::post('/events', [EventController::class, 'createEvent']);
     Route::post('/events/{eventId}', [EventController::class, 'updateEvent']);
+    Route::get('/events/{eventId}/posts', [PostController::class, 'getEventPosts']);
+    Route::post('/events/{eventId}/posts', [PostController::class, 'createPost']);
     Route::patch('/events/{eventId}/artists/{artistId}', [EventController::class, 'addArtistToEvent']);
     Route::delete('/events/{eventId}/artists/{artistId}', [EventController::class, 'removeArtistFromEvent']);
     
+
     Route::get('/locations', [LocationController::class, 'getLocations']);
     Route::post('/locations', [LocationController::class, 'createLocation']);
     Route::post('/locations/{locationId}', [LocationController::class, 'updateLocation']);
