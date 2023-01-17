@@ -7,7 +7,7 @@
                 <img :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" class="card-img-top">
             </div>
             <div class="card-body">
-                <h3 class="text-center">{{ event.name  }}</h3>
+                <h3 class="text-center">{{ event.name }}</h3>
 
                 <div class="row">
                     <div class="col">
@@ -39,7 +39,12 @@
                                 v-for="(artist, index) in event.artists"
                                 :key="index"
                             >
-                                {{ artist.name }}
+                                <a 
+                                    @click="showArtistPage(artist.id)"
+                                    class="event-line-up-artist-link"
+                                >
+                                    {{ artist.name }}
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -83,6 +88,10 @@ const props = defineProps({
         default: null
     }
 });
+
+const emit = defineEmits([
+    'show-artist-page'
+]);
 
 const event = ref(null);
 const posts = ref(null);
@@ -138,6 +147,10 @@ const getWatchlistEntriesCount = () => {
         if (entry.status == 'interested') interestedCount.value++;
         else if (entry.status == 'attending') attendingCount.value++;
     });
+}
+
+const showArtistPage = (artistId) => {
+    emit('show-artist-page', artistId);
 }
 
 onMounted(() => {

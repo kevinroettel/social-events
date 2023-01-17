@@ -10,8 +10,7 @@ class Artist extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'website'
+        'name'
     ];
 
     public function tags() {

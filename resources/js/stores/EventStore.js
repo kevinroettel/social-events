@@ -39,11 +39,12 @@ export const useEventStore = defineStore('events', {
         initializeWatchlist(data) {
             this.watchlist = data;
 
-            this.watchlist.forEach((entry, index) => {
-                let event = this.removeEventById(entry.event_id);
-                if (event == null) this.watchlist.splice(index, 1);
+            for (let index = 0; index < this.watchlist.length; index++) {
+                let event = this.removeEventById(this.watchlist[index].event_id);
+
+                if (event == null) this.watchlist.splice(index--, 1);
                 else this.watchlist[index].event = event[0];
-            })
+            }
         },
 
         removeEventById(id) {
@@ -94,6 +95,34 @@ export const useEventStore = defineStore('events', {
             let event = this.watchlist[index].event;
             this.events.push(event);
             this.watchlist.splice(index, 1);
+        },
+
+        getEventsWithArtist(artistId) {
+            let eventsWithArtist = [];
+
+            this.events.forEach(event => {
+                event.artists.forEach(artist => {
+                    if (Number.isInteger(artist) && artist == artistId) {
+                        eventsWithArtist.push(event);
+                    } else {
+                        if (artist.id == artistId) {
+                            eventsWithArtist.push(event);
+                        }
+                    }
+                });
+            });
+            
+            this.watchlist.forEach(entry => {
+                entry.event.artists.forEach(artist => {
+                    if (artist.id == artistId) eventsWithArtist.push(entry.event)
+                });
+            });
+
+            return eventsWithArtist;
+        },
+
+        getPastEventsWithArtist(artistId) {
+            return this.oldEvents.filter(event => event.artists.includes(artistId));
         },
     }
 })

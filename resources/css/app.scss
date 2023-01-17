@@ -155,6 +155,45 @@ body {
         border-radius: 50%;
     }
 
+    .event-line-up-artist-link {
+        cursor: pointer;
+        color: black;
+        text-decoration: none;
+    }
+
+    .artist-tag {
+        border: 1px solid black;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    .event-list-entry {
+        .event-list-date {
+    
+            .event-list-day-month {
+                font-size: 25px;
+                font-weight: bold;
+            }
+    
+            .event-list-year {
+    
+            }
+        }
+    
+        .event-list-details {
+            margin-bottom: 20px;
+
+            .event-list-name {
+                font-size: 20px;
+            }
+    
+            .event-list-location {
+    
+            }
+        }
+    }
+
+
     .image-modal {
         .modal-dialog {
             display: table;
@@ -167,5 +206,15 @@ body {
                 }
             }
         }
+    }
+
+    .spinner-middle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        width: 100px;
+        height: 100px;
     }
 }

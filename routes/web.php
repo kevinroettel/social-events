@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/artists', [ArtistController::class, 'getArtists']);
-    Route::post('/artists', [ArtistController::class, 'createArtist']);
+    Route::post('/artists', [ArtistController::class, 'createArtist']); // wird alleinstehend nicht genutzt. direkte artist erstellung durch Event-Erstellung
     Route::post('/artists/{artistId}', [ArtistController::class, 'updateArtist']);
     Route::patch('/artists/{artistId}/tags/{tagId}', [ArtistController::class, 'addTagToArtist']);
     Route::delete('/artists/{artistId}/tags/{tagId}', [ArtistController::class, 'removeTagFromArtist']);
@@ -61,5 +62,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/users/{userId}/friendrequests', [UserController::class, 'getFriendRequests']);
     Route::get('/users/{userId}/watchlists', [WatchlistController::class, 'getUserWatchlistEntries']);
     Route::get('/users/{userId}/watchlists/{eventId}', [WatchlistController::class, 'getInterestedFriends']);
-    Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'updateEntryStatus']);
+
+    Route::patch('/users/{userId}/watchlists/{eventId}/request', [WatchlistController::class, 'sendFriendRequest']);
+    Route::patch('/users/{userId}/watchlists/{eventId}/accept', [WatchlistController::class, 'acceptFriendRequest']);
+    Route::patch('/users/{userId}/watchlists/{eventId}/deny', [WatchlistController::class, 'removeFriendRequest']);
+    Route::patch('/users/{userId}/watchlists/{eventId}/remove', [WatchlistController::class, 'removeFriendRequest']);
 });

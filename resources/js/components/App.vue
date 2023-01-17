@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="page" v-if="dataLoaded">
         <Navbar
             :currentPage="currentPage"
             @page-change="changePage($event)"
@@ -15,6 +15,7 @@
             <Event
                 v-else-if="currentPage == 'event'"
                 :eventId="showEvent"
+                @show-artist-page="showArtistPage($event)"
             />
 
             <EventForm
@@ -22,8 +23,9 @@
                 @event-created="addEvent($event)"
             />
 
-            <Artists
-                v-else-if="currentPage == 'artists'"
+            <Artist
+                v-else-if="currentPage == 'artist'"
+                :artistId="showArtist"
             />
 
             <Locations
@@ -41,15 +43,16 @@
             <Toast />
         </div>
     </div>
+    <div v-else class="spinner-border spinner-middle" role="status"></div>
 </template>
 <script setup>
-import { reactive, onMounted, ref, inject } from 'vue';
+import { reactive, onMounted, ref, inject, computed } from 'vue';
 import Navbar from './layouts/Navbar.vue';
 import Toast from './layouts/Toast.vue';
 import Dashboard from './pages/Dashboard.vue';
 import EventForm from './pages/EventForm.vue';
 import Event from './pages/Event.vue';
-import Artists from './pages/Artists.vue';
+import Artist from './pages/Artist.vue';
 import Locations from './pages/Locations.vue';
 import Friends from './pages/Friends.vue';
 import Account from './pages/Account.vue';
@@ -76,21 +79,46 @@ const props = defineProps({
 const currentPage = ref("home");
 
 const showEvent = ref(null);
+const showArtist = ref(null);
+
+const dataDone = reactive({
+    events: false,
+    watchlist: false,
+    locations: false,
+    artists: false,
+    users: false,
+    friends: false
+});
 
 const changePage = (page) => {
     currentPage.value = page;
 }
 
-const showEventPage= (eventId) => {
+const showEventPage = (eventId) => {
     currentPage.value = "event";
     showEvent.value = eventId;
 }
+
+const showArtistPage = (artistId) => {
+    currentPage.value = "artist";
+    showArtist.value = artistId;
+}
+
+const dataLoaded = computed(() => {
+    return dataDone.events && 
+        dataDone.watchlist && 
+        dataDone.locations && 
+        dataDone.artists && 
+        dataDone.users && 
+        dataDone.friends;
+})
 
 const getEvents = () => {
     axios.get(
         '/events'
     ).then((response) => {
         eventStore.initializeEvents(response.data);
+        dataDone.events = true;
         getWatchlistEntries();
     }).catch((error) => {
         console.log(error);
@@ -99,7 +127,8 @@ const getEvents = () => {
 
 const addEvent = (event) => {
     currentPage.value = "home";
-    eventStore.addNewEvent(event);
+    event.location = locationStore.getLocationById(event.location_id);
+    eventStore.addNewEvent(event)
 }
 
 const getWatchlistEntries = () => {
@@ -107,6 +136,7 @@ const getWatchlistEntries = () => {
         `/users/${userStore.getUserId}/watchlists`
     ).then((response) => {
         eventStore.initializeWatchlist(response.data);
+        dataDone.watchlist = true
     }).catch((error) => {
         console.log(error);
     })
@@ -117,6 +147,7 @@ const getLocations = () => {
         '/locations'
     ).then((response) => {
         locationStore.initializeLocations(response.data);
+        dataDone.locations = true
     }).catch((error) => {
         console.log(error);
     })
@@ -127,6 +158,7 @@ const getArtists = () => {
         '/artists'
     ).then((response) => {
         artistStore.initializeArtists(response.data);
+        dataDone.artists = true
     }).catch((error) => {
         console.log(error);
     })
@@ -137,6 +169,7 @@ const getUsers = () => {
         '/users'
     ).then((response) => {
         userStore.initializeUsers(response.data);
+        dataDone.users = true
     }).catch((error) => {
         console.log(error)
     })
@@ -147,6 +180,7 @@ const getFriends = () => {
         `/users/${userStore.getUserId}/friends`
     ).then((response) => {
         userStore.initializeFriends(response.data);
+        dataDone.friends = true
     }).catch((error) => {
         console.log(error);
     })
@@ -157,8 +191,8 @@ onMounted(() => {
     userStore.initializeUser(user)
 
     getEvents();
-    getLocations();
     getArtists();
+    getLocations();
     getUsers();
     getFriends();
 })

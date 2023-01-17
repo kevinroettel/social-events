@@ -11319,6 +11319,26 @@ body .small-profile-picture {
   height: 50px;
   border-radius: 50%;
 }
+body .event-line-up-artist-link {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+body .artist-tag {
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 10px;
+}
+body .event-list-entry .event-list-date .event-list-day-month {
+  font-size: 25px;
+  font-weight: bold;
+}
+body .event-list-entry .event-list-details {
+  margin-bottom: 20px;
+}
+body .event-list-entry .event-list-details .event-list-name {
+  font-size: 20px;
+}
 body .image-modal .modal-dialog {
   display: table;
 }
@@ -11328,4 +11348,13 @@ body .image-modal .modal-dialog .modal-content {
 }
 body .image-modal .modal-dialog .modal-content .full-size-image {
   height: 90vh;
+}
+body .spinner-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
 }

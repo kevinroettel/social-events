@@ -1,0 +1,103 @@
+<template>
+    <div v-if="artistTags != null">
+        <div class="d-flex mb-2">
+            <div
+                v-for="(tag, index) in artistTags"
+                :key="index"
+                class="m-1"
+            >
+                <span class="artist-tag">
+                    {{ tag.name }} 
+                    <button 
+                        class="btn btn-secondary" 
+                        @click="removeTagFromArtist(tag.id)"
+                    >
+                        X
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <div class="d-inline">
+            <v-select
+                taggable
+                class="w-25"
+                :options="availableTags"
+                label="name"
+                v-model="newTag"
+            ></v-select>
+            
+            <button
+                type="button"
+                class="btn btn-primary"
+                @click="addTagToArtist()"
+            >
+                Hinzufügen
+            </button>
+        </div>
+    </div>
+</template>
+<script setup>
+import { inject, onMounted, ref } from "vue";
+
+const axios = inject('axios');
+
+const props = defineProps({
+    artistTags: {
+        required: true,
+        type: Array,
+        default: null
+    },
+});
+
+const emit = defineEmits([
+    'tag-added',
+    'tag-removed'
+]);
+
+const availableTags = ref([]);
+const newTag = ref(null);
+
+const getAllAvailableTags = () => {
+    axios.get(
+        '/tags'
+    ).then((response) => {
+        availableTags.value = response.data;
+    }).catch((error) => {
+        console.warn(error);
+    })
+}
+
+const addTagToArtist = () => {
+    console.log('addTagToArtist', newTag.value);
+
+    if (newTag.value.hasOwnProperty('id')) {
+        emit('tag-added', newTag.value);
+        newTag.value = null;
+    } else {
+        createTag();
+    }
+}
+
+const createTag = () => {
+    console.log('createTag', newTag.value)
+
+    axios.post(
+        '/tags',
+        newTag.value
+    ).then((response) => {
+        emit('tag-added', response.data);
+        newTag.value = null;
+    }).catch((error) => {
+        console.warn(error);
+    })
+}
+
+const removeTagFromArtist = (tagId) => {
+    emit('tag-removed', tagId)
+}
+
+onMounted(() => {
+    getAllAvailableTags();
+})
+</script>

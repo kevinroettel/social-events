@@ -18,7 +18,6 @@
                     <div class="display-contents navbar-left">
                         <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
                         <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
-                        <a :class="`nav-link ${props.currentPage == 'artists' ? 'active' : ''}`" @click="changePage('artists')">Künstler</a>
                         <a :class="`nav-link ${props.currentPage == 'locations' ? 'active' : ''}`" @click="changePage('locations')">Venues</a>
                         <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a>
                     </div>

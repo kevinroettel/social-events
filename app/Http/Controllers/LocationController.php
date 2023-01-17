@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
@@ -12,25 +13,33 @@ class LocationController extends Controller
         return Location::all();
     }
 
+    private $rules = [
+        'name' => 'required|string',
+        'streetAndNumber' => 'nullable|string',
+        'city' => 'required|string',
+        'website' => 'nullable|string',
+        'parking' => 'required|string',
+        'barrierFree' => 'required|string',
+        'description' => 'nullable|string'
+    ];
+
     public function createLocation(Request $request) {
-        $request = $request->validate([
-            'name' => 'required|string',
-            'streetAndNumber' => 'nullable|string',
-            'city' => 'required|string',
-            'website' => 'nullable|string',
-            'parking' => 'required|string',
-            'barrierFree' => 'required|string',
-            'description' => 'nullable|string'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules);
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $validated = $validator->validated();
 
         $location = Location::create([
-            'name' => $request['name'],
-            'streetAndNumber' => $request['streetAndNumber'],
-            'city' => $request['city'],
-            'website' => $request['website'],
-            'parking' => $request['parking'],
-            'barrierFree' => $request['barrierFree'],
-            'description' => $request['description']
+            'name' => $validated['name'],
+            'streetAndNumber' => $validated['streetAndNumber'],
+            'city' => $validated['city'],
+            'website' => $validated['website'],
+            'parking' => $validated['parking'],
+            'barrierFree' => $validated['barrierFree'],
+            'description' => $validated['description']
         ]);
 
         return $location;
@@ -41,23 +50,21 @@ class LocationController extends Controller
 
         if (empty($location)) return false;
 
-        $request = $request->validate([
-            'name' => 'required|string',
-            'streetAndNumber' => 'nullable|string',
-            'city' => 'required|string',
-            'website' => 'nullable|string',
-            'parking' => 'required|string',
-            'barrierFree' => 'required|string',
-            'description' => 'nullable|string'
-        ]);
+        $validator = Validator::make($request->all(), $this->rules);
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
 
-        $location->name = $request['name'];
-        $location->streetAndNumber = $request['streetAndNumber'];
-        $location->city = $request['city'];
-        $location->website = $request['website'];
-        $location->parking = $request['parking'];
-        $location->barrierFree = $request['barrierFree'];
-        $location->description = $request['description'];
+        $validated = $validator->validated();
+
+        $location->name = $validated['name'];
+        $location->streetAndNumber = $validated['streetAndNumber'];
+        $location->city = $validated['city'];
+        $location->website = $validated['website'];
+        $location->parking = $validated['parking'];
+        $location->barrierFree = $validated['barrierFree'];
+        $location->description = $validated['description'];
         $location->save();
 
         return $location;

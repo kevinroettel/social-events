@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Location;
 use App\Http\Controllers\ArtistController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ class EventController extends Controller
             foreach ($event->watchlists as $index => $watchlist) {
                 $event->watchlists[$index] = $watchlist->only(['user_id', 'status']);
             }
+
+            $event->location = Location::find($event->location_id);
         }
 
         return $events;
@@ -29,10 +32,6 @@ class EventController extends Controller
 
     public function createEvent(Request $request) {
         $request['artists'] = json_decode($request['artists']);
-        
-        // @TODO
-        // find good method for json decode everything
-        // cause null is getting parsed as a string fml
 
         $request = $request->validate([
             'name' => 'required|string',
@@ -44,7 +43,6 @@ class EventController extends Controller
             'ticketLink' => 'nullable|string',
             'location' => 'required|integer|min:1',
             'artists' => 'required|array|min:1',
-            // 'artists.*' => 'integer|min:1'
         ]);
 
         $name = null;
@@ -66,16 +64,17 @@ class EventController extends Controller
             'location_id' => $request['location']
         ]);
 
+        // User kann hierdurch eine Quick-Create Möglichkeit nutzen um schneller einen neuen Künstler anzulegen
         foreach ($request['artists'] as $artist) {
             if (is_numeric($artist)) {
                 $event->artists()->attach($artist);
             } else {
-                $newArtist = ArtistController::createArtistFromNewEvent($artist);
+                $newArtist = ArtistController::createArtist($artist);
                 $event->artists()->attach($newArtist->id);
             }
         }
 
-        return $event;
+        return Event::where('id', $event->id)->with(['artists'])->first();
     }
 
     public function updateEvent(Request $request, $eventId) {

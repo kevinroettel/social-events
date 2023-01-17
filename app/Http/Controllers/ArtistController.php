@@ -5,29 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Artist;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ArtistController extends Controller
 {
     public function getArtists() {
-        return Artist::all();
+        return Artist::with('tags')->get();
     }
 
-    public function createArtist(Request $request) {
-        $request = $request->validate([
-            'name' => 'required|string',
-            'website' => 'nullable|string'
-        ]);
+    /**
+     * @TODO
+     * Überprüfen ob der Name bereits vorhanden ist
+     * Überprüfen ob ein Vertipper in dem Namen ist und der Künstler eigentlich schon existiert
+     */
+    public static function createArtist($name) {
+        $validator = Validator::make(
+            ['name' => $name], 
+            ['name' => 'required|string']
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $validated = $validator->validated();
 
         $artist = Artist::create([
-            'name' => $request['name'],
-            'website' => $request['website']
+            'name' => $validated['name']
         ]);
 
-        return $artist;
-    }
-
-    public static function createArtistFromNewEvent($artistName) {
-        $artist = Artist::create(['name' => $artistName]);
         return $artist;
     }
 
@@ -37,24 +43,22 @@ class ArtistController extends Controller
         if (empty($artist)) return false;
 
         $request = $request->validate([
-            'name' => 'required|string',
-            'website' => 'nullable|string'
+            'name' => 'required|string'
         ]);
 
         $artist->name = $request['name'];
-        $artist->website = $request['website'];
         $artist->save();
 
         return $artist;
     }
 
     public function addTagToArtist($artistId, $tagId) {
-        $artist = Artist::find($artistId)->first();
+        $artist = Artist::find($artistId);
         $artist->tags()->attach($tagId);
     }
 
     public function removeTagFromArtist($artistId, $tagId) {
-        $artist = Artist::find($artistId)->first();
+        $artist = Artist::find($artistId);
         $artist->tags()->detach($tagId);
     }
 }

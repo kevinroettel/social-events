@@ -43,6 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Die ganze Freundes-Relations sind etwas komplizierter.
+     * Da doppelte Einträge keinen Sinn machen, müssen hier Datensätze aus verschiedenen Abfragen zusammengefügt werden.
+     * Zudem ist alles recht kleinschrittig aufgeteilt, damit man im nachhinein noch zusätzliche Freundesfunktionalitäten hinzufügen kann.
+     */
+
     public function friendsTo() {
         return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')
             ->withPivot('accepted')
@@ -77,9 +88,5 @@ class User extends Authenticatable
             ->transform(function ($friend, $key) use ($userAttributes) {
                 return $friend->only($userAttributes);
             });
-    }
-
-    public function posts() {
-        return $this->hasMany(Post::class);
     }
 }

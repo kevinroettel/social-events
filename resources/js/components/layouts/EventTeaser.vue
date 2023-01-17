@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="card-text-headline">{{ event.name }}</div>
                 <p class="card-text">{{ getFormattedDate(event.date) }}</p>
-                <p v-if="location != null" class="card-text">{{ location.name }}, {{ location.city }}</p>
+                <p class="card-text">{{ event.location.name }}, {{ event.location.city }}</p>
             </div>
         </div>
         <div class="card-footer">
@@ -21,11 +21,9 @@
 <script setup>
 import EventStatusButtons from './EventStatusButtons.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
-import { inject, onMounted, ref } from '@vue/runtime-core';
-import { useLocationStore } from '../../stores/LocationStore.js';
+import { inject, onMounted, ref, watch } from '@vue/runtime-core';
 import { useUserStore } from '../../stores/UserStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
-const locationsStore = useLocationStore();
 const userStore = useUserStore();
 const eventStore = useEventStore();
 
@@ -42,6 +40,12 @@ const props = defineProps({
         required: false,
         type: String,
         default: null
+    },
+
+    carouselIndex: {
+        required: false,
+        type: Number,
+        default: null
     }
 });
 
@@ -49,13 +53,7 @@ const emit = defineEmits([
     'show-event-page'
 ]);
 
-const location = ref(null)
-
 const showEventPage = () => {
     emit('show-event-page', props.event.id);
 }
-
-onMounted(() => {
-    location.value = locationsStore.getLocationById(props.event.location_id);
-})
 </script>
