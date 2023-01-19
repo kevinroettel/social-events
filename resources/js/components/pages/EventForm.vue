@@ -1,5 +1,9 @@
 <template>
     <div>
+        <LocationFormModal 
+            @location-saved="selectCreated($event)"
+        />
+
         <div class="row">
             <div class="col">
                 <h3>Neues Event</h3>
@@ -57,6 +61,10 @@
                     ></v-select>
                 </div>
 
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new-location-modal">
+                    Neue Venue erstellen
+                </button>
+
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
                 <div class="input-group mb-3">
@@ -94,6 +102,7 @@
 <script setup>
 import { inject, onMounted, reactive, ref } from "vue";
 import EventPreview from '../layouts/EventPreview.vue';
+import LocationFormModal from './LocationFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 
@@ -174,6 +183,10 @@ const saveEvent = () => {
 
 const errorClass = (input) => {
     return hasError[input] ? 'is-invalid' : '';
+}
+
+const selectCreated = (location) => {
+    newEvent.location = location
 }
 
 </script>

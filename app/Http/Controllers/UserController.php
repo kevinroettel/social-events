@@ -24,7 +24,9 @@ class UserController extends Controller
         $rules = [
             'username' => 'required|unique:users|string',
             'email' => 'required|unique:users|email',
-            'password' => 'required|confirmed|string|min:6'
+            'password' => 'required|confirmed|string|min:6',
+            'address' => 'nullable|string',
+            'city' => 'nullable|string'
         ];
 
         if ($password == "null") unset($rules['password']);
@@ -88,6 +90,8 @@ class UserController extends Controller
         $user = Auth::user();
         $user->username = $validated['username'];
         $user->email = $validated['email'];
+        $user->address = $validated['address'];
+        $user->city = $validated['city'];
         
         if ($pictureIsString) {
             $user->profile_picture = $validated['profile_picture'];

@@ -7,6 +7,8 @@ export const useUserStore = defineStore('user', {
             username: null,
             email: null,
             profile_picture: null,
+            address: null,
+            city: null,
         },
 
         friends: [],
@@ -20,6 +22,8 @@ export const useUserStore = defineStore('user', {
         getUserId(state) { return state.user.id },
         getUserName(state) { return state.user.username },
         getUserEmail(state) { return state.user.email },
+        getUserAddress(state) { return state.user.address },
+        getUserCity(state) { return state.user.city },
         getUserPicture(state) { return state.user.profile_picture },
         
         getFriends(state) { return state.friends },
@@ -32,6 +36,8 @@ export const useUserStore = defineStore('user', {
             this.user.username = data.username;
             this.user.email = data.email;
             this.user.profile_picture = data.profile_picture;
+            this.user.address = data.address;
+            this.user.city = data.city;
         },
 
         initializeFriends(data) {

@@ -33,12 +33,22 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="email-input-label">E-Mail</span>
-                        <input type="text" :class="`form-control ${errorClass('email')}`" aria-label="E-Mail" aria-describedby="email-input-label" v-model="userData.email"  @change="changeDetected = true">
+                        <input type="text" :class="`form-control ${errorClass('email')}`" aria-label="E-Mail" aria-describedby="email-input-label" v-model="userData.email" @change="changeDetected = true">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="picture-input-label">Profilbild</span>
                         <input type="file" class="form-control" aria-label="Profilbild" aria-describedby="picture-input-label" @change="handleFile($event)">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="address-input-label">Adresse</span>
+                        <input type="text" class="form-control" aria-label="Adresse" aria-describedby="address-input-label" v-model="userData.address" @change="changeDetected = true">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="city-input-label">Stadt/Ort</span>
+                        <input type="text" class="form-control" aria-label="Stadt/Ort" aria-describedby="city-input-label" v-model="userData.city" @change="changeDetected = true">
                     </div>
 
                     <div class="input-group mb-3">
@@ -81,6 +91,8 @@ const userData = reactive({
     username: null,
     email: null,
     profile_picture: null,
+    address: null,
+    city: null,
     password: null,
     password_confirmation: null
 });
@@ -125,6 +137,8 @@ const saveUser = () => {
     formData.append('profile_picture', userData.profile_picture);
     formData.append('username', userData.username);
     formData.append('email', userData.email);
+    formData.append('address', userData.address);
+    formData.append('city', userData.city);
     formData.append('password', userData.password);
     formData.append('password_confirmation', userData.password_confirmation);
 
@@ -151,6 +165,8 @@ onMounted(() => {
     userData.id = userStore.getUserId;
     userData.username = userStore.getUserName;
     userData.email = userStore.getUserEmail;
+    userData.address = userStore.getUserAddress;
+    userData.city = userStore.getUserCity;
     userData.profile_picture = userStore.getUserPicture;
 })
 </script>

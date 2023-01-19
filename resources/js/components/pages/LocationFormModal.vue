@@ -104,7 +104,7 @@
 import { inject, reactive, ref } from "vue";
 import { Modal } from 'bootstrap';
 import { useLocationStore } from '../../stores/LocationStore.js';
-const store = useLocationStore();
+const locationStore = useLocationStore();
 
 const axios = inject('axios');
 
@@ -164,8 +164,8 @@ const saveLocation = () => {
         '/locations', 
         newLocation
     ).then((response) => {
-        store.addNewLocation(response.data);
-        emit('location-saved');
+        locationStore.addNewLocation(response.data);
+        emit('location-saved', response.data);;
         Modal.getInstance(modal.value).hide();
         resetForm();
     }).catch((error) =>  {

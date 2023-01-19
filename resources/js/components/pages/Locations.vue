@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3>Locations</h3>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new-location-modal">New Location</button>
+        <button type="button" class="btn btn-primary" >New Location</button>
 
         <table class="table table-striped">
             <thead>

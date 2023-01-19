@@ -28,10 +28,6 @@
                 :artistId="showArtist"
             />
 
-            <Locations
-                v-else-if="currentPage == 'locations'"
-            />
-
             <Friends
                 v-else-if="currentPage == 'friends'"
             />
@@ -53,7 +49,6 @@ import Dashboard from './pages/Dashboard.vue';
 import EventForm from './pages/EventForm.vue';
 import Event from './pages/Event.vue';
 import Artist from './pages/Artist.vue';
-import Locations from './pages/Locations.vue';
 import Friends from './pages/Friends.vue';
 import Account from './pages/Account.vue';
 

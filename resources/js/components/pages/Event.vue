@@ -15,6 +15,7 @@
                         <span v-if="event.doors">Einlass: {{ event.doors }}</span><br>
                         <span>Beginn: {{ event.begin }}</span><br>
                         <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}</span><br>
+                        <span>{{ getDistance() }}</span><br>
                         <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a></span><br><hr>
                     </div>
                     <div class="col">
@@ -69,6 +70,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from '@vue/runtime-core';
+import * as geo from '../helpers/geoCoding.js';
 import ImageModal from '../layouts/ImageModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import CreatePost from '../layouts/CreatePost.vue';
@@ -77,9 +79,11 @@ import { getFormattedDate } from '../helpers/dateFormat.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
+import { useUserStore } from '../../stores/UserStore.js';
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
 const artistStore = useArtistStore();
+const userStore = useUserStore();
 
 const props = defineProps({
     eventId: {
@@ -151,6 +155,13 @@ const getWatchlistEntriesCount = () => {
 
 const showArtistPage = (artistId) => {
     emit('show-artist-page', artistId);
+}
+
+const getDistance = () => {
+    let origin = geo.getCoordinatesOfAddress(userStore.getUserAddress, userStore.getUserCity);
+    let destination = geo.getCoordinatesOfPlace(event.value.location.name, event.value.location.city);
+    let distance = geo.getDistanceBetweenTwoPoints(origin, destination);
+    return distance
 }
 
 onMounted(() => {
