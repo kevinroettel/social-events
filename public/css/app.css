@@ -11358,3 +11358,8 @@ body .spinner-middle {
   width: 100px;
   height: 100px;
 }
+body .small-info-button {
+  background-color: lightgrey;
+  width: 24px;
+  border-radius: 5px;
+}

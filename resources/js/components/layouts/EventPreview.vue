@@ -2,23 +2,31 @@
     <div class="card">
         <div class="flyer-overflow">
             <img 
-                v-if="flyer != null"
-                :src="flyer" 
+                :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" 
                 class="card-img-top"
             >
         </div>
         <div class="card-body">
-            <h3>{{ event.name }}</h3>
+            <h3 class="text-center">{{ event.name }}</h3>
             
             <div class="row">
-                <span v-if="event.date">{{ getFormattedDate(event.date) }}</span>
-                <span v-if="event.doors">Einlass: {{ event.doors }}</span>
-                <span v-if="event.begin">Beginn: {{ event.begin }}</span>
+                <div class="col">
+                    <span v-if="event.date">{{ getFormattedDate(event.date) }}<br></span>
+                    <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
+                    <span v-if="event.begin">Beginn: {{ event.begin }}<br></span>
+                    <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}<br></span>
+                    <span v-if="event.ticketLink != null"><a target="_blank">Tickets</a><br></span>
+                    <hr>
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="button">Interessiert</button>
+                    <button class="btn btn-primary ml-1" type="button">Zusagen</button>
+
+                    <br><span>0 Personen sind interessiert.</span><br>
+                    <span>0 Personen nehmen teil.</span><br><hr>
+                </div>
             </div>
 
-            <p v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}</p>
-            
-            <p v-if="event.name != null">Name1 und zwei weitere Freunde sind an der Veranstaltung interessiert.</p>
             <div class="row">
                 <div class="col pre-wrap">{{ event.description }}</div>
                 <div class="col">

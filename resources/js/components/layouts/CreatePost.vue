@@ -6,7 +6,7 @@
             class="btn btn-primary"
             @click="showPostForm = true"
         >
-            {{ answerTo == null ? "Eignen Beitrag erstellen" : "Kommentar hinzufügen"}}
+            {{ answerTo == null ? "Eigenen Beitrag erstellen" : "Kommentar hinzufügen"}}
         </button>
 
         <div v-else-if="showPostForm">

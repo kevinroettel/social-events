@@ -16,8 +16,8 @@
                 <div class="row event-list-name">
                     {{ event.name }}
                 </div>
+                    <!-- :href="getLocationMapsLink(event.location.name, event.location.city)" -->
                 <a 
-                    :href="getLocationMapsLink(event.location.name, event.location.city)"
                     target="_blank"
                     class="row event-list-location"
                 >
@@ -30,10 +30,8 @@
     </div>
 </template>
 <script setup>
-
 import { onMounted } from '@vue/runtime-core';
-import { getLocationMapsLink } from '../helpers/locationMapsLink.js';
-
+// import { getLocationMapsLink } from '../helpers/locationMapsLink.js';
 
 const props = defineProps({
     events: {

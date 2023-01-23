@@ -137,8 +137,8 @@ const saveUser = () => {
     formData.append('profile_picture', userData.profile_picture);
     formData.append('username', userData.username);
     formData.append('email', userData.email);
-    formData.append('address', userData.address);
-    formData.append('city', userData.city);
+    if (userData.address != null) formData.append('address', userData.address);
+    if (userData.address != null) formData.append('city', userData.city);
     formData.append('password', userData.password);
     formData.append('password_confirmation', userData.password_confirmation);
 

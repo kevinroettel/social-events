@@ -16,10 +16,12 @@
                 v-else-if="currentPage == 'event'"
                 :eventId="showEvent"
                 @show-artist-page="showArtistPage($event)"
+                @show-event-update="showEventUpdatePage($event)"
             />
 
             <EventForm
                 v-else-if="currentPage == 'eventform'"
+                :eventToUpdate="eventToUpdate"
                 @event-created="addEvent($event)"
             />
 
@@ -76,6 +78,8 @@ const currentPage = ref("home");
 const showEvent = ref(null);
 const showArtist = ref(null);
 
+const eventToUpdate = ref(null);
+
 const dataDone = reactive({
     events: false,
     watchlist: false,
@@ -97,6 +101,11 @@ const showEventPage = (eventId) => {
 const showArtistPage = (artistId) => {
     currentPage.value = "artist";
     showArtist.value = artistId;
+}
+
+const showEventUpdatePage = (eventId) => {
+    currentPage.value = "eventform";
+    eventToUpdate.value = eventId;
 }
 
 const dataLoaded = computed(() => {

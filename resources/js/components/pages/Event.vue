@@ -1,6 +1,7 @@
 <template>
     <div v-if="event != null">
         <ImageModal :image="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" :name="event.name + '-flyer'" />
+        <DistanceInfoModal />
 
         <div class="card w-50 mx-auto">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
@@ -11,12 +12,13 @@
 
                 <div class="row">
                     <div class="col">
-                        <span>{{ getFormattedDate(event.date) }}</span><br>
-                        <span v-if="event.doors">Einlass: {{ event.doors }}</span><br>
-                        <span>Beginn: {{ event.begin }}</span><br>
-                        <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}</span><br>
-                        <span>{{ getDistance() }}</span><br>
-                        <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a></span><br><hr>
+                        <span>{{ getFormattedDate(event.date) }}<br></span>
+                        <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
+                        <span>Beginn: {{ event.begin }}<br></span>
+                        <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}<br></span>
+                        <span v-if="distance != null">~ {{ distance }}km <button type="button" class="small-info-button" data-bs-toggle="modal" data-bs-target="#distance-info-modal">?</button><br></span>
+                        <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a><br></span>
+                        <hr>
                     </div>
                     <div class="col">
                         <EventStatusButtons
@@ -33,7 +35,6 @@
                 <div class="row">
                     <div class="col pre-wrap">{{ event.description }}</div>
                     <div class="col">
-                        Artists
                         <p v-if="event.artists.length != 0">Line-up:</p>
                         <ul>
                             <li 
@@ -49,6 +50,16 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div class="row">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="openEventUpdateForm()"
+                    >
+                        Details ändern
+                    </button>
                 </div>
 
                 <hr>
@@ -70,8 +81,9 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from '@vue/runtime-core';
-import * as geo from '../helpers/geoCoding.js';
+import { calculateRouteDistance } from '../helpers/geoCoding.js';
 import ImageModal from '../layouts/ImageModal.vue';
+import DistanceInfoModal from '../layouts/DistanceInfoModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import CreatePost from '../layouts/CreatePost.vue';
 import Posts from '../layouts/Posts.vue';
@@ -94,7 +106,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-    'show-artist-page'
+    'show-artist-page',
+    'show-event-update'
 ]);
 
 const event = ref(null);
@@ -103,6 +116,7 @@ const watchlistStatus = ref(null);
 const showFullImage = ref(false);
 const interestedCount = ref(0);
 const attendingCount = ref(0);
+const distance = ref(null);
 
 const getEventData = () =>  {
     let eventFromStore = eventStore.getEventById(props.eventId);
@@ -157,15 +171,26 @@ const showArtistPage = (artistId) => {
     emit('show-artist-page', artistId);
 }
 
+const openEventUpdateForm = () => {
+    emit('show-event-update', props.eventId);
+}
+
 const getDistance = () => {
-    let origin = geo.getCoordinatesOfAddress(userStore.getUserAddress, userStore.getUserCity);
-    let destination = geo.getCoordinatesOfPlace(event.value.location.name, event.value.location.city);
-    let distance = geo.getDistanceBetweenTwoPoints(origin, destination);
-    return distance
+    if (userStore.getUserCity != null) {
+        calculateRouteDistance(
+            userStore.getUserAddress, 
+            userStore.getUserCity, 
+            event.value.location.name, 
+            event.value.location.city
+        ).then((response) => {
+            distance.value = response
+        })
+    }
 }
 
 onMounted(() => {
     if (props.eventId != null) getEventData();
     getWatchlistEntriesCount();
+    getDistance();
 })
 </script>
