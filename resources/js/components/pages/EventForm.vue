@@ -8,6 +8,7 @@
             <div class="col">
                 <h3 v-if="isUpdate">Eventbearbeitung</h3>
                 <h3 v-else>Neues Event</h3>
+                
                 <!-- name -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="name-input-label">Name *</span>

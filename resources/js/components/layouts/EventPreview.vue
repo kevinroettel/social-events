@@ -2,7 +2,14 @@
     <div class="card">
         <div class="flyer-overflow">
             <img 
-                :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" 
+                v-if="flyer != null"
+                :src="flyer"
+                class="card-img-top"
+            >
+
+            <img 
+                v-else
+                :src="'/storage/fallback-flyer.jpg'"
                 class="card-img-top"
             >
         </div>
