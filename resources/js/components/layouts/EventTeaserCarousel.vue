@@ -1,9 +1,10 @@
 <template>
     <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="(event, index) in eventStore.getAllEvents" :key="index">
+        <Slide v-for="(event, index) in events" :key="index">
             <div class="carousel__item">
                 <EventTeaser 
-                    :event="event"
+                    :status="(event.status != undefined ? event.status : null)"
+                    :event="(event.event != undefined ? event.event : event)"
                     @show-event-page="showEventPage($event)"
                 />
             </div>
@@ -20,6 +21,14 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import EventTeaser from '../layouts/EventTeaser.vue';
 import { useEventStore } from '../../stores/EventStore.js';
 const eventStore = useEventStore();
+
+const props = defineProps({
+    events: {
+        required: true,
+        type: Array,
+        default: []
+    }
+});
 
 const settings = reactive({
     itemsToShow: 1,

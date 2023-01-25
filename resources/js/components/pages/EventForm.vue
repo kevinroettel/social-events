@@ -69,7 +69,7 @@
 
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
-                <div class="input-group mb-3">
+                <div v-if="eventToUpdate == null" class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
                         multiple
@@ -90,6 +90,10 @@
                 <button type="button" class="btn btn-primary" @click="checkInputs()">
                     <span v-if="isUpdate">Event aktualisieren</span>
                     <span v-else>Event Speichern</span>
+                </button>
+
+                <button v-if="isUpdate" type="button" class="btn btn-primary ml-2" @click="discardUpdate()">
+                    Bearbeitung abbrechen
                 </button>
             </div>
             <div class="col">
@@ -125,7 +129,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-    'event-created'
+    'event-created',
+    'discard-update'
 ]);
 
 const isUpdate = ref(false);
@@ -183,10 +188,37 @@ const checkInputs = () => {
         } else hasError[key] = false;
     }
 
-    if (allInputsOkay) saveEvent();
+    if (allInputsOkay) {
+        if (props.eventToUpdate == null) createEvent();
+        else updateEvent();
+    }
+    
 }
 
-const saveEvent = () => {
+const createEvent = () => {
+    axios.post(
+        '/events',
+        getFormData()
+    ).then((response) => {
+        emit('event-created', response.data);
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
+const updateEvent = () => {
+    axios.post(
+        `/events/${props.eventToUpdate}`,
+        getFormData()
+    ).then((response) => {
+        console.log(response.data)
+        emit('event-updated', response.data);
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
+const getFormData = () => {
     let formData = new FormData();
     formData.append('name', event.name);
     if (event.description != null) formData.append('description', event.description);
@@ -197,16 +229,7 @@ const saveEvent = () => {
     if (event.ticketLink != null) formData.append('ticketLink', event.ticketLink);
     formData.append('location', event.location.id);
     formData.append('artists', JSON.stringify(event.artists.map(a => a.id != undefined ? a.id : a.name)));
-
-    axios.post(
-        '/events',
-        formData
-    ).then((response) => {
-        console.log(response.data)
-        emit('event-created', response.data);
-    }).catch((error) => {
-        console.log(error);
-    })
+    return formData;
 }
 
 const errorClass = (input) => {
@@ -215,6 +238,10 @@ const errorClass = (input) => {
 
 const selectCreated = (location) => {
     event.location = location
+}
+
+const discardUpdate = () => {
+    emit('discard-update');
 }
 
 onMounted(() => {

@@ -78,7 +78,7 @@ class EventController extends Controller
     }
 
     public function updateEvent(Request $request, $eventId) {
-        $event = Event::find($eventId)->first();
+        $event = Event::find($eventId);
 
         if (empty($event)) return false;
 
@@ -109,12 +109,12 @@ class EventController extends Controller
         }
 
         $event->name = $request['name'];
-        $event->description = $request['description'];
+        $event->description = (array_key_exists('description', $request) ? $request['description'] : null);
         $event->flyer = $request['flyer'];
         $event->date = $request['date'];
-        $event->doors = $request['doors'];
+        $event->doors = (array_key_exists('doors', $request) ? $request['doors'] : null);
         $event->begin = $request['begin'];
-        $event->ticketLink = $request['ticketLink'];
+        $event->ticketLink = (array_key_exists('ticketLink', $request) ? $request['ticketLink'] : null);
         $event->location_id = $request['location'];
         $event->save();
 

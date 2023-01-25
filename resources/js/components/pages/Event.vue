@@ -1,7 +1,12 @@
 <template>
     <div v-if="event != null">
         <ImageModal :image="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" :name="event.name + '-flyer'" />
+
         <DistanceInfoModal />
+
+        <LineUpModal
+            :lineup="event.artists"
+        />
 
         <div class="card w-50 mx-auto">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
@@ -53,13 +58,23 @@
                 </div>
 
                 <div class="row">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="openEventUpdateForm()"
-                    >
-                        Details ändern
-                    </button>
+                    <div class="col"></div>
+                    <div class="col">
+                        <button
+                            type="button"
+                            class="btn btn-secondary w-auto"
+                            @click="openEventUpdateForm()"
+                        >
+                            Details ändern
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-secondary w-auto ml-1"
+                            data-bs-toggle="modal" data-bs-target="#update-line-up-modal"
+                        >
+                            Line-up ändern
+                        </button>
+                    </div>
                 </div>
 
                 <hr>
@@ -84,6 +99,7 @@ import { onMounted, ref, watch } from '@vue/runtime-core';
 import { calculateRouteDistance } from '../helpers/geoCoding.js';
 import ImageModal from '../layouts/ImageModal.vue';
 import DistanceInfoModal from '../layouts/DistanceInfoModal.vue';
+import LineUpModal from '../layouts/LineUpModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import CreatePost from '../layouts/CreatePost.vue';
 import Posts from '../layouts/Posts.vue';
@@ -152,7 +168,9 @@ const getLocation = () => {
 
 const getArtists = () => {
     event.value.artists.forEach((artistId, index) => {
-        event.value.artists[index] = artistStore.getArtistById(artistId);
+        if (event.value.artists[index].name == undefined) {
+            event.value.artists[index] = artistStore.getArtistById(artistId);
+        }
     });
 }
 
@@ -189,8 +207,10 @@ const getDistance = () => {
 }
 
 onMounted(() => {
-    if (props.eventId != null) getEventData();
-    getWatchlistEntriesCount();
-    getDistance();
+    if (props.eventId != null) {
+        getEventData();
+        getWatchlistEntriesCount();
+        getDistance();
+    }
 })
 </script>

@@ -11270,6 +11270,7 @@ body .website-content .main-content .event-teaser-card {
   display: inline-block;
   background-color: white;
   transition: 0.5s;
+  width: 90%;
 }
 body .website-content .main-content .event-teaser-card:hover {
   background-color: lightgray;

@@ -1,5 +1,5 @@
 <template>
-    <div class="card event-teaser-card" style="width: 18rem;">
+    <div class="card event-teaser-card">
         <div @click="showEventPage()">
             <div class="small-flyer-overflow">
                 <img class="card-img-top" :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" alt="Card image cap">

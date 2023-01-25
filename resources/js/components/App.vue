@@ -23,6 +23,7 @@
                 v-else-if="currentPage == 'eventform'"
                 :eventToUpdate="eventToUpdate"
                 @event-created="addEvent($event)"
+                @discard-update="discardUpdate()"
             />
 
             <Artist
@@ -106,6 +107,12 @@ const showArtistPage = (artistId) => {
 const showEventUpdatePage = (eventId) => {
     currentPage.value = "eventform";
     eventToUpdate.value = eventId;
+}
+
+const discardUpdate = () => {
+    currentPage.value = "event";
+    showEvent.value = eventToUpdate.value;
+    eventToUpdate.value = null;
 }
 
 const dataLoaded = computed(() => {

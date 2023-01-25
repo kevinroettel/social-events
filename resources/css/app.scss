@@ -93,6 +93,7 @@ body {
                 display: inline-block;
                 background-color: white;
                 transition: .5s;
+                width: 90%;
 
                 &:hover {
                     background-color: lightgray;
@@ -175,9 +176,9 @@ body {
                 font-weight: bold;
             }
     
-            .event-list-year {
+            // .event-list-year {
     
-            }
+            // }
         }
     
         .event-list-details {
@@ -187,9 +188,9 @@ body {
                 font-size: 20px;
             }
     
-            .event-list-location {
+            // .event-list-location {
     
-            }
+            // }
         }
     }
 

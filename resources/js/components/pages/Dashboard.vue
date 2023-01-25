@@ -9,11 +9,9 @@
                     <p>Zurzeit befinden sich keine Einträge in deiner Watchlist. Füge welche hinzu!</p>
                 </div>
 
-                <EventTeaser 
-                    v-for="(entry, index) in eventStore.getWatchlist"
-                    :key="index"
-                    :status="entry.status"
-                    :event="entry.event"
+                <EventTeaserCarousel
+                    v-else
+                    :events="eventStore.getWatchlist"
                     @show-event-page="showEventPage($event)"
                 />
             </div>
@@ -25,6 +23,7 @@
             </div>
             <div class="card-body">
                 <EventTeaserCarousel 
+                    :events="eventStore.getAllEvents"
                     @show-event-page="showEventPage($event)"
                 />
             </div>
@@ -33,7 +32,6 @@
 </template>
 <script setup>
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
-import EventTeaser from '../layouts/EventTeaser.vue'
 import { useEventStore } from '../../stores/EventStore.js';
 const eventStore = useEventStore();
 
