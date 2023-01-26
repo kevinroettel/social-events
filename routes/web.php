@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/artists', [ArtistController::class, 'getArtists']);
-    Route::post('/artists', [ArtistController::class, 'createArtist']); // wird alleinstehend nicht genutzt. direkte artist erstellung durch Event-Erstellung
+    Route::post('/artists', [ArtistController::class, 'createArtist']);
     Route::post('/artists/{artistId}', [ArtistController::class, 'updateArtist']);
     Route::patch('/artists/{artistId}/tags/{tagId}', [ArtistController::class, 'addTagToArtist']);
     Route::delete('/artists/{artistId}/tags/{tagId}', [ArtistController::class, 'removeTagFromArtist']);
@@ -46,7 +46,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/events/{eventId}/posts', [PostController::class, 'createPost']);
     Route::patch('/events/{eventId}/artists/{artistId}', [EventController::class, 'addArtistToEvent']);
     Route::delete('/events/{eventId}/artists/{artistId}', [EventController::class, 'removeArtistFromEvent']);
-    
 
     Route::get('/locations', [LocationController::class, 'getLocations']);
     Route::post('/locations', [LocationController::class, 'createLocation']);
@@ -57,14 +56,16 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/users', [UserController::class, 'getUsers']);
     Route::post('/users/{userId}', [UserController::class, 'updateProfile']);
+    
     Route::get('/users/{userId}/friends', [UserController::class, 'getFriends']);
+    Route::patch('/users/{userId}/friends/{friendId}/request', [WatchlistController::class, 'sendFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/accept', [WatchlistController::class, 'acceptFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/deny', [WatchlistController::class, 'removeFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/remove', [WatchlistController::class, 'removeFriendRequest']);
+
     Route::get('/users/{userId}/friendrequests', [UserController::class, 'getFriendRequests']);
     Route::get('/users/{userId}/watchlists', [WatchlistController::class, 'getUserWatchlistEntries']);
     Route::get('/users/{userId}/watchlists/{eventId}', [WatchlistController::class, 'getInterestedFriends']);
     Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'updateEntryStatus']);
     
-    Route::patch('/users/{userId}/friends/{friendId}/request', [WatchlistController::class, 'sendFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/accept', [WatchlistController::class, 'acceptFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/deny', [WatchlistController::class, 'removeFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/remove', [WatchlistController::class, 'removeFriendRequest']);
 });

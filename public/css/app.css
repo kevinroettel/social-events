@@ -11340,6 +11340,10 @@ body .event-list-entry .event-list-details {
 body .event-list-entry .event-list-details .event-list-name {
   font-size: 20px;
 }
+body .carousel .carousel__viewport {
+  padding-right: 25px;
+  padding-left: 25px;
+}
 body .image-modal .modal-dialog {
   display: table;
 }

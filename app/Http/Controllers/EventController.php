@@ -69,7 +69,7 @@ class EventController extends Controller
             if (is_numeric($artist)) {
                 $event->artists()->attach($artist);
             } else {
-                $newArtist = ArtistController::createArtist($artist);
+                $newArtist = ArtistController::createArtistByName($artist);
                 $event->artists()->attach($newArtist->id);
             }
         }
@@ -122,12 +122,12 @@ class EventController extends Controller
     }
 
     public function addArtistToEvent($eventId, $artistId) {
-        $event = Event::find($eventId)->first();
+        $event = Event::find($eventId);
         $event->artists()->attach($artistId);
     }
 
     public function removeArtistFromEvent($eventId, $artistId) {
-        $event = Event::find($eventId)->first();
-        $event->artists()->dettach($artistId);
+        $event = Event::find($eventId);
+        $event->artists()->detach($artistId);
     }
 }

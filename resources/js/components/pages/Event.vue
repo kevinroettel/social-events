@@ -4,10 +4,6 @@
 
         <DistanceInfoModal />
 
-        <LineUpModal
-            :lineup="event.artists"
-        />
-
         <div class="card w-50 mx-auto">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
                 <img :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" class="card-img-top">
@@ -67,13 +63,6 @@
                         >
                             Details ändern
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-secondary w-auto ml-1"
-                            data-bs-toggle="modal" data-bs-target="#update-line-up-modal"
-                        >
-                            Line-up ändern
-                        </button>
                     </div>
                 </div>
 
@@ -99,7 +88,6 @@ import { onMounted, ref, watch } from '@vue/runtime-core';
 import { calculateRouteDistance } from '../helpers/geoCoding.js';
 import ImageModal from '../layouts/ImageModal.vue';
 import DistanceInfoModal from '../layouts/DistanceInfoModal.vue';
-import LineUpModal from '../layouts/LineUpModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import CreatePost from '../layouts/CreatePost.vue';
 import Posts from '../layouts/Posts.vue';

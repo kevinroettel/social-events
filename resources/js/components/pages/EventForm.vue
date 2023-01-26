@@ -4,6 +4,13 @@
             @location-saved="selectCreated($event)"
         />
 
+        <LineUpModal
+            :lineup="event.artists"
+            :eventId="eventToUpdate"
+            @added-artist="addArtist($event)"
+            @artist-removed="removeArtist($event)"
+        />
+
         <div class="row">
             <div class="col">
                 <h3 v-if="isUpdate">Eventbearbeitung</h3>
@@ -84,15 +91,26 @@
                         @option:created="showNotifcation = true"
                     ></v-select>
                 </div>
+                
+                <span v-else>
+                    <button
+                        type="button"
+                        class="btn btn-secondary w-auto ml-1"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#update-line-up-modal"
+                    >
+                        Line-up ändern
+                    </button>
+                </span>
 
                 <p>* Benötigte Eingaben</p>
 
                 <button type="button" class="btn btn-primary" @click="checkInputs()">
-                    <span v-if="isUpdate">Event aktualisieren</span>
+                    <span v-if="isUpdate">Bearbeitung speichern</span>
                     <span v-else>Event Speichern</span>
                 </button>
 
-                <button v-if="isUpdate" type="button" class="btn btn-primary ml-2" @click="discardUpdate()">
+                <button v-if="isUpdate" type="button" class="btn btn-secondary ml-2" @click="discardUpdate()">
                     Bearbeitung abbrechen
                 </button>
             </div>
@@ -108,6 +126,7 @@
 </template>
 <script setup>
 import { inject, onMounted, reactive, ref } from "vue";
+import LineUpModal from '../layouts/LineUpModal.vue';
 import EventPreview from '../layouts/EventPreview.vue';
 import LocationFormModal from './LocationFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
@@ -169,6 +188,14 @@ const getEventData = () => {
     event.ticketLink = eventData.ticketLink;
     event.location = eventData.location;
     event.artists = eventData.artists;
+}
+
+const addArtist = (artist) => {
+    event.artists.push(artist);
+}
+
+const removeArtist = (artistId) => {
+    event.artists = event.artists.filter(artist => artist.id !== artistId);
 }
 
 const handleFile = (input) => {

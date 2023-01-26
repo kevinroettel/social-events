@@ -4,55 +4,51 @@
             <div class="modal-content">
                 <div class="modal-header">Line-Up aktualisieren</div>
                 <div class="modal-body">
-                    <div v-for="(artist, index) in lineup" :key="index">
-                        {{ artist.name }}
-                        
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            @click="showConfirmation = true"
-                        >
-                            <FontAwesomeIcon icon="fa-solid fa-trash" />
-                        </button>
-
-                        <span v-if="showConfirmation">
-                            Sicher?
-
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                                @click="removeArtistFromLineUp(artist.id)"
-                            >
-                                <FontAwesomeIcon icon="fa-solid fa-check" />
-                            </button>
-
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                                @click="showConfirmation = false"
-                            >
-                                <FontAwesomeIcon icon="fa-solid fa-times" />
-                            </button>
-                        </span>
-
-                    </div>
+                    <LineUpArtist
+                        v-for="(artist, index) in lineup"
+                        :key="index"
+                        :artist="artist"
+                        :eventId="eventId"
+                        @artist-removed="artistRemoved($event)"
+                    />
 
                     <button
                         type="button"
-                        class="btn btn-secondary"
-                        @click="showArtistSelect()"
+                        class="btn btn-secondary mt-2"
+                        @click="showArtistSelection = true"
                     >
                         Neuen Künstler hinzufügen
                     </button>
 
-                    <!-- v select -->
-                    <!-- button for add -->
+                    <div v-if="showArtistSelection">
+                        <p v-if="showNotifcation">Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher sie den Namen korrekt geschrieben haben.</p>
+                        
+                        <v-select 
+                            taggable 
+                            class="form-control" 
+                            aria-label="Künstler" 
+                            aria-describedby="artist-select-label" 
+                            :options="artistStore.artists" 
+                            label="name" 
+                            v-model="newArtist"
+                            @option:created="showNotifcation = true"
+                        ></v-select>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="addArtistToLineUp()"
+                        >
+                            Hinzufügen
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
+import LineUpArtist from './LineUpArtist.vue';
 import { onMounted, ref } from "vue";
 import { useArtistStore } from "../../stores/ArtistStore";
 const artistStore = useArtistStore();
@@ -62,17 +58,50 @@ const props = defineProps({
         required: true,
         type: Array,
         default: []
+    },
+
+    eventId: {
+        required: true,
+        type: Number,
+        default: null
     }
 });
 
-const artists = ref(null);
-const showConfirmation = ref(false);
+const emit = defineEmits([
+    'artist-removed',
+    'added-artist'
+]);
 
-const getArtists = () => {
-    artists.value = artistStore.getArtists;
+const newArtist = ref(null);
+const showArtistSelection = ref(false);
+const showNotifcation = ref(false);
+
+const addArtistToLineUp = () => {
+    if (newArtist.value.id !== undefined) {
+        axios.patch(
+            `/events/${props.eventId}/artists/${newArtist.value.id}`
+        ).then((response) => {
+            emit('added-artist', newArtist.value);
+        }).catch((error) => {
+            console.log(error);
+        })
+    } else {
+        createArtist()
+    }
 }
 
-onMounted(() => {
-    getArtists();
-})
+const createArtist = () => {
+    axios.post(
+        '/artists',
+        newArtist.value
+    ).then((response) => {
+        newArtist.value = response.data;
+        addArtistToLineUp();
+    }).catch((error) => {
+        console.log(error);
+    })
+}
+
+const artistRemoved = (artistId) => emit('artist-removed', artistId);
+
 </script>

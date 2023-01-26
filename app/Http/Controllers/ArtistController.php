@@ -18,7 +18,7 @@ class ArtistController extends Controller
      * Überprüfen ob der Name bereits vorhanden ist
      * Überprüfen ob ein Vertipper in dem Namen ist und der Künstler eigentlich schon existiert
      */
-    public static function createArtist($name) {
+    public static function createArtistByName($name) {
         $validator = Validator::make(
             ['name' => $name], 
             ['name' => 'required|string']
@@ -34,6 +34,12 @@ class ArtistController extends Controller
             'name' => $validated['name']
         ]);
 
+        return $artist;
+    }
+
+    public function createArtist(Request $request) {
+        $request = $request->validate(['name' => 'required|string']);
+        $artist = Artist::create(['name' => $request['name']]);
         return $artist;
     }
 
