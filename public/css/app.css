@@ -11320,7 +11320,7 @@ body .small-profile-picture {
   height: 50px;
   border-radius: 50%;
 }
-body .event-line-up-artist-link {
+body .list-item-link {
   cursor: pointer;
   color: black;
   text-decoration: none;

@@ -22,6 +22,10 @@ export const useArtistStore = defineStore('artist', {
 
         getArtistById(id) {
             return this.artists.filter(a => a.id == id)[0];
+        },
+
+        getArtistsByString(string) {
+            return this.artists.filter(artist => artist.name.toLowerCase().includes(string.toLowerCase()));
         }
     },
 })

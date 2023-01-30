@@ -118,7 +118,7 @@ class EventController extends Controller
         $event->location_id = $request['location'];
         $event->save();
 
-        return $event;
+        return Event::where('id', $eventId)->with(['artists'])->first();
     }
 
     public function addArtistToEvent($eventId, $artistId) {

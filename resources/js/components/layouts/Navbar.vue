@@ -15,37 +15,51 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <div class="display-contents navbar-left">
-                        <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
-                        <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
-                        <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a>
+                    <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
+                    <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
+                    <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a>
+
+                    <div class="display-inline-flex">
+                        <input 
+                            class="form-control" 
+                            type="search" 
+                            placeholder="Search" 
+                            aria-label="Search"
+                            v-model="searchQuery"
+                            @keyup.enter="startSearch()"
+                        >
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary ml-1"
+                            @click="startSearch()"
+                        >
+                            Suchen
+                        </button>
                     </div>
 
-                    <div class="display-contents navbar-right d-flex">
-                        <a :class="`nav-link account-link ${props.currentPage == 'account' ? 'active' : ''}`" @click="changePage('account')">
-                            <FontAwesomeIcon class="navbar-profile-picture" v-if="userStore.getUserPicture == null" icon="fa-solid fa-circle-user" />
-                            <img class="navbar-profile-picture" v-else :src="'/storage' + userStore.getUserPicture">
+                    <div class="logout-link">
+                        <a 
+                            class="nav-link"
+                            @click="submitLogoutForm($event)"
+                        >
+                            Logout
                         </a>
 
-                        <div class="logout-link">
-                            <a 
-                                class="nav-link"
-                                @click="submitLogoutForm($event)"
-                            >
-                                Logout
-                            </a>
-
-                            <form 
-                                id="logout-form" 
-                                action="/logout"
-                                method="POST"
-                                style="display:none;"
-                            >
-                                <input type="hidden" name="_token" :value="csrf">
-                            </form>
-                        </div>
+                        <form 
+                            id="logout-form" 
+                            action="/logout"
+                            method="POST"
+                            style="display:none;"
+                        >
+                            <input type="hidden" name="_token" :value="csrf">
+                        </form>
                     </div>
 
+                    <a :class="`nav-link account-link ${props.currentPage == 'account' ? 'active' : ''}`" @click="changePage('account')">
+                        <FontAwesomeIcon class="navbar-profile-picture" v-if="userStore.getUserPicture == null" icon="fa-solid fa-circle-user" />
+                        <img class="navbar-profile-picture" v-else :src="'/storage' + userStore.getUserPicture">
+                    </a>
                 </div>
             </div>
         </div>
@@ -66,11 +80,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-    'page-change'
+    'page-change',
+    'search-query'
 ]);
 
 const currentPage = ref("home");
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const searchQuery = ref(null);
 
 const changePage = (newPage) => {
     emit('page-change', newPage);
@@ -79,6 +95,10 @@ const changePage = (newPage) => {
 const submitLogoutForm = (event) => {
     event.preventDefault();
     document.getElementById('logout-form').submit();
+}
+
+const startSearch = () => {
+    if (searchQuery.value != null && searchQuery.value != "") emit('search-query', searchQuery.value);
 }
 
 </script>

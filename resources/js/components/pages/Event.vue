@@ -44,7 +44,7 @@
                             >
                                 <a 
                                     @click="showArtistPage(artist.id)"
-                                    class="event-line-up-artist-link"
+                                    class="list-item-link"
                                 >
                                     {{ artist.name }}
                                 </a>
@@ -86,8 +86,8 @@
 <script setup>
 import { onMounted, ref, watch } from '@vue/runtime-core';
 import { calculateRouteDistance } from '../helpers/geoCoding.js';
-import ImageModal from '../layouts/ImageModal.vue';
-import DistanceInfoModal from '../layouts/DistanceInfoModal.vue';
+import ImageModal from '../modals/ImageModal.vue';
+import DistanceInfoModal from '../modals/DistanceInfoModal.vue';
 import EventStatusButtons from '../layouts/EventStatusButtons.vue';
 import CreatePost from '../layouts/CreatePost.vue';
 import Posts from '../layouts/Posts.vue';
@@ -124,7 +124,8 @@ const distance = ref(null);
 
 const getEventData = () =>  {
     let eventFromStore = eventStore.getEventById(props.eventId);
-    if (typeof eventFromStore.status !== "undefined") {
+
+    if (eventFromStore.hasOwnProperty('status')) {
         event.value = eventFromStore.event;
         watchlistStatus.value = eventFromStore.status;
     } else {

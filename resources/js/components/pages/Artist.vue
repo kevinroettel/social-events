@@ -38,13 +38,19 @@
                         v-if="show == 'upcoming'"
                         class="card-body"
                     >
-                        <EventList :events="upcomingEvents" />
+                        <EventList 
+                            :events="upcomingEvents" 
+                            @show-event-page="showEventPage($event)"
+                        />
                     </div>
                     <div 
                         v-else-if="show == 'past'"
                         class="card-body"
                     >
-                        <EventList :events="pastEvents" />
+                        <EventList 
+                            :events="pastEvents" 
+                            @show-event-page="showEventPage($event)"
+                        />
                     </div>
                 </div>
             </div>
@@ -73,6 +79,10 @@ const props = defineProps({
     }
 });
 
+const emit = defineEmits([
+    'show-event-page'
+]);
+
 const show = ref('upcoming');
 
 const artist = ref(null);
@@ -90,6 +100,8 @@ const getArtistData = () => {
 
     pastEvents.value = eventStore.getPastEventsWithArtist(props.artistId);
 }
+
+const showEventPage = (eventId) => emit('show-event-page', eventId);
 
 const addTagToArtist = (tag) => {
     axios.patch(

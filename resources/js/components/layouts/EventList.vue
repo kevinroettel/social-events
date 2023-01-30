@@ -13,7 +13,7 @@
             </div>
 
             <div class="col event-list-details">
-                <div class="row event-list-name">
+                <div class="row event-list-name" @click="showEventPage(event.id)">
                     {{ event.name }}
                 </div>
                     <!-- :href="getLocationMapsLink(event.location.name, event.location.city)" -->
@@ -40,6 +40,12 @@ const props = defineProps({
         default: null
     }
 });
+
+const emit = defineEmits([
+    'show-event-page'
+]);
+
+const showEventPage = (eventId) => emit('show-event-page', eventId);
 
 const getDate = (stringDate) => {
     let date = new Date(stringDate);

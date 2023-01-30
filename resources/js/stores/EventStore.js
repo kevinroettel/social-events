@@ -70,6 +70,28 @@ export const useEventStore = defineStore('events', {
             return event[0];
         },
 
+        updateEventData(eventData) {
+            this.events.forEach((event, index) => {
+                if (event.id == eventData.id) {
+                    let location = event.location;
+                    let watchlistEntries = event.watchlists;
+                    this.events[index] = eventData;
+                    this.events[index].location = location;
+                    this.events[index].watchlists = watchlistEntries;
+                }
+            });
+
+            this.watchlist.forEach((entry, index) => {
+                if (entry.event.id == eventData.id) {
+                    let location = entry.event.location;
+                    let watchlistEntries = entry.event.watchlists;
+                    this.watchlist[index].event = eventData
+                    this.watchlist[index].event.location = location;
+                    this.watchlist[index].event.watchlists = watchlistEntries;
+                }
+            })
+        },
+
         updateWatchlist(updatedEntry) {
             let isNewEntry = true;
             
@@ -114,7 +136,8 @@ export const useEventStore = defineStore('events', {
             
             this.watchlist.forEach(entry => {
                 entry.event.artists.forEach(artist => {
-                    if (artist.id == artistId) eventsWithArtist.push(entry.event)
+                    if ((Number.isInteger(artist) && artist == artistId) || artist.id == artistId) 
+                        eventsWithArtist.push(entry.event)
                 });
             });
 
@@ -124,5 +147,13 @@ export const useEventStore = defineStore('events', {
         getPastEventsWithArtist(artistId) {
             return this.oldEvents.filter(event => event.artists.includes(artistId));
         },
+
+        getEventsByString(string) {
+            let eventsWithString = this.events.filter(event => event.name.toLowerCase().includes(string.toLowerCase()));
+            let oldEventsWithString = this.oldEvents.filter(event => event.name.toLowerCase().includes(string.toLowerCase()));
+            let watchlistWithString = this.watchlist.filter(entry => entry.event.name.toLowerCase().includes(string.toLowerCase()));
+
+            return eventsWithString.concat(oldEventsWithString, watchlistWithString);
+        }
     }
 })

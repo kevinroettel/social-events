@@ -36,7 +36,7 @@
 </template>
 <script setup>
 import { inject, onMounted, ref } from 'vue';
-import LocationFormModal from './LocationFormModal.vue';
+import LocationFormModal from '../modals/LocationFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 
 const store = useLocationStore();

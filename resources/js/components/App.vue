@@ -3,6 +3,7 @@
         <Navbar
             :currentPage="currentPage"
             @page-change="changePage($event)"
+            @search-query="showSearchResults($event)"
         />
 
         <div class="main-content">
@@ -24,11 +25,21 @@
                 :eventToUpdate="eventToUpdate"
                 @event-created="addEvent($event)"
                 @discard-update="discardUpdate()"
+                @event-updated="eventUpdated($event)"
+            />
+
+            <SearchResults
+                v-else-if="currentPage == 'search'"
+                :searchQuery="searchQuery"
+                @show-artist-page="showArtistPage($event)"
+                @show-event-page="showEventPage($event)"
+                @show-location-page="showLocationPage($event)"
             />
 
             <Artist
                 v-else-if="currentPage == 'artist'"
                 :artistId="showArtist"
+                @show-event-page="showEventPage($event)"
             />
 
             <Friends
@@ -54,6 +65,7 @@ import Event from './pages/Event.vue';
 import Artist from './pages/Artist.vue';
 import Friends from './pages/Friends.vue';
 import Account from './pages/Account.vue';
+import SearchResults from './pages/SearchResults.vue';
 
 import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';
@@ -78,8 +90,11 @@ const currentPage = ref("home");
 
 const showEvent = ref(null);
 const showArtist = ref(null);
+const showLocation = ref(null);
 
 const eventToUpdate = ref(null);
+
+const searchQuery = ref(null);
 
 const dataDone = reactive({
     events: false,
@@ -104,14 +119,32 @@ const showArtistPage = (artistId) => {
     showArtist.value = artistId;
 }
 
+const showLocationPage = (locationId) => {
+    currentPage.value = "location";
+    showLocation.value = locationId;
+}
+
 const showEventUpdatePage = (eventId) => {
     currentPage.value = "eventform";
     eventToUpdate.value = eventId;
 }
 
+const showSearchResults = (query) => {
+    currentPage.value = "search";
+    searchQuery.value = query;
+}
+
 const discardUpdate = () => {
     currentPage.value = "event";
     showEvent.value = eventToUpdate.value;
+    eventToUpdate.value = null;
+}
+
+const eventUpdated = (event) => {
+    eventStore.updateEventData(event);
+    
+    currentPage.value = "event";
+    showEvent.value = event.id;
     eventToUpdate.value = null;
 }
 

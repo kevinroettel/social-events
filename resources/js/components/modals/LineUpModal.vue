@@ -2,7 +2,10 @@
     <div class="modal fade update-line-up-modal" id="update-line-up-modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">Line-Up aktualisieren</div>
+                <div class="modal-header">
+                    <h5 clas="modal-title">Line-Up aktualisieren</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                     <LineUpArtist
                         v-for="(artist, index) in lineup"
@@ -48,7 +51,7 @@
     </div>
 </template>
 <script setup>
-import LineUpArtist from './LineUpArtist.vue';
+import LineUpArtist from '../layouts/LineUpArtist.vue';
 import { onMounted, ref } from "vue";
 import { useArtistStore } from "../../stores/ArtistStore";
 const artistStore = useArtistStore();

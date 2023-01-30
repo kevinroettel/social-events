@@ -22,6 +22,10 @@ export const useLocationStore = defineStore('location', {
 
         getLocationById(id) {
             return this.locations.filter(l => l.id == id)[0];
+        },
+
+        getLocationsByString(string) {
+            return this.locations.filter(location => location.name.toLowerCase().includes(string.toLowerCase()));
         }
     },
 })

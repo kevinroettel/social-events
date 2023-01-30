@@ -5,6 +5,7 @@
         />
 
         <LineUpModal
+            v-if="isUpdate"
             :lineup="event.artists"
             :eventId="eventToUpdate"
             @added-artist="addArtist($event)"
@@ -126,9 +127,9 @@
 </template>
 <script setup>
 import { inject, onMounted, reactive, ref } from "vue";
-import LineUpModal from '../layouts/LineUpModal.vue';
+import LineUpModal from '../modals/LineUpModal.vue';
 import EventPreview from '../layouts/EventPreview.vue';
-import LocationFormModal from './LocationFormModal.vue';
+import LocationFormModal from '../modals/LocationFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
@@ -149,7 +150,8 @@ const props = defineProps({
 
 const emit = defineEmits([
     'event-created',
-    'discard-update'
+    'discard-update',
+    'event-updated'
 ]);
 
 const isUpdate = ref(false);
@@ -178,6 +180,7 @@ const hasError = reactive({
 
 const getEventData = () => {
     let eventData = eventStore.getEventById(props.eventToUpdate);
+    if (eventData.event != undefined) eventData = eventData.event;
     event.name = eventData.name;
     event.description = eventData.description;
     event.flyer = eventData.flyer;
@@ -273,8 +276,8 @@ const discardUpdate = () => {
 
 onMounted(() => {
     if (props.eventToUpdate != null) {
-        getEventData();
         isUpdate.value = true
+        getEventData();
     }
 })
 </script>
