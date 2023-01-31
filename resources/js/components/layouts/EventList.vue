@@ -16,29 +16,37 @@
                 <div class="row event-list-name" @click="showEventPage(event.id)">
                     {{ event.name }}
                 </div>
-                    <!-- :href="getLocationMapsLink(event.location.name, event.location.city)" -->
-                <a 
-                    target="_blank"
-                    class="row event-list-location"
-                >
+
+                <p v-if="parentModel == 'artist'" class="row event-list-location">
                     {{ event.location.name }}, {{ event.location.city }}
-                </a>
+                </p>
+
+                <p v-else-if="parentModel == 'location'" class="row event-list-line-up">
+                    Line-Up: {{ event.artists.map(artist => artist.name).join(", ") }}
+                </p>
             </div>
 
             <hr v-if="index + 1 != events.length">
         </div>
+
+        <p v-if="events.length == 0">Hierfür konnten wir keine Veranstaltungen finden.</p>
     </div>
 </template>
 <script setup>
 import { onMounted } from '@vue/runtime-core';
-// import { getLocationMapsLink } from '../helpers/locationMapsLink.js';
 
 const props = defineProps({
     events: {
         required: true,
         type: Object,
         default: null
-    }
+    },
+
+    parentModel: {
+        required: true,
+        type: String,
+        default: "artist"
+    },
 });
 
 const emit = defineEmits([

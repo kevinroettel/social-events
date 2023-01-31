@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <p>* Benötigt</p>
+                        <p>* Benötigt</p><br>
                         <p>** Eventuelle Erörterungen zu Parkplätzen und Barrierefreiheit.</p>
                     </div>
 

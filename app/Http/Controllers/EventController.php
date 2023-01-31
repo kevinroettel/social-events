@@ -74,7 +74,7 @@ class EventController extends Controller
             }
         }
 
-        return Event::where('id', $event->id)->with(['artists'])->first();
+        return Event::where('id', $event->id)->with(['artists', 'watchlists'])->first();
     }
 
     public function updateEvent(Request $request, $eventId) {

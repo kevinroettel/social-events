@@ -43,7 +43,7 @@
                             v-for="(artist, index) in event.artists"
                             :key="index"
                         >
-                            {{ artist.name }}
+                            {{ artist.name ?? artist }}
                         </li>
                     </ul>
                 </div>

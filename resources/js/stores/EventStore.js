@@ -154,6 +154,24 @@ export const useEventStore = defineStore('events', {
             let watchlistWithString = this.watchlist.filter(entry => entry.event.name.toLowerCase().includes(string.toLowerCase()));
 
             return eventsWithString.concat(oldEventsWithString, watchlistWithString);
+        },
+
+        getEventsInLocation(locationId) {
+            let eventsInLocation = [];
+
+            this.events.forEach(event => {
+                if (event.location_id == locationId) eventsInLocation.push(event);
+            });
+            
+            this.watchlist.forEach(entry => {
+                if (entry.event.location_id == locationId) eventsInLocation.push(entry.event);
+            });
+
+            return eventsInLocation;
+        },
+
+        getPastEventsInLocation(locationId) {
+            return this.oldEvents.filter(event => event.location_id == locationId);
         }
     }
 })

@@ -41,16 +41,21 @@
                     <input type="date" :class="`form-control ${errorClass('date')}`" aria-label="Datum" aria-describedby="date-input-label" v-model="event.date">
                 </div>
 
-                <!-- doors -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="doors-input-label">Einlass</span>
-                    <input type="time" :class="`form-control`" aria-label="Einlass" aria-describedby="doors-input-label" v-model="event.doors">
-                </div>
-
-                <!-- begin -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="begin-input-label">Beginn *</span>
-                    <input type="time" :class="`form-control ${errorClass('begin')}`" aria-label="Beginn" aria-describedby="begin-input-label" v-model="event.begin">
+                <div class="row">
+                    <div class="col">
+                        <!-- doors -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="doors-input-label">Einlass</span>
+                            <input type="time" :class="`form-control`" aria-label="Einlass" aria-describedby="doors-input-label" v-model="event.doors">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- begin -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="begin-input-label">Beginn *</span>
+                            <input type="time" :class="`form-control ${errorClass('begin')}`" aria-label="Beginn" aria-describedby="begin-input-label" v-model="event.begin">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="input-group mb-3">
@@ -68,12 +73,18 @@
                         :options="locationStore.locations" 
                         label="name" 
                         v-model="event.location"
-                    ></v-select>
+                    >
+                       <template v-slot:no-options="{ search, searching }">
+                            <template v-if="searching">
+                                <em>{{ search }}</em> konnte nicht gefunden werden. Vergewissere dich ob du den Namen richtig geschrieben hast. Ansonsten kannst du die Venue über den rechten Button erstellen.
+                            </template>
+                            <em v-else style="opacity: 0.5">Fange an zu Tippen um eine Venue zu finden.</em>
+                        </template>
+                    </v-select>
+                    <button type="button" class="btn btn-primary input-group-text" data-bs-toggle="modal" data-bs-target="#new-location-modal">
+                        Neue Venue erstellen
+                    </button>
                 </div>
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new-location-modal">
-                    Neue Venue erstellen
-                </button>
 
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
@@ -90,7 +101,11 @@
                         
                         v-model="event.artists"
                         @option:created="showNotifcation = true"
-                    ></v-select>
+                    >
+                        <template v-slot:no-options="search">
+                            <em style="opacity: 0.5">Hier die Künstler eingeben.</em>
+                        </template>
+                    </v-select>
                 </div>
                 
                 <span v-else>
@@ -258,7 +273,7 @@ const getFormData = () => {
     formData.append('begin', event.begin);
     if (event.ticketLink != null) formData.append('ticketLink', event.ticketLink);
     formData.append('location', event.location.id);
-    formData.append('artists', JSON.stringify(event.artists.map(a => a.id != undefined ? a.id : a.name)));
+    formData.append('artists', JSON.stringify(event.artists.map(a => a.id ?? (a.name ?? a))));
     return formData;
 }
 

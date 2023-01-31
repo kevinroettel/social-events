@@ -7,7 +7,6 @@
         />
 
         <div class="main-content">
-
             <Dashboard
                 v-if="currentPage == 'home'"
                 @show-event-page="showEventPage($event)"
@@ -42,6 +41,11 @@
                 @show-event-page="showEventPage($event)"
             />
 
+            <Location
+                v-else-if="currentPage == 'location'"
+                :showLocation="showLocation"
+            />
+
             <Friends
                 v-else-if="currentPage == 'friends'"
             />
@@ -66,6 +70,7 @@ import Artist from './pages/Artist.vue';
 import Friends from './pages/Friends.vue';
 import Account from './pages/Account.vue';
 import SearchResults from './pages/SearchResults.vue';
+import Location from './pages/Location.vue';
 
 import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';

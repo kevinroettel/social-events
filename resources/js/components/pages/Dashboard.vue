@@ -22,7 +22,12 @@
                 Vorschläge (erstmal Platzhalter, soll aber schonmal im Dashboard zu sehen sein)
             </div>
             <div class="card-body">
+                <div v-if="eventStore.getAllEvents.length == 0">
+                    <p>Zurzeit existieren keine aktuellen Events. Erstelle ein paar!</p>
+                </div>
+
                 <EventTeaserCarousel 
+                    v-else
                     :events="eventStore.getAllEvents"
                     @show-event-page="showEventPage($event)"
                 />
