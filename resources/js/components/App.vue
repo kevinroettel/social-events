@@ -44,6 +44,7 @@
             <Location
                 v-else-if="currentPage == 'location'"
                 :showLocation="showLocation"
+                @show-event-page="showEventPage($event)"
             />
 
             <Friends
@@ -151,6 +152,10 @@ const eventUpdated = (event) => {
     currentPage.value = "event";
     showEvent.value = event.id;
     eventToUpdate.value = null;
+}
+
+const searchDone = () => {
+
 }
 
 const dataLoaded = computed(() => {

@@ -42,7 +42,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
@@ -62,7 +62,7 @@ const props = defineProps({
 const emit = defineEmits([
     'show-artist-page',
     'show-event-page',
-    'show-location-page'
+    'show-location-page',
 ]);
 
 const searchDone = ref(false);
@@ -83,6 +83,13 @@ const search = () => {
 const showArtistPage = (artistId) => emit('show-artist-page', artistId);
 const showEventPage = (eventId) => emit('show-event-page', eventId);
 const showLocationPage = (locationId) => emit('show-location-page', locationId);
+
+watch(
+    () => props.searchQuery,
+    (newQuery, oldQuery) => {
+        if (newQuery != oldQuery) search();
+    }
+);
 
 onMounted(() => {
     search()

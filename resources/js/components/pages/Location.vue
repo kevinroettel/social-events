@@ -2,8 +2,20 @@
     <div v-if="location != null">
         <div class="card w-50 mx-auto">
             <div class="card-body">
-                <h3 class="text-center">{{ location.name }}</h3>
-                
+                <h3 class="text-center">{{ location.name }} ({{ location.city }})</h3>
+
+                <div class="row">
+                    <div class="col">
+                        <span v-if="location.streetAndNumber != null">{{ location.streetAndNumber }}<br></span>
+                        <span v-if="location.website != null"><a :href="location.website" target="_blank">{{ location.website }}</a><br></span>
+                        <span>{{ getParking() }}</span><br>
+                        <span>{{ getBarrierFree() }}</span><br>
+                    </div>
+                    <div class="col">
+                        <span>{{ location.description }}</span>
+                    </div>
+                </div>                
+
                 <hr>
 
                 <div class="card text-center">
@@ -101,6 +113,22 @@ const getLocation = () => {
             }
         })
     });
+}
+
+const getParking = () => {
+    switch (location.value.parking) {
+        case 'possible': return "Parkmöglichkeiten vorhanden"
+        case 'impossible': return "Keine Parkmöglichkeiten"
+        case 'unknown': return "Unbekannte Parksituation"
+    }
+}
+
+const getBarrierFree = () => {
+    switch (location.value.barrierFree) {
+        case 'possible': return "Venue ist Barrierefrei"
+        case 'impossible': return "Venue ist nicht Barrierefrei"
+        case 'unknown': return "Barrierefreiheit ist nicht bekannt"
+    }
 }
 
 const showEventPage = (eventId) => emit('show-event-page', eventId);

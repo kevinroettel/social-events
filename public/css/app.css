@@ -11330,6 +11330,13 @@ body .artist-tag {
   border-radius: 15px;
   padding: 10px;
 }
+body .event-list-entry {
+  cursor: pointer;
+}
+body .event-list-entry:hover {
+  background-color: lightgrey;
+  transition: 0.3s;
+}
 body .event-list-entry .event-list-date .event-list-day-month {
   font-size: 25px;
   font-weight: bold;

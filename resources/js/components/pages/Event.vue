@@ -9,18 +9,40 @@
                 <img :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" class="card-img-top">
             </div>
             <div class="card-body">
-                <h3 class="text-center">{{ event.name }}</h3>
+                <h3 class="text-center mb-3">{{ event.name }}</h3>
 
                 <div class="row">
                     <div class="col">
-                        <span>{{ getFormattedDate(event.date) }}<br></span>
-                        <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
-                        <span>Beginn: {{ event.begin }}<br></span>
-                        <span v-if="event.location != null">{{ event.location.name }} in {{ event.location.city }}<br></span>
-                        <span v-if="distance != null">~ {{ distance }}km <button type="button" class="small-info-button" data-bs-toggle="modal" data-bs-target="#distance-info-modal">?</button><br></span>
-                        <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a><br></span>
+                        <div class="row">
+                            <div class="col">
+                                <span>{{ getFormattedDate(event.date) }}<br></span>
+                                <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
+                                <span>Beginn: {{ event.begin }}<br></span>
+                            </div>
+                            <div class="col">
+                                <span v-if="event.location != null">
+                                    {{ event.location.name }} in {{ event.location.city }}
+                                    <br>
+                                </span>
+                                <span v-if="distance != null">
+                                    ~ {{ distance }}km 
+                                    <button 
+                                        type="button" 
+                                        class="small-info-button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#distance-info-modal"
+                                    >
+                                        ?
+                                    </button>
+                                    <br>
+                                </span>
+                                <span v-if="event.ticketLink != null"><a :href="event.ticketLink" target="_blank">Tickets</a><br></span>
+                            </div>
+                        </div>
                         <hr>
                     </div>
+
+                    <!-- </div> -->
                     <div class="col">
                         <EventStatusButtons
                             :event="event.id"
@@ -169,8 +191,10 @@ const toggleImage = () => {
 
 const getWatchlistEntriesCount = () => {
     event.value.watchlists.forEach((entry) => {
-        if (entry.status == 'interested') interestedCount.value++;
-        else if (entry.status == 'attending') attendingCount.value++;
+        if (entry.user_id != userStore.getUserId) {
+            if (entry.status == 'interested') interestedCount.value++;
+            else if (entry.status == 'attending') attendingCount.value++;
+        }
     });
 }
 
@@ -194,6 +218,17 @@ const getDistance = () => {
         })
     }
 }
+
+watch(
+    watchlistStatus,
+    (newStatus, oldStatus) => {
+        if (newStatus == 'interested') interestedCount.value++;
+        else if (newStatus == 'attending') attendingCount.value++;
+
+        if (oldStatus == 'interested') interestedCount.value--;
+        else if (oldStatus == 'attending') attendingCount.value--;
+    }
+);
 
 onMounted(() => {
     if (props.eventId != null) {

@@ -169,6 +169,13 @@ body {
     }
 
     .event-list-entry {
+        cursor: pointer;
+        
+        &:hover {
+            background-color: lightgrey;
+            transition: .3s;
+        }
+
         .event-list-date {
     
             .event-list-day-month {

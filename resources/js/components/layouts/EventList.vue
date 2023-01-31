@@ -4,7 +4,10 @@
             v-for="(event, index) in events"
             :key="index"
             class="row event-list-entry"
+            @click="showEventPage(event.id)"
         >
+            <hr v-if="index != 0">
+
             <div class="col-2 event-list-date">
                 <div class="row">
                     <div class="event-list-day-month">{{ getDate(event.date) }}</div>
@@ -13,7 +16,7 @@
             </div>
 
             <div class="col event-list-details">
-                <div class="row event-list-name" @click="showEventPage(event.id)">
+                <div class="row event-list-name">
                     {{ event.name }}
                 </div>
 
@@ -25,8 +28,6 @@
                     Line-Up: {{ event.artists.map(artist => artist.name).join(", ") }}
                 </p>
             </div>
-
-            <hr v-if="index + 1 != events.length">
         </div>
 
         <p v-if="events.length == 0">Hierfür konnten wir keine Veranstaltungen finden.</p>
