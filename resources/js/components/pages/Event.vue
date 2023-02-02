@@ -42,7 +42,6 @@
                         <hr>
                     </div>
 
-                    <!-- </div> -->
                     <div class="col">
                         <EventStatusButtons
                             :event="event.id"
@@ -118,6 +117,7 @@ import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useUserStore } from '../../stores/UserStore.js';
+import { toast } from '../helpers/toast.js';
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
 const artistStore = useArtistStore();
@@ -165,7 +165,7 @@ const getEventPosts = () => {
     ).then((response) => {
         posts.value = response.data;
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 

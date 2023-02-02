@@ -35,6 +35,7 @@
 <script setup>
 import { inject, onMounted, reactive, ref } from "vue";
 import { useUserStore } from '../../stores/UserStore.js';
+import { toast } from "../helpers/toast.js";
 const userStore = useUserStore();
 
 const axios = inject('axios');
@@ -78,7 +79,7 @@ const postContribution = () => {
     ).then((response) => {
         emit('created-post', response.data);
     }).catch((error) => {
-        console.error(error)
+        toast(error.message, 'error');
     })
 }
 

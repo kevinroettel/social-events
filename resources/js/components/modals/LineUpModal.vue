@@ -54,6 +54,7 @@
 import LineUpArtist from '../layouts/LineUpArtist.vue';
 import { onMounted, ref } from "vue";
 import { useArtistStore } from "../../stores/ArtistStore";
+import { toast } from '../helpers/toast';
 const artistStore = useArtistStore();
 
 const props = defineProps({
@@ -86,7 +87,7 @@ const addArtistToLineUp = () => {
         ).then((response) => {
             emit('added-artist', newArtist.value);
         }).catch((error) => {
-            console.log(error);
+            toast(error.message, 'error');
         })
     } else {
         createArtist()
@@ -101,7 +102,7 @@ const createArtist = () => {
         newArtist.value = response.data;
         addArtistToLineUp();
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 

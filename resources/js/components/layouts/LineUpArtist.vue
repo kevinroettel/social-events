@@ -34,6 +34,7 @@
 </template>
 <script setup>
 import { inject, ref } from "vue";
+import { toast } from "../helpers/toast";
 
 const axios = inject('axios');
 
@@ -63,7 +64,7 @@ const removeArtistFromLineUp = () => {
     ).then((response) => {
         emit('artist-removed', props.artist.id)
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 </script>

@@ -79,6 +79,7 @@
 <script setup>
 import { inject, onMounted, reactive, ref } from '@vue/runtime-core';
 import { useUserStore } from '../../stores/UserStore.js';
+import { toast } from '../helpers/toast.js';
 const userStore = useUserStore();
 const axios = inject('axios');
 
@@ -148,9 +149,9 @@ const saveUser = () => {
             'Content-Type': 'multipart/form-data; charset=utf-8;'
         }
     ).then((response) => {
-        console.log(response)
+        toast('Nutzerdaten erfolgreich aktualisiert.', 'success');
     }).catch((error) => {
-        console.warn(error)
+        toast(error.message, 'error');
     })
 }
 

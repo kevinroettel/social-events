@@ -39,6 +39,7 @@
 </template>
 <script setup>
 import { inject, onMounted, ref } from "vue";
+import { toast } from "../helpers/toast";
 
 const axios = inject('axios');
 
@@ -64,13 +65,11 @@ const getAllAvailableTags = () => {
     ).then((response) => {
         availableTags.value = response.data;
     }).catch((error) => {
-        console.warn(error);
+        toast(error.message, 'error');
     })
 }
 
 const addTagToArtist = () => {
-    console.log('addTagToArtist', newTag.value);
-
     if (newTag.value.hasOwnProperty('id')) {
         emit('tag-added', newTag.value);
         newTag.value = null;
@@ -80,8 +79,6 @@ const addTagToArtist = () => {
 }
 
 const createTag = () => {
-    console.log('createTag', newTag.value)
-
     axios.post(
         '/tags',
         newTag.value
@@ -89,7 +86,7 @@ const createTag = () => {
         emit('tag-added', response.data);
         newTag.value = null;
     }).catch((error) => {
-        console.warn(error);
+        toast(error.message, 'error');
     })
 }
 

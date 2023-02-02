@@ -47,6 +47,7 @@
 import { inject, onMounted } from "vue";
 import { useUserStore } from '../../stores/UserStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
+import { toast } from "../helpers/toast.js";
 
 const props = defineProps({
     event: {
@@ -79,7 +80,7 @@ const changeStatus = (status) => {
 
         emit('status-updated', status);
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 

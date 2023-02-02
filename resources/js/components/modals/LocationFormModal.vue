@@ -104,6 +104,7 @@
 import { inject, reactive, ref } from "vue";
 import { Modal } from 'bootstrap';
 import { useLocationStore } from '../../stores/LocationStore.js';
+import { toast } from "../helpers/toast.js";
 const locationStore = useLocationStore();
 
 const axios = inject('axios');
@@ -169,7 +170,7 @@ const saveLocation = () => {
         Modal.getInstance(modal.value).hide();
         resetForm();
     }).catch((error) =>  {
-        console.warn(error)
+        toast(error.message, 'error');
     })
 }
 

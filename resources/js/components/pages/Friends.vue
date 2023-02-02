@@ -56,6 +56,7 @@
 import UserBox from '../layouts/UserBox.vue';
 import { inject, onMounted, ref } from '@vue/runtime-core';
 import { useUserStore } from '../../stores/UserStore.js';
+import { toast } from '../helpers/toast';
 const userStore = useUserStore();
 
 const axios = inject('axios');
@@ -69,7 +70,7 @@ const getFriendRequests = () => {
     ).then((response) => {
         userStore.initializeRequests(response.data);
     }).catch((error) => {
-        console.log(error)
+        toast(error.message, 'error');
     })
 }
 

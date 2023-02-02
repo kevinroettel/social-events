@@ -150,6 +150,7 @@ import LocationFormModal from '../modals/LocationFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
+import { toast } from "../helpers/toast";
 
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
@@ -249,7 +250,7 @@ const createEvent = () => {
     ).then((response) => {
         emit('event-created', response.data);
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 
@@ -258,10 +259,9 @@ const updateEvent = () => {
         `/events/${props.eventToUpdate}`,
         getFormData()
     ).then((response) => {
-        console.log(response.data)
         emit('event-updated', response.data);
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 

@@ -66,6 +66,7 @@ import { ref, inject, onMounted } from 'vue';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
+import { toast } from '../helpers/toast';
 
 const artistStore = useArtistStore();
 const eventStore = useEventStore();
@@ -111,7 +112,7 @@ const addTagToArtist = (tag) => {
     ).then((response) => {
         artist.value.tags.push(tag);
     }).catch((error) => {
-        console.warn(error);
+        toast(error.message, 'error');
     })
 }
 
@@ -126,7 +127,7 @@ const removeTagFromArtist = (tagId) => {
             }
         });
     }).catch((error) => {
-        console.warn(error);
+        toast(error.message, 'error');
     })
 }
 
