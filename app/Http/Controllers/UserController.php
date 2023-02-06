@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use App\Http\Controllers\WatchlistController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -128,6 +130,13 @@ class UserController extends Controller
     }
 
     public function getFriends() {
-        return Auth::user()->friends(['id', 'username', 'profile_picture']);
+        $friends = Auth::user()->friends(['id', 'username', 'profile_picture']);
+        
+        $friends = $friends->map(function ($friend) {
+            $friend['watchlist'] = WatchlistController::getFriendWatchlistEntries($friend['id']);
+            return $friend;
+        });
+
+        return $friends;
     }
 }

@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function watchlists() {
+        return $this->hasMany(Watchlist::class);
+    }
+
     /**
      * Die ganze Freundes-Relations sind etwas komplizierter.
      * Da doppelte Einträge keinen Sinn machen, müssen hier Datensätze aus verschiedenen Abfragen zusammengefügt werden.

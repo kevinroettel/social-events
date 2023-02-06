@@ -33,4 +33,12 @@ class WatchlistController extends Controller
     public function getUserWatchlistEntries($userId) {
         return Watchlist::where('user_id', $userId)->get();
     }
+
+    public static function getFriendWatchlistEntries($friendId) {
+        return Watchlist::where('user_id', $friendId)
+            ->get()
+            ->transform(function ($entry) {
+                return $entry->only(['event_id', 'status']);
+            });;
+    }
 }

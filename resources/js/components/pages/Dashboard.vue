@@ -1,21 +1,12 @@
 <template v-cloak>
     <div>
-        <div class="card mb-3">
-            <div class="card-header">
-                Watchlist
-            </div>
-            <div class="card-body">
-                <div v-if="eventStore.isWatchlistEmpty">
-                    <p>Zurzeit befinden sich keine Einträge in deiner Watchlist. Füge welche hinzu!</p>
-                </div>
+        <Watchlist 
+            @show-event-page="showEventPage($event)"
+        />
 
-                <EventTeaserCarousel
-                    v-else
-                    :events="eventStore.getWatchlist"
-                    @show-event-page="showEventPage($event)"
-                />
-            </div>
-        </div>
+        <FriendWatchlists
+            @show-event-page="showEventPage($event)"
+        />
 
         <div class="card">
             <div class="card-header">
@@ -36,6 +27,8 @@
     </div>
 </template>
 <script setup>
+import Watchlist from '../recommender/Watchlist.vue';
+import FriendWatchlists from '../recommender/FriendWatchlists.vue'
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from '../../stores/EventStore.js';
 const eventStore = useEventStore();

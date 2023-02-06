@@ -28,6 +28,16 @@ export const useUserStore = defineStore('user', {
         
         getFriends(state) { return state.friends },
         getFriendRequests(state) { return state.requested },
+
+        getFriendWatchlistEntries(state) {
+            let entries = [];
+
+            state.friends.forEach(friend => {
+                entries.push(...friend.watchlist)
+            });
+
+            return entries;
+        }
     },
 
     actions: {
