@@ -81,7 +81,7 @@
                             <em v-else style="opacity: 0.5">Fange an zu Tippen um eine Venue zu finden.</em>
                         </template>
                     </v-select>
-                    <button type="button" class="btn btn-primary input-group-text" data-bs-toggle="modal" data-bs-target="#new-location-modal">
+                    <button type="button" class="btn btn-primary input-group-text" data-bs-toggle="modal" data-bs-target="#location-form-modal">
                         Neue Venue erstellen
                     </button>
                 </div>

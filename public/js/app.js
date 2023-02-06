@@ -24870,14 +24870,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'LocationFormModal',
-  emits: ['location-saved'],
+  props: {
+    locationToUpdate: {
+      required: false,
+      type: Object,
+      "default": null
+    }
+  },
+  emits: ['location-saved', 'location-updated'],
   setup: function setup(__props, _ref) {
     var expose = _ref.expose,
       emit = _ref.emit;
     expose();
+    var props = __props;
     var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_2__.useLocationStore)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
-    var newLocation = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+    var location = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       name: null,
       streetAndNumber: null,
       city: null,
@@ -24892,8 +24900,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     });
     var modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var resetForm = function resetForm() {
-      newLocation.name = null;
-      newLocation.streetAndNumber = null, newLocation.city = null, newLocation.website = null, newLocation.parking = "unknown", newLocation.barrierFree = "unknown", newLocation.description = null;
+      bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal.getInstance(modal.value).hide();
+      location.name = null;
+      location.streetAndNumber = null, location.city = null, location.website = null, location.parking = "unknown", location.barrierFree = "unknown", location.description = null;
       hasError.name = false;
       hasError.city = false;
     };
@@ -24906,36 +24915,59 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
           key = _Object$entries$_i[0],
           val = _Object$entries$_i[1];
-        if (newLocation[key] == null) {
+        if (location[key] == null) {
           hasError[key] = true;
           allInputsOkay = false;
         } else hasError[key] = false;
       }
-      if (allInputsOkay) saveLocation();
+      if (allInputsOkay) {
+        if (props.locationToUpdate == null) saveLocation();else updateLocation();
+      }
     };
     var saveLocation = function saveLocation() {
-      axios.post('/locations', newLocation).then(function (response) {
+      axios.post('/locations', location).then(function (response) {
         locationStore.addNewLocation(response.data);
         emit('location-saved', response.data);
-        ;
-        bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal.getInstance(modal.value).hide();
         resetForm();
       })["catch"](function (error) {
         (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
+    var updateLocation = function updateLocation() {
+      axios.post("/locations/".concat(props.locationToUpdate.id), location).then(function (response) {
+        locationStore.updateLocation(response.data);
+        emit('location-updated', response.data);
+        resetForm();
+      })["catch"](function (error) {
+        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
+      });
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      if (props.locationToUpdate != null) {
+        location.name = props.locationToUpdate.name;
+        location.streetAndNumber = props.locationToUpdate.streetAndNumber;
+        location.city = props.locationToUpdate.city;
+        location.website = props.locationToUpdate.website;
+        location.parking = props.locationToUpdate.parking;
+        location.barrierFree = props.locationToUpdate.barrierFree;
+        location.description = props.locationToUpdate.description;
+      }
+    });
     var __returned__ = {
       locationStore: locationStore,
       axios: axios,
+      props: props,
       emit: emit,
-      newLocation: newLocation,
+      location: location,
       hasError: hasError,
       modal: modal,
       resetForm: resetForm,
       errorClass: errorClass,
       checkInputs: checkInputs,
       saveLocation: saveLocation,
+      updateLocation: updateLocation,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       Modal: bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal,
@@ -25698,12 +25730,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
 /* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/LocationStore */ "./resources/js/stores/LocationStore.js");
 /* harmony import */ var _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../layouts/EventList.vue */ "./resources/js/components/layouts/EventList.vue");
+/* harmony import */ var _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modals/LocationFormModal.vue */ "./resources/js/components/modals/LocationFormModal.vue");
+
 
 
 
@@ -25727,10 +25761,10 @@ __webpack_require__.r(__webpack_exports__);
     var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore)();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
     var locationStore = (0,_stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore)();
-    var show = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)('upcoming');
-    var location = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)(null);
-    var upcomingEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)(null);
-    var pastEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)(null);
+    var show = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)('upcoming');
+    var location = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
+    var upcomingEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
+    var pastEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
     var getLocation = function getLocation() {
       location.value = locationStore.getLocationById(props.showLocation);
       upcomingEvents.value = eventStore.getEventsInLocation(props.showLocation);
@@ -25749,6 +25783,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       });
+      updateDescription();
     };
     var getParking = function getParking() {
       switch (location.value.parking) {
@@ -25770,10 +25805,26 @@ __webpack_require__.r(__webpack_exports__);
           return "Barrierefreiheit ist nicht bekannt";
       }
     };
+    var locationUpdated = function locationUpdated(newLocationData) {
+      location.value.name = newLocationData.name;
+      location.value.streetAndNumber = newLocationData.streetAndNumber;
+      location.value.city = newLocationData.city;
+      location.value.website = newLocationData.website;
+      location.value.parking = newLocationData.parking;
+      location.value.barrierFree = newLocationData.barrierFree;
+      location.value.description = newLocationData.description;
+      updateDescription();
+    };
+    var updateDescription = function updateDescription() {
+      setTimeout(function () {
+        var desc = location.value.description.replace('\n', '<br>');
+        document.getElementById('location-details-description').innerHTML = desc;
+      }, 1);
+    };
     var showEventPage = function showEventPage(eventId) {
       return emit('show-event-page', eventId);
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.onMounted)(function () {
+    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.onMounted)(function () {
       if (props.showLocation != null) getLocation();
     });
     var __returned__ = {
@@ -25789,13 +25840,16 @@ __webpack_require__.r(__webpack_exports__);
       getLocation: getLocation,
       getParking: getParking,
       getBarrierFree: getBarrierFree,
+      locationUpdated: locationUpdated,
+      updateDescription: updateDescription,
       showEventPage: showEventPage,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref,
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.onMounted,
+      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref,
       useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore,
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       useLocationStore: _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore,
-      EventList: _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+      EventList: _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      LocationFormModal: _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -26957,7 +27011,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   "class": "modal fade modal-xl",
-  id: "new-location-modal",
+  id: "location-form-modal",
   ref: "modal"
 };
 var _hoisted_2 = {
@@ -26966,200 +27020,206 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "modal-content"
 };
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_4 = {
   "class": "modal-header"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Neue Venue")], -1 /* HOISTED */);
+};
 var _hoisted_5 = {
-  "class": "modal-body"
+  key: 0
 };
 var _hoisted_6 = {
-  "class": "input-group mb-3"
+  key: 1
 };
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "input-group-text",
-  id: "name-input-label"
-}, "Name *", -1 /* HOISTED */);
+var _hoisted_7 = {
+  "class": "modal-body"
+};
 var _hoisted_8 = {
   "class": "input-group mb-3"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "input-group-text",
-  id: "street-input-label"
-}, "Straße und Hausnummer", -1 /* HOISTED */);
+  id: "name-input-label"
+}, "Name *", -1 /* HOISTED */);
 var _hoisted_10 = {
   "class": "input-group mb-3"
 };
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "input-group-text",
-  id: "city-input-label"
-}, "Stadt *", -1 /* HOISTED */);
+  id: "street-input-label"
+}, "Straße und Hausnummer", -1 /* HOISTED */);
 var _hoisted_12 = {
   "class": "input-group mb-3"
 };
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "input-group-text",
-  id: "website-input-label"
-}, "Webseite", -1 /* HOISTED */);
+  id: "city-input-label"
+}, "Stadt *", -1 /* HOISTED */);
 var _hoisted_14 = {
   "class": "input-group mb-3"
 };
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "input-group-text",
+  id: "website-input-label"
+}, "Webseite", -1 /* HOISTED */);
+var _hoisted_16 = {
+  "class": "input-group mb-3"
+};
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "radio-group-label form-check-inline"
 }, " Gibt es ausreichend Parkplätze vor Ort? * ", -1 /* HOISTED */);
-var _hoisted_16 = {
-  "class": "form-check form-check-inline"
-};
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "form-check-label",
-  "for": "location-parking-radios-1"
-}, " Nicht bekannt ", -1 /* HOISTED */);
 var _hoisted_18 = {
   "class": "form-check form-check-inline"
 };
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
-  "for": "location-parking-radios-2"
-}, " Genug Parkplätze vorhanden ", -1 /* HOISTED */);
+  "for": "location-parking-radios-1"
+}, " Nicht bekannt ", -1 /* HOISTED */);
 var _hoisted_20 = {
   "class": "form-check form-check-inline"
 };
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
-  "for": "location-parking-radios-3"
-}, " Keine Parkplätze vorhanden ", -1 /* HOISTED */);
+  "for": "location-parking-radios-2"
+}, " Genug Parkplätze vorhanden ", -1 /* HOISTED */);
 var _hoisted_22 = {
-  "class": "input-group mb-3"
-};
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "radio-group-label form-check-inline"
-}, " Ist die Venue barrierefrei? * ", -1 /* HOISTED */);
-var _hoisted_24 = {
   "class": "form-check form-check-inline"
 };
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
-  "for": "location-barrierfree-radios-1"
-}, " Nicht bekannt ", -1 /* HOISTED */);
+  "for": "location-parking-radios-3"
+}, " Keine Parkplätze vorhanden ", -1 /* HOISTED */);
+var _hoisted_24 = {
+  "class": "input-group mb-3"
+};
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "radio-group-label form-check-inline"
+}, " Ist die Venue barrierefrei? * ", -1 /* HOISTED */);
 var _hoisted_26 = {
   "class": "form-check form-check-inline"
 };
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
-  "for": "location-barrierfree-radios-2"
-}, " Venue ist barrierefrei ", -1 /* HOISTED */);
+  "for": "location-barrierfree-radios-1"
+}, " Nicht bekannt ", -1 /* HOISTED */);
 var _hoisted_28 = {
   "class": "form-check form-check-inline"
 };
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
+  "for": "location-barrierfree-radios-2"
+}, " Venue ist barrierefrei ", -1 /* HOISTED */);
+var _hoisted_30 = {
+  "class": "form-check form-check-inline"
+};
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "form-check-label",
   "for": "location-barrierfree-radios-3"
 }, " Venue ist nicht barrierefrei ", -1 /* HOISTED */);
-var _hoisted_30 = {
+var _hoisted_32 = {
   "class": "input-group mb-3"
 };
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "input-group-text"
 }, "Beschreibung **", -1 /* HOISTED */);
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "input-group mb-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "* Benötigt"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "** Eventuelle Erörterungen zu Parkplätzen und Barrierefreiheit.")], -1 /* HOISTED */);
-var _hoisted_33 = {
+var _hoisted_35 = {
   "class": "input-group mb-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [$props.locationToUpdate == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h3", _hoisted_5, "Neue Venue")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h3", _hoisted_6, "Neue Venue"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("form-control ".concat($setup.errorClass('name'))),
     "aria-label": "Name",
     "aria-describedby": "name-input-label",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $setup.newLocation.name = $event;
+      return $setup.location.name = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newLocation.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.location.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     "aria-label": "Straße und Hausnummer",
     "aria-describedby": "street-input-label",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $setup.newLocation.streetAndNumber = $event;
+      return $setup.location.streetAndNumber = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newLocation.streetAndNumber]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.location.streetAndNumber]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("form-control ".concat($setup.errorClass('city'))),
     "aria-label": "Stadt",
     "aria-describedby": "city-input-label",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $setup.newLocation.city = $event;
+      return $setup.location.city = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newLocation.city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.location.city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     "aria-label": "Webseite",
     "aria-describedby": "website-input-label",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $setup.newLocation.website = $event;
+      return $setup.location.website = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newLocation.website]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.location.website]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-parking-radios",
     id: "location-parking-radios-1",
     value: "unknown",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $setup.newLocation.parking = $event;
+      return $setup.location.parking = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.parking]]), _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.parking]]), _hoisted_19]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-parking-radios",
     id: "location-parking-radios-2",
     value: "possible",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $setup.newLocation.parking = $event;
+      return $setup.location.parking = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.parking]]), _hoisted_19]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.parking]]), _hoisted_21]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-parking-radios",
     id: "location-parking-radios-3",
     value: "impossible",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $setup.newLocation.parking = $event;
+      return $setup.location.parking = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.parking]]), _hoisted_21])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.parking]]), _hoisted_23])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-barrierfree-radios",
     id: "location-barrierfree-radios-1",
     value: "unknown",
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-      return $setup.newLocation.barrierFree = $event;
+      return $setup.location.barrierFree = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.barrierFree]]), _hoisted_25]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.barrierFree]]), _hoisted_27]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-barrierfree-radios",
     id: "location-barrierfree-radios-2",
     value: "possible",
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
-      return $setup.newLocation.barrierFree = $event;
+      return $setup.location.barrierFree = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.barrierFree]]), _hoisted_27]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.barrierFree]]), _hoisted_29]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-check-input",
     type: "radio",
     name: "location-barrierfree-radios",
     id: "location-barrierfree-radios-3",
     value: "impossible",
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
-      return $setup.newLocation.barrierFree = $event;
+      return $setup.location.barrierFree = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.newLocation.barrierFree]]), _hoisted_29])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $setup.location.barrierFree]]), _hoisted_31])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     "aria-label": "Description",
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
-      return $setup.newLocation.description = $event;
+      return $setup.location.description = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.newLocation.description]])]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.location.description]])]), _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     onClick: _cache[11] || (_cache[11] = function ($event) {
       return $setup.checkInputs();
@@ -27751,7 +27811,7 @@ var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   type: "button",
   "class": "btn btn-primary input-group-text",
   "data-bs-toggle": "modal",
-  "data-bs-target": "#new-location-modal"
+  "data-bs-target": "#location-form-modal"
 }, " Neue Venue erstellen ", -1 /* HOISTED */);
 var _hoisted_27 = {
   key: 2
@@ -28035,9 +28095,16 @@ var _hoisted_10 = ["href"];
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
-var _hoisted_14 = {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col"
-};
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  id: "location-details-description"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "button",
+  "class": "btn btn-secondary",
+  "data-bs-toggle": "modal",
+  "data-bs-target": "#location-form-modal"
+}, " Details bearbeiten ")], -1 /* HOISTED */);
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
 var _hoisted_16 = {
   "class": "card text-center"
@@ -28063,29 +28130,34 @@ var _hoisted_22 = {
   "class": "card-body"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $setup.location != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.name) + " (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.city) + ")", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.location.streetAndNumber != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.streetAndNumber), 1 /* TEXT */), _hoisted_8])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.location.website != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  return $setup.location != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["LocationFormModal"], {
+    locationToUpdate: $setup.location,
+    onLocationUpdated: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.locationUpdated($event);
+    })
+  }, null, 8 /* PROPS */, ["locationToUpdate"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.location.streetAndNumber != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.streetAndNumber) + ", ", 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.city), 1 /* TEXT */), _hoisted_8]), $setup.location.website != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: $setup.location.website,
     target: "_blank"
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.website), 9 /* TEXT, PROPS */, _hoisted_10), _hoisted_11])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.getParking()), 1 /* TEXT */), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.getBarrierFree()), 1 /* TEXT */), _hoisted_13]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.description), 1 /* TEXT */)])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.location.website), 9 /* TEXT, PROPS */, _hoisted_10), _hoisted_11])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.getParking()), 1 /* TEXT */), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.getBarrierFree()), 1 /* TEXT */), _hoisted_13]), _hoisted_14]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link ".concat($setup.show == 'upcoming' ? 'active' : '')),
-    onClick: _cache[0] || (_cache[0] = function ($event) {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
       return $setup.show = 'upcoming';
     })
   }, " Bevorstehende Veranstaltungen ", 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link ".concat($setup.show == 'past' ? 'active' : '')),
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.show = 'past';
     })
   }, " Vergangene Veranstaltungen ", 2 /* CLASS */)])])]), $setup.show == 'upcoming' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.upcomingEvents,
     parentModel: 'location',
-    onShowEventPage: _cache[2] || (_cache[2] = function ($event) {
+    onShowEventPage: _cache[3] || (_cache[3] = function ($event) {
       return $setup.showEventPage($event);
     })
   }, null, 8 /* PROPS */, ["events"])])) : $setup.show == 'past' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.pastEvents,
     parentModel: 'location',
-    onShowEventPage: _cache[3] || (_cache[3] = function ($event) {
+    onShowEventPage: _cache[4] || (_cache[4] = function ($event) {
       return $setup.showEventPage($event);
     })
   }, null, 8 /* PROPS */, ["events"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
@@ -28659,6 +28731,15 @@ var useLocationStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('locat
     },
     addNewLocation: function addNewLocation(location) {
       this.locations.push(location);
+    },
+    updateLocation: function updateLocation(updatedLocation) {
+      var _this = this;
+      this.locations.forEach(function (location, index) {
+        if (location.id == updatedLocation.id) {
+          _this.locations[index] = updatedLocation;
+          return;
+        }
+      });
     },
     getLocationById: function getLocationById(id) {
       return this.locations.filter(function (l) {

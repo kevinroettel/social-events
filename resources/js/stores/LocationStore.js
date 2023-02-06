@@ -20,6 +20,15 @@ export const useLocationStore = defineStore('location', {
             this.locations.push(location);
         },
 
+        updateLocation(updatedLocation) {
+            this.locations.forEach((location, index) => {
+                if (location.id == updatedLocation.id) {
+                    this.locations[index] = updatedLocation;
+                    return;
+                }
+            });
+        },
+
         getLocationById(id) {
             return this.locations.filter(l => l.id == id)[0];
         },

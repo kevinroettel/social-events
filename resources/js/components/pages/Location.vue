@@ -1,18 +1,33 @@
 <template>
     <div v-if="location != null">
+        <LocationFormModal
+            :locationToUpdate="location"
+            @location-updated="locationUpdated($event)"
+        />
+
         <div class="card w-50 mx-auto">
             <div class="card-body">
-                <h3 class="text-center">{{ location.name }} ({{ location.city }})</h3>
+                <h3 class="text-center">{{ location.name }}</h3>
 
                 <div class="row">
                     <div class="col">
-                        <span v-if="location.streetAndNumber != null">{{ location.streetAndNumber }}<br></span>
+                        <span v-if="location.streetAndNumber != null">{{ location.streetAndNumber }}, </span>
+                        <span>{{ location.city }}<br></span>
                         <span v-if="location.website != null"><a :href="location.website" target="_blank">{{ location.website }}</a><br></span>
                         <span>{{ getParking() }}</span><br>
                         <span>{{ getBarrierFree() }}</span><br>
                     </div>
                     <div class="col">
-                        <span>{{ location.description }}</span>
+                        <span id="location-details-description"></span><br>
+                        
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#location-form-modal"
+                        >
+                            Details bearbeiten
+                        </button>
                     </div>
                 </div>                
 
@@ -70,6 +85,7 @@ import { useArtistStore } from "../../stores/ArtistStore";
 import { useEventStore } from "../../stores/EventStore";
 import { useLocationStore } from "../../stores/LocationStore";
 import EventList from '../layouts/EventList.vue';
+import LocationFormModal from '../modals/LocationFormModal.vue';
 
 const artistStore = useArtistStore();
 const eventStore = useEventStore();
@@ -113,6 +129,8 @@ const getLocation = () => {
             }
         })
     });
+
+    updateDescription();
 }
 
 const getParking = () => {
@@ -129,6 +147,24 @@ const getBarrierFree = () => {
         case 'impossible': return "Venue ist nicht Barrierefrei"
         case 'unknown': return "Barrierefreiheit ist nicht bekannt"
     }
+}
+
+const locationUpdated = (newLocationData) => {
+    location.value.name = newLocationData.name
+    location.value.streetAndNumber = newLocationData.streetAndNumber
+    location.value.city = newLocationData.city
+    location.value.website = newLocationData.website
+    location.value.parking = newLocationData.parking
+    location.value.barrierFree = newLocationData.barrierFree
+    location.value.description = newLocationData.description
+    updateDescription();
+}
+
+const updateDescription = () => {
+    setTimeout(() => {
+        let desc = location.value.description.replace('\n', '<br>');
+        document.getElementById('location-details-description').innerHTML = desc;
+    }, 1);
 }
 
 const showEventPage = (eventId) => emit('show-event-page', eventId);
