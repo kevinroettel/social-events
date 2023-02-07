@@ -88,6 +88,7 @@
 
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
+                <p v-if="notificationText != null">{{ notificationText }}</p>
                 <div v-if="eventToUpdate == null" class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
@@ -100,7 +101,7 @@
                         label="name" 
                         
                         v-model="event.artists"
-                        @option:created="showNotifcation = true"
+                        @option:created="showNotifcationWithSimilarArtists($event)"
                     >
                         <!-- search ist in diesem Fall ein spezifischer Enum Wert für v-select -->
                         <!-- eslint-disable-next-line -->
@@ -151,6 +152,7 @@ import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
 import { toast } from "../helpers/toast";
+import { compareStrings } from '../helpers/compareStrings.js';
 
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
@@ -175,6 +177,7 @@ const emit = defineEmits([
 const isUpdate = ref(false);
 const flyerUrl = ref(null);
 const showNotifcation = ref(false);
+const notificationText = ref(null);
 
 const event = reactive({
     name: null,
@@ -289,6 +292,24 @@ const selectCreated = (location) => {
 
 const discardUpdate = () => {
     emit('discard-update');
+}
+
+const showNotifcationWithSimilarArtists = (createdArtist) => {
+    let similar = [];
+    let allArtists = artistStore.getArtists;
+
+    allArtists.forEach(artist => {
+        let similarity = compareStrings(createdArtist.name, artist.name);
+
+        if (similarity > 0.85) similar.push(artist.name);
+    });
+
+    if (similar.length != 0) {
+        notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
+        similar.forEach(artist => notificationText.value += artist + ", ");
+    }
+
+    showNotifcation.value = true;
 }
 
 onMounted(() => {
