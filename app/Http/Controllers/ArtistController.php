@@ -13,11 +13,6 @@ class ArtistController extends Controller
         return Artist::with('tags')->get();
     }
 
-    /**
-     * @TODO
-     * Überprüfen ob der Name bereits vorhanden ist
-     * Überprüfen ob ein Vertipper in dem Namen ist und der Künstler eigentlich schon existiert
-     */
     public static function createArtistByName($name) {
         $validator = Validator::make(
             ['name' => $name], 

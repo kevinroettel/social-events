@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 class EventController extends Controller
 {
     public function getEvents() {
-        // $events = Event::where('date', '>=', Carbon::now()->toDateTimeString())->with('artists')->get();
         $events = Event::with(['artists', 'watchlists'])->get();
         
         foreach ($events as $index => $event) {
@@ -55,16 +54,15 @@ class EventController extends Controller
 
         $event = Event::create([
             'name' => $request['name'],
-            'description' => (array_key_exists('description', $request) ? $request['description'] : null),
+            'description' => ($request['description'] ?? null),
             'flyer' => $name,
             'date' => $request['date'],
-            'doors' => (array_key_exists('doors', $request) ? $request['doors'] : null),
+            'doors' => ($request['doors'] ?? null),
             'begin' => $request['begin'],
-            'ticketLink' => (array_key_exists('ticketLink', $request) ? $request['ticketLink'] : null),
+            'ticketLink' => ($request['ticketLink'] ?? null),
             'location_id' => $request['location']
         ]);
 
-        // User kann hierdurch eine Quick-Create Möglichkeit nutzen um schneller einen neuen Künstler anzulegen
         foreach ($request['artists'] as $artist) {
             if (is_numeric($artist)) {
                 $event->artists()->attach($artist);
@@ -109,12 +107,12 @@ class EventController extends Controller
         }
 
         $event->name = $request['name'];
-        $event->description = (array_key_exists('description', $request) ? $request['description'] : null);
+        $event->description = ($request['description'] ?? null);
         $event->flyer = $request['flyer'];
         $event->date = $request['date'];
-        $event->doors = (array_key_exists('doors', $request) ? $request['doors'] : null);
+        $event->doors = ($request['doors'] ?? null);
         $event->begin = $request['begin'];
-        $event->ticketLink = (array_key_exists('ticketLink', $request) ? $request['ticketLink'] : null);
+        $event->ticketLink = ($request['ticketLink'] ?? null);
         $event->location_id = $request['location'];
         $event->save();
 

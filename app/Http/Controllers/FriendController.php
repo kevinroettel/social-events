@@ -13,9 +13,8 @@ class FriendController extends Controller
             ->where('friend_id', '=', $friendId)
             ->first();
 
-        if (!empty($friend)) {
+        if (!empty($friend))
             return response()->json(['errors' => "Freundschaftsanfrage wurde bereits versendet, aber noch nicht bestätigt."]);
-        }
 
         $friend = Friend::create([
             'user_id' => $userId,
@@ -31,7 +30,9 @@ class FriendController extends Controller
             ->where('friend_id', '=', $userId)
             ->first();
 
-        if (empty($friend)) return response()->json(['errors' => "Diese Freundschaftsanfrage existiert nicht."]);
+        if (empty($friend)) 
+            return response()->json(['errors' => "Diese Freundschaftsanfrage existiert nicht."]);
+        
         $friend->accepted = true;
         $friend->save();
         return response()->json(['success' => "Die Freundschaftsanfrage wurde akzeptiert."]);
