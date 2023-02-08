@@ -1,3 +1,7 @@
+// Levenshtein distance
+// Code taken from: 
+// https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
+
 export function compareStrings(s1, s2) {
     var longer = s1;
     var shorter = s2;

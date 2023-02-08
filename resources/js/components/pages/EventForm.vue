@@ -306,7 +306,7 @@ const showNotifcationWithSimilarArtists = (createdArtist) => {
 
     if (similar.length != 0) {
         notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
-        similar.forEach(artist => notificationText.value += artist + ", ");
+        similar.forEach((artist, index) => notificationText.value += artist + (index == similar.length - 1 ? "" : ", "));
     }
 
     showNotifcation.value = true;

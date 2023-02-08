@@ -21,7 +21,7 @@ class ArtistController extends Controller
     public static function createArtistByName($name) {
         $validator = Validator::make(
             ['name' => $name], 
-            ['name' => 'required|string']
+            ['name' => 'required|unique:artists|string']
         );
 
         if ($validator->fails()) {
@@ -38,7 +38,7 @@ class ArtistController extends Controller
     }
 
     public function createArtist(Request $request) {
-        $request = $request->validate(['name' => 'required|string']);
+        $request = $request->validate(['name' => 'required|unique:artists|string']);
         $artist = Artist::create(['name' => $request['name']]);
         return $artist;
     }
@@ -49,7 +49,7 @@ class ArtistController extends Controller
         if (empty($artist)) return false;
 
         $request = $request->validate([
-            'name' => 'required|string'
+            'name' => 'required|unique:artists|string'
         ]);
 
         $artist->name = $request['name'];

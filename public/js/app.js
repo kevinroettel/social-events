@@ -25618,8 +25618,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       });
       if (similar.length != 0) {
         notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
-        similar.forEach(function (artist) {
-          return notificationText.value += artist + ", ";
+        similar.forEach(function (artist, index) {
+          return notificationText.value += artist + (index == similar.length - 1 ? "" : ", ");
         });
       }
       showNotifcation.value = true;
@@ -28574,6 +28574,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "compareStrings": () => (/* binding */ compareStrings)
 /* harmony export */ });
+// Levenshtein distance
+// Code taken from: 
+// https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
+
 function compareStrings(s1, s2) {
   var longer = s1;
   var shorter = s2;
