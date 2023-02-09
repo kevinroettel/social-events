@@ -35,6 +35,9 @@
 </template>
 <script setup>
 import { onMounted } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
     events: {
@@ -50,11 +53,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits([
-    'show-event-page'
-]);
-
-const showEventPage = (eventId) => emit('show-event-page', eventId);
+const showEventPage = (eventId) => router.push(`/event/${eventId}`);
 
 const getDate = (stringDate) => {
     let date = new Date(stringDate);

@@ -1,6 +1,6 @@
 <template>
     <div v-if="searchDone">
-        <h3>Suchanfrage zu: "{{ searchQuery }}"</h3>
+        <h3>Suchanfrage zu: "{{ route.params.query }}"</h3>
 
         <div class="row">
             <div class="col">
@@ -43,6 +43,7 @@
 </template>
 <script setup>
 import { onMounted, reactive, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
@@ -51,13 +52,8 @@ const artistStore = useArtistStore();
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
 
-const props = defineProps({
-    searchQuery: {
-        required: true,
-        type: String,
-        default: null
-    }
-});
+const router = useRouter();
+const route = useRoute();
 
 const emit = defineEmits([
     'show-artist-page',
@@ -74,20 +70,20 @@ const result = reactive({
 });
 
 const search = () => {
-    result.artists = artistStore.getArtistsByString(props.searchQuery);
-    result.events = eventStore.getEventsByString(props.searchQuery);
-    result.locations = locationStore.getLocationsByString(props.searchQuery);
+    result.artists = artistStore.getArtistsByString(route.params.query);
+    result.events = eventStore.getEventsByString(route.params.query);
+    result.locations = locationStore.getLocationsByString(route.params.query);
     searchDone.value = true;
 }
 
-const showArtistPage = (artistId) => emit('show-artist-page', artistId);
-const showEventPage = (eventId) => emit('show-event-page', eventId);
-const showLocationPage = (locationId) => emit('show-location-page', locationId);
+const showArtistPage = (artistId) => router.push(`/künstler/${artistId}`);
+const showEventPage = (eventId) => router.push(`/event/${eventId}`);
+const showLocationPage = (locationId) => router.push(`/venue/${locationId}`);
 
 watch(
-    () => props.searchQuery,
+    () => route.params.query,
     (newQuery, oldQuery) => {
-        if (newQuery != oldQuery) search();
+        if ((newQuery != oldQuery) && newQuery != null) search();
     }
 );
 

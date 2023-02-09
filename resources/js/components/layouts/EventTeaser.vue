@@ -24,8 +24,11 @@ import { getFormattedDate } from '../helpers/dateFormat.js';
 import { inject, onMounted, ref, watch } from '@vue/runtime-core';
 import { useUserStore } from '../../stores/UserStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
+import { useRouter } from 'vue-router';
 const userStore = useUserStore();
 const eventStore = useEventStore();
+
+const router = useRouter();
 
 const axios = inject('axios');
 
@@ -49,11 +52,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits([
-    'show-event-page'
-]);
-
 const showEventPage = () => {
-    emit('show-event-page', props.event.id);
+    router.push(`/event/${props.event.id}`);
 }
 </script>

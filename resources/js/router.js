@@ -14,11 +14,12 @@ export const router = createRouter({
     routes: [
         { path: '/', component: Dashboard },
         { path: '/neues-event', component: EventForm },
+        { path: '/event-aktualisieren/:eventId', component: EventForm },
         { path: '/event/:eventId', component: Event },
         { path: '/freunde', component: Friends },
         { path: '/suche/:query', component: SearchResults },
         { path: '/account', component: Account },
-        { path: '/künstler/:artistId', component: Artist },
+        { path: '/kuenstler/:artistId', component: Artist },
         { path: '/venue/:locationId', component: Location },
     ]
 });

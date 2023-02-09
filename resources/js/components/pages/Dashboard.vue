@@ -1,12 +1,7 @@
 <template v-cloak>
     <div>
-        <Watchlist 
-            @show-event-page="showEventPage($event)"
-        />
-
-        <FriendWatchlists
-            @show-event-page="showEventPage($event)"
-        />
+        <Watchlist />
+        <FriendWatchlists />
 
         <div class="card">
             <div class="card-header">
@@ -20,7 +15,6 @@
                 <EventTeaserCarousel 
                     v-else
                     :events="eventStore.getAllEvents"
-                    @show-event-page="showEventPage($event)"
                 />
             </div>
         </div>
@@ -32,12 +26,4 @@ import FriendWatchlists from '../recommender/FriendWatchlists.vue'
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from '../../stores/EventStore.js';
 const eventStore = useEventStore();
-
-const emit = defineEmits([
-    'show-event-page'
-]);
-
-const showEventPage = (eventId) => {
-    emit('show-event-page', eventId);
-}
 </script>

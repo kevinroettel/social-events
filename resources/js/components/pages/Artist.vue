@@ -41,7 +41,6 @@
                         <EventList 
                             :events="upcomingEvents" 
                             :parentModel="'artist'"
-                            @show-event-page="showEventPage($event)"
                         />
                     </div>
                     <div 
@@ -51,7 +50,6 @@
                         <EventList 
                             :events="pastEvents" 
                             :parentModel="'artist'"
-                            @show-event-page="showEventPage($event)"
                         />
                     </div>
                 </div>
@@ -67,6 +65,7 @@ import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { toast } from '../helpers/toast';
+import { useRoute, useRouter } from 'vue-router';
 
 const artistStore = useArtistStore();
 const eventStore = useEventStore();
@@ -74,17 +73,7 @@ const locationStore = useLocationStore();
 
 const axios = inject('axios');
 
-const props = defineProps({
-    artistId: {
-        required: true,
-        type: Number,
-        default: null,
-    }
-});
-
-const emit = defineEmits([
-    'show-event-page'
-]);
+const route = useRoute();
 
 const show = ref('upcoming');
 
@@ -93,18 +82,16 @@ const upcomingEvents = ref(null);
 const pastEvents = ref(null)
 
 const getArtistData = () => {
-    artist.value = artistStore.getArtistById(props.artistId);
-    upcomingEvents.value = eventStore.getEventsWithArtist(props.artistId);
+    artist.value = artistStore.getArtistById(route.params.artistId);
+    upcomingEvents.value = eventStore.getEventsWithArtist(route.params.artistId);
     upcomingEvents.value.forEach((event, index) => {
         if (!event.hasOwnProperty('location')) {
             upcomingEvents.value[index].location = locationStore.getLocationById(event.location_id);
         }
     });
 
-    pastEvents.value = eventStore.getPastEventsWithArtist(props.artistId);
+    pastEvents.value = eventStore.getPastEventsWithArtist(route.params.artistId);
 }
-
-const showEventPage = (eventId) => emit('show-event-page', eventId);
 
 const addTagToArtist = (tag) => {
     axios.patch(
@@ -132,6 +119,6 @@ const removeTagFromArtist = (tagId) => {
 }
 
 onMounted(() => {
-    if (props.artistId != null) getArtistData();
+    if (route.params.artistId != null) getArtistData();
 })
 </script>

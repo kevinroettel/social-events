@@ -1,61 +1,10 @@
 <template>
     <div class="page" v-if="dataLoaded">
-        <Navbar
-            :currentPage="currentPage"
-            @page-change="changePage($event)"
-            @search-query="showSearchResults($event)"
-        />
+        <Navbar />
 
         <div class="main-content">
+            <!-- includes all main pages. to see every page go to router.js -->
             <router-view></router-view>
-
-            <!-- <Dashboard
-                v-if="currentPage == 'home'"
-                @show-event-page="showEventPage($event)"
-            />
-
-            <Event
-                v-else-if="currentPage == 'event'"
-                :eventId="showEvent"
-                @show-artist-page="showArtistPage($event)"
-                @show-event-update="showEventUpdatePage($event)"
-            />
-
-            <EventForm
-                v-if="currentPage == 'eventform'"
-                :eventToUpdate="eventToUpdate"
-                @event-created="addEvent($event)"
-                @discard-update="discardUpdate()"
-                @event-updated="eventUpdated($event)"
-            />
-
-            <SearchResults
-                v-else-if="currentPage == 'search'"
-                :searchQuery="searchQuery"
-                @show-artist-page="showArtistPage($event)"
-                @show-event-page="showEventPage($event)"
-                @show-location-page="showLocationPage($event)"
-            />
-
-            <Artist
-                v-else-if="currentPage == 'artist'"
-                :artistId="showArtist"
-                @show-event-page="showEventPage($event)"
-            />
-
-            <Location
-                v-else-if="currentPage == 'location'"
-                :showLocation="showLocation"
-                @show-event-page="showEventPage($event)"
-            />
-
-            <Friends
-                v-else-if="currentPage == 'friends'"
-            />
-
-            <Account
-                v-else-if="currentPage == 'account'"
-            /> -->
 
             <Toast />
         </div>
@@ -66,14 +15,6 @@
 import { reactive, onMounted, ref, inject, computed } from 'vue';
 import Navbar from './layouts/Navbar.vue';
 import Toast from './layouts/Toast.vue';
-import Dashboard from './pages/Dashboard.vue';
-import EventForm from './pages/EventForm.vue';
-import Event from './pages/Event.vue';
-import Artist from './pages/Artist.vue';
-import Friends from './pages/Friends.vue';
-import Account from './pages/Account.vue';
-import SearchResults from './pages/SearchResults.vue';
-import Location from './pages/Location.vue';
 
 import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';
@@ -94,16 +35,6 @@ const props = defineProps({
     },
 });
 
-const currentPage = ref("home");
-
-const showEvent = ref(null);
-const showArtist = ref(null);
-const showLocation = ref(null);
-
-const eventToUpdate = ref(null);
-
-const searchQuery = ref(null);
-
 const dataDone = reactive({
     events: false,
     watchlist: false,
@@ -112,53 +43,6 @@ const dataDone = reactive({
     users: false,
     friends: false
 });
-
-const changePage = (page) => {
-    currentPage.value = page;
-}
-
-const showEventPage = (eventId) => {
-    currentPage.value = "event";
-    showEvent.value = eventId;
-}
-
-const showArtistPage = (artistId) => {
-    currentPage.value = "artist";
-    showArtist.value = artistId;
-}
-
-const showLocationPage = (locationId) => {
-    currentPage.value = "location";
-    showLocation.value = locationId;
-}
-
-const showEventUpdatePage = (eventId) => {
-    currentPage.value = "eventform";
-    eventToUpdate.value = eventId;
-}
-
-const showSearchResults = (query) => {
-    currentPage.value = "search";
-    searchQuery.value = query;
-}
-
-const discardUpdate = () => {
-    currentPage.value = "event";
-    showEvent.value = eventToUpdate.value;
-    eventToUpdate.value = null;
-}
-
-const eventUpdated = (event) => {
-    eventStore.updateEventData(event);
-    
-    currentPage.value = "event";
-    showEvent.value = event.id;
-    eventToUpdate.value = null;
-}
-
-const searchDone = () => {
-
-}
 
 const dataLoaded = computed(() => {
     return dataDone.events && 
@@ -179,12 +63,6 @@ const getEvents = () => {
     }).catch((error) => {
         console.log(error);
     });
-}
-
-const addEvent = (event) => {
-    currentPage.value = "home";
-    event.location = locationStore.getLocationById(event.location_id);
-    eventStore.addNewEvent(event)
 }
 
 const getWatchlistEntries = () => {

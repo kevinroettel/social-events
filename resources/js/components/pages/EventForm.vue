@@ -7,7 +7,7 @@
         <LineUpModal
             v-if="isUpdate"
             :lineup="event.artists"
-            :eventId="eventToUpdate"
+            :eventId="event.id"
             @added-artist="addArtist($event)"
             @artist-removed="removeArtist($event)"
         />
@@ -89,7 +89,7 @@
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
                 <p v-if="notificationText != null">{{ notificationText }}</p>
-                <div v-if="eventToUpdate == null" class="input-group mb-3">
+                <div v-if="event.id == null" class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
                         multiple
@@ -153,26 +153,16 @@ import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
 import { toast } from "../helpers/toast";
 import { compareStrings } from '../helpers/compareStrings.js';
+import { useRoute, useRouter } from "vue-router";
 
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
 const artistStore = useArtistStore();
 
+const router = useRouter();
+const route = useRoute();
+
 const axios = inject('axios');
-
-const props = defineProps({
-    eventToUpdate: {
-        required: false,
-        type: Number,
-        default: null
-    }
-});
-
-const emit = defineEmits([
-    'event-created',
-    'discard-update',
-    'event-updated'
-]);
 
 const isUpdate = ref(false);
 const flyerUrl = ref(null);
@@ -180,6 +170,7 @@ const showNotifcation = ref(false);
 const notificationText = ref(null);
 
 const event = reactive({
+    id: null,
     name: null,
     description: null,
     flyer: null,
@@ -200,7 +191,7 @@ const hasError = reactive({
 });
 
 const getEventData = () => {
-    let eventData = eventStore.getEventById(props.eventToUpdate);
+    let eventData = eventStore.getEventById(event.id);
     if (eventData.event != undefined) eventData = eventData.event;
     event.name = eventData.name;
     event.description = eventData.description;
@@ -211,7 +202,14 @@ const getEventData = () => {
     event.begin = eventData.begin;
     event.ticketLink = eventData.ticketLink;
     event.location = eventData.location;
-    event.artists = eventData.artists;
+    
+    eventData.artists.forEach(artist => {
+        if (Number.isInteger(artist)) {
+            event.artists.push(artistStore.getArtistById(artist));
+        } else {
+            event.artists.push(artist);
+        }
+    });
 }
 
 const addArtist = (artist) => {
@@ -240,10 +238,9 @@ const checkInputs = () => {
     }
 
     if (allInputsOkay) {
-        if (props.eventToUpdate == null) createEvent();
+        if (event.id == null) createEvent();
         else updateEvent();
     }
-    
 }
 
 const createEvent = () => {
@@ -251,7 +248,8 @@ const createEvent = () => {
         '/events',
         getFormData()
     ).then((response) => {
-        emit('event-created', response.data);
+        eventStore.addNewEvent(response.data);
+        router.push(`/event/${response.data.id}`);
     }).catch((error) => {
         toast(error.message, 'error');
     })
@@ -259,10 +257,11 @@ const createEvent = () => {
 
 const updateEvent = () => {
     axios.post(
-        `/events/${props.eventToUpdate}`,
+        `/events/${event.id}`,
         getFormData()
     ).then((response) => {
-        emit('event-updated', response.data);
+        eventStore.updateEventData(response.data);
+        router.back();
     }).catch((error) => {
         toast(error.message, 'error');
     })
@@ -291,7 +290,7 @@ const selectCreated = (location) => {
 }
 
 const discardUpdate = () => {
-    emit('discard-update');
+    router.back();
 }
 
 const showNotifcationWithSimilarArtists = (createdArtist) => {
@@ -313,7 +312,8 @@ const showNotifcationWithSimilarArtists = (createdArtist) => {
 }
 
 onMounted(() => {
-    if (props.eventToUpdate != null) {
+    if (route.params.eventId != null) {
+        event.id = parseInt(route.params.eventId);
         isUpdate.value = true
         getEventData();
     }

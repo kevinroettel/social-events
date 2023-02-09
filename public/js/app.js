@@ -23606,26 +23606,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _layouts_Navbar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/Navbar.vue */ "./resources/js/components/layouts/Navbar.vue");
 /* harmony import */ var _layouts_Toast_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layouts/Toast.vue */ "./resources/js/components/layouts/Toast.vue");
-/* harmony import */ var _pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Dashboard.vue */ "./resources/js/components/pages/Dashboard.vue");
-/* harmony import */ var _pages_EventForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/EventForm.vue */ "./resources/js/components/pages/EventForm.vue");
-/* harmony import */ var _pages_Event_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Event.vue */ "./resources/js/components/pages/Event.vue");
-/* harmony import */ var _pages_Artist_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Artist.vue */ "./resources/js/components/pages/Artist.vue");
-/* harmony import */ var _pages_Friends_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Friends.vue */ "./resources/js/components/pages/Friends.vue");
-/* harmony import */ var _pages_Account_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/Account.vue */ "./resources/js/components/pages/Account.vue");
-/* harmony import */ var _pages_SearchResults_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/SearchResults.vue */ "./resources/js/components/pages/SearchResults.vue");
-/* harmony import */ var _pages_Location_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/Location.vue */ "./resources/js/components/pages/Location.vue");
-/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
-/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
-
-
-
-
-
-
-
-
+/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
+/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
+/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
 
 
 
@@ -23646,17 +23630,11 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_11__.useLocationStore)();
-    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_12__.useArtistStore)();
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_13__.useUserStore)();
-    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_14__.useEventStore)();
+    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore)();
+    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__.useArtistStore)();
+    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__.useUserStore)();
+    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__.useEventStore)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
-    var currentPage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("home");
-    var showEvent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var showArtist = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var showLocation = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var eventToUpdate = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var searchQuery = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var dataDone = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       events: false,
       watchlist: false,
@@ -23665,41 +23643,6 @@ __webpack_require__.r(__webpack_exports__);
       users: false,
       friends: false
     });
-    var changePage = function changePage(page) {
-      currentPage.value = page;
-    };
-    var showEventPage = function showEventPage(eventId) {
-      currentPage.value = "event";
-      showEvent.value = eventId;
-    };
-    var showArtistPage = function showArtistPage(artistId) {
-      currentPage.value = "artist";
-      showArtist.value = artistId;
-    };
-    var showLocationPage = function showLocationPage(locationId) {
-      currentPage.value = "location";
-      showLocation.value = locationId;
-    };
-    var showEventUpdatePage = function showEventUpdatePage(eventId) {
-      currentPage.value = "eventform";
-      eventToUpdate.value = eventId;
-    };
-    var showSearchResults = function showSearchResults(query) {
-      currentPage.value = "search";
-      searchQuery.value = query;
-    };
-    var discardUpdate = function discardUpdate() {
-      currentPage.value = "event";
-      showEvent.value = eventToUpdate.value;
-      eventToUpdate.value = null;
-    };
-    var eventUpdated = function eventUpdated(event) {
-      eventStore.updateEventData(event);
-      currentPage.value = "event";
-      showEvent.value = event.id;
-      eventToUpdate.value = null;
-    };
-    var searchDone = function searchDone() {};
     var dataLoaded = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return dataDone.events && dataDone.watchlist && dataDone.locations && dataDone.artists && dataDone.users && dataDone.friends;
     });
@@ -23711,11 +23654,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
-    };
-    var addEvent = function addEvent(event) {
-      currentPage.value = "home";
-      event.location = locationStore.getLocationById(event.location_id);
-      eventStore.addNewEvent(event);
     };
     var getWatchlistEntries = function getWatchlistEntries() {
       axios.get("/users/".concat(userStore.getUserId, "/watchlists")).then(function (response) {
@@ -23773,25 +23711,9 @@ __webpack_require__.r(__webpack_exports__);
       eventStore: eventStore,
       axios: axios,
       props: props,
-      currentPage: currentPage,
-      showEvent: showEvent,
-      showArtist: showArtist,
-      showLocation: showLocation,
-      eventToUpdate: eventToUpdate,
-      searchQuery: searchQuery,
       dataDone: dataDone,
-      changePage: changePage,
-      showEventPage: showEventPage,
-      showArtistPage: showArtistPage,
-      showLocationPage: showLocationPage,
-      showEventUpdatePage: showEventUpdatePage,
-      showSearchResults: showSearchResults,
-      discardUpdate: discardUpdate,
-      eventUpdated: eventUpdated,
-      searchDone: searchDone,
       dataLoaded: dataLoaded,
       getEvents: getEvents,
-      addEvent: addEvent,
       getWatchlistEntries: getWatchlistEntries,
       getLocations: getLocations,
       getArtists: getArtists,
@@ -23804,18 +23726,10 @@ __webpack_require__.r(__webpack_exports__);
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
       Navbar: _layouts_Navbar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       Toast: _layouts_Toast_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      Dashboard: _pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      EventForm: _pages_EventForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      Event: _pages_Event_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      Artist: _pages_Artist_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-      Friends: _pages_Friends_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-      Account: _pages_Account_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-      SearchResults: _pages_SearchResults_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-      Location: _pages_Location_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_11__.useLocationStore,
-      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_12__.useArtistStore,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_13__.useUserStore,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_14__.useEventStore
+      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore,
+      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__.useArtistStore,
+      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__.useUserStore,
+      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__.useEventStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24012,7 +23926,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'EventList',
@@ -24028,14 +23944,13 @@ __webpack_require__.r(__webpack_exports__);
       "default": "artist"
     }
   },
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
     var props = __props;
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_0__.useRouter)();
     var showEventPage = function showEventPage(eventId) {
-      return emit('show-event-page', eventId);
+      return router.push("/event/".concat(eventId));
     };
     var getDate = function getDate(stringDate) {
       var date = new Date(stringDate);
@@ -24049,12 +23964,13 @@ __webpack_require__.r(__webpack_exports__);
       return date.getFullYear();
     };
     var __returned__ = {
+      router: router,
       props: props,
-      emit: emit,
       showEventPage: showEventPage,
       getDate: getDate,
       getYear: getYear,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_0__.onMounted
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.onMounted,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_0__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24209,10 +24125,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventStatusButtons.vue */ "./resources/js/components/layouts/EventStatusButtons.vue");
 /* harmony import */ var _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/dateFormat.js */ "./resources/js/components/helpers/dateFormat.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
 /* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
 /* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+
 
 
 
@@ -24237,33 +24155,33 @@ __webpack_require__.r(__webpack_exports__);
       "default": null
     }
   },
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
     var props = __props;
     var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
-    var axios = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.inject)('axios');
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
+    var axios = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.inject)('axios');
     var showEventPage = function showEventPage() {
-      emit('show-event-page', props.event.id);
+      router.push("/event/".concat(props.event.id));
     };
     var __returned__ = {
       userStore: userStore,
       eventStore: eventStore,
+      router: router,
       axios: axios,
       props: props,
-      emit: emit,
       showEventPage: showEventPage,
       EventStatusButtons: _EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       getFormattedDate: _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_1__.getFormattedDate,
-      inject: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.inject,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref,
-      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.watch,
+      inject: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.inject,
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.onMounted,
+      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref,
+      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.watch,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore
+      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24303,10 +24221,8 @@ __webpack_require__.r(__webpack_exports__);
       "default": []
     }
   },
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
     var props = __props;
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
@@ -24324,16 +24240,11 @@ __webpack_require__.r(__webpack_exports__);
         snapAlign: 'start'
       }
     });
-    var showEventPage = function showEventPage(eventId) {
-      emit('show-event-page', eventId);
-    };
     var __returned__ = {
       eventStore: eventStore,
       props: props,
       settings: settings,
       breakpoints: breakpoints,
-      emit: emit,
-      showEventPage: showEventPage,
       defineComponent: vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       Carousel: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel,
@@ -24428,49 +24339,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Navbar',
-  props: {
-    currentPage: {
-      required: true,
-      type: String,
-      "default": null
-    }
-  },
-  emits: ['page-change', 'search-query'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
-    var props = __props;
     var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore)();
-    var currentPage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)("home");
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
     var csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     var searchQuery = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var changePage = function changePage(newPage) {
-      emit('page-change', newPage);
-    };
     var submitLogoutForm = function submitLogoutForm(event) {
       event.preventDefault();
       document.getElementById('logout-form').submit();
     };
     var startSearch = function startSearch() {
-      if (searchQuery.value != null && searchQuery.value != "") emit('search-query', searchQuery.value);
+      if (searchQuery.value != null && searchQuery.value != "") {
+        router.push("/suche/".concat(searchQuery.value));
+      }
     };
     var __returned__ = {
       userStore: userStore,
-      props: props,
-      emit: emit,
-      currentPage: currentPage,
+      router: router,
       csrf: csrf,
       searchQuery: searchQuery,
-      changePage: changePage,
       submitLogoutForm: submitLogoutForm,
       startSearch: startSearch,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -25122,6 +25022,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
 /* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+
 
 
 
@@ -25131,39 +25033,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Artist',
-  props: {
-    artistId: {
-      required: true,
-      type: Number,
-      "default": null
-    }
-  },
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
-    var props = __props;
     var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_3__.useArtistStore)();
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_4__.useEventStore)();
     var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_5__.useLocationStore)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('axios');
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_7__.useRoute)();
     var show = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)('upcoming');
     var artist = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
     var upcomingEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
     var pastEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
     var getArtistData = function getArtistData() {
-      artist.value = artistStore.getArtistById(props.artistId);
-      upcomingEvents.value = eventStore.getEventsWithArtist(props.artistId);
+      artist.value = artistStore.getArtistById(route.params.artistId);
+      upcomingEvents.value = eventStore.getEventsWithArtist(route.params.artistId);
       upcomingEvents.value.forEach(function (event, index) {
         if (!event.hasOwnProperty('location')) {
           upcomingEvents.value[index].location = locationStore.getLocationById(event.location_id);
         }
       });
-      pastEvents.value = eventStore.getPastEventsWithArtist(props.artistId);
-    };
-    var showEventPage = function showEventPage(eventId) {
-      return emit('show-event-page', eventId);
+      pastEvents.value = eventStore.getPastEventsWithArtist(route.params.artistId);
     };
     var addTagToArtist = function addTagToArtist(tag) {
       axios.patch("/artists/".concat(artist.value.id, "/tags/").concat(tag.id)).then(function (response) {
@@ -25185,21 +25075,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
-      if (props.artistId != null) getArtistData();
+      if (route.params.artistId != null) getArtistData();
     });
     var __returned__ = {
       artistStore: artistStore,
       eventStore: eventStore,
       locationStore: locationStore,
       axios: axios,
-      props: props,
-      emit: emit,
+      route: route,
       show: show,
       artist: artist,
       upcomingEvents: upcomingEvents,
       pastEvents: pastEvents,
       getArtistData: getArtistData,
-      showEventPage: showEventPage,
       addTagToArtist: addTagToArtist,
       removeTagFromArtist: removeTagFromArtist,
       EventList: _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -25210,7 +25098,9 @@ __webpack_require__.r(__webpack_exports__);
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_3__.useArtistStore,
       useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_4__.useEventStore,
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_5__.useLocationStore,
-      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_6__.toast
+      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_6__.toast,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_7__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_7__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25243,19 +25133,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Dashboard',
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
-    var showEventPage = function showEventPage(eventId) {
-      emit('show-event-page', eventId);
-    };
     var __returned__ = {
       eventStore: eventStore,
-      emit: emit,
-      showEventPage: showEventPage,
       Watchlist: _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -25282,8 +25165,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
 /* harmony import */ var _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/geoCoding.js */ "./resources/js/components/helpers/geoCoding.js");
 /* harmony import */ var _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modals/ImageModal.vue */ "./resources/js/components/modals/ImageModal.vue");
 /* harmony import */ var _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modals/DistanceInfoModal.vue */ "./resources/js/components/modals/DistanceInfoModal.vue");
@@ -25296,6 +25179,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
 /* harmony import */ var _helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../helpers/toast.js */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+
 
 
 
@@ -25311,32 +25196,24 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Event',
-  props: {
-    eventId: {
-      required: true,
-      type: [Number, null],
-      "default": null
-    }
-  },
-  emits: ['show-artist-page', 'show-event-update'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
-    var props = __props;
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore)();
     var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_8__.useLocationStore)();
     var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__.useArtistStore)();
     var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__.useUserStore)();
-    var event = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(null);
-    var posts = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(null);
-    var watchlistStatus = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(null);
-    var showFullImage = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(false);
-    var interestedCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(0);
-    var attendingCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(0);
-    var distance = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref)(null);
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.useRoute)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.useRouter)();
+    var event = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
+    var posts = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
+    var watchlistStatus = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
+    var showFullImage = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(false);
+    var interestedCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(0);
+    var attendingCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(0);
+    var distance = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
     var getEventData = function getEventData() {
-      var eventFromStore = eventStore.getEventById(props.eventId);
+      var eventFromStore = eventStore.getEventById(route.params.eventId);
       if (eventFromStore.hasOwnProperty('status')) {
         event.value = eventFromStore.event;
         watchlistStatus.value = eventFromStore.status;
@@ -25348,7 +25225,7 @@ __webpack_require__.r(__webpack_exports__);
       getArtists();
     };
     var getEventPosts = function getEventPosts() {
-      axios.get("/events/".concat(props.eventId, "/posts")).then(function (response) {
+      axios.get("/events/".concat(route.params.eventId, "/posts")).then(function (response) {
         posts.value = response.data;
       })["catch"](function (error) {
         (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__.toast)(error.message, 'error');
@@ -25378,10 +25255,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
     var showArtistPage = function showArtistPage(artistId) {
-      emit('show-artist-page', artistId);
+      router.push("/kuenstler/".concat(artistId));
     };
     var openEventUpdateForm = function openEventUpdateForm() {
-      emit('show-event-update', props.eventId);
+      router.push("/event-aktualisieren/".concat(route.params.eventId));
     };
     var getDistance = function getDistance() {
       if (userStore.getUserCity != null) {
@@ -25390,12 +25267,12 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.watch)(watchlistStatus, function (newStatus, oldStatus) {
+    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.watch)(watchlistStatus, function (newStatus, oldStatus) {
       if (newStatus == 'interested') interestedCount.value++;else if (newStatus == 'attending') attendingCount.value++;
       if (oldStatus == 'interested') interestedCount.value--;else if (oldStatus == 'attending') attendingCount.value--;
     });
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.onMounted)(function () {
-      if (props.eventId != null) {
+    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.onMounted)(function () {
+      if (route.params.eventId != null) {
         getEventData();
         getWatchlistEntriesCount();
         getDistance();
@@ -25406,8 +25283,8 @@ __webpack_require__.r(__webpack_exports__);
       locationStore: locationStore,
       artistStore: artistStore,
       userStore: userStore,
-      props: props,
-      emit: emit,
+      route: route,
+      router: router,
       event: event,
       posts: posts,
       watchlistStatus: watchlistStatus,
@@ -25425,9 +25302,9 @@ __webpack_require__.r(__webpack_exports__);
       showArtistPage: showArtistPage,
       openEventUpdateForm: openEventUpdateForm,
       getDistance: getDistance,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_12__.ref,
-      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.watch,
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.onMounted,
+      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref,
+      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.watch,
       calculateRouteDistance: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_0__.calculateRouteDistance,
       ImageModal: _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       DistanceInfoModal: _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -25439,7 +25316,9 @@ __webpack_require__.r(__webpack_exports__);
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_8__.useLocationStore,
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__.useArtistStore,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__.useUserStore,
-      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__.toast
+      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__.toast,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_12__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_12__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25471,6 +25350,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
 /* harmony import */ var _helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../helpers/compareStrings.js */ "./resources/js/components/helpers/compareStrings.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -25486,30 +25366,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'EventForm',
-  props: {
-    eventToUpdate: {
-      required: false,
-      type: Number,
-      "default": null
-    }
-  },
-  emits: ['event-created', 'discard-update', 'event-updated'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
-    var props = __props;
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_6__.useEventStore)();
     var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_4__.useLocationStore)();
     var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_9__.useRouter)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_9__.useRoute)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
     var isUpdate = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var flyerUrl = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var showNotifcation = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var notificationText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var event = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
+      id: null,
       name: null,
       description: null,
       flyer: null,
@@ -25528,7 +25402,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       artists: false
     });
     var getEventData = function getEventData() {
-      var eventData = eventStore.getEventById(props.eventToUpdate);
+      var eventData = eventStore.getEventById(event.id);
       if (eventData.event != undefined) eventData = eventData.event;
       event.name = eventData.name;
       event.description = eventData.description;
@@ -25539,7 +25413,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       event.begin = eventData.begin;
       event.ticketLink = eventData.ticketLink;
       event.location = eventData.location;
-      event.artists = eventData.artists;
+      eventData.artists.forEach(function (artist) {
+        if (Number.isInteger(artist)) {
+          event.artists.push(artistStore.getArtistById(artist));
+        } else {
+          event.artists.push(artist);
+        }
+      });
     };
     var addArtist = function addArtist(artist) {
       event.artists.push(artist);
@@ -25567,19 +25447,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         } else hasError[key] = false;
       }
       if (allInputsOkay) {
-        if (props.eventToUpdate == null) createEvent();else updateEvent();
+        if (event.id == null) createEvent();else updateEvent();
       }
     };
     var createEvent = function createEvent() {
       axios.post('/events', getFormData()).then(function (response) {
-        emit('event-created', response.data);
+        eventStore.addNewEvent(response.data);
+        router.push("/event/".concat(response.data.id));
       })["catch"](function (error) {
         (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_7__.toast)(error.message, 'error');
       });
     };
     var updateEvent = function updateEvent() {
-      axios.post("/events/".concat(props.eventToUpdate), getFormData()).then(function (response) {
-        emit('event-updated', response.data);
+      axios.post("/events/".concat(event.id), getFormData()).then(function (response) {
+        eventStore.updateEventData(response.data);
+        router.back();
       })["catch"](function (error) {
         (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_7__.toast)(error.message, 'error');
       });
@@ -25607,7 +25489,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       event.location = location;
     };
     var discardUpdate = function discardUpdate() {
-      emit('discard-update');
+      router.back();
     };
     var showNotifcationWithSimilarArtists = function showNotifcationWithSimilarArtists(createdArtist) {
       var similar = [];
@@ -25625,7 +25507,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       showNotifcation.value = true;
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
-      if (props.eventToUpdate != null) {
+      if (route.params.eventId != null) {
+        event.id = parseInt(route.params.eventId);
         isUpdate.value = true;
         getEventData();
       }
@@ -25634,9 +25517,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       eventStore: eventStore,
       locationStore: locationStore,
       artistStore: artistStore,
+      router: router,
+      route: route,
       axios: axios,
-      props: props,
-      emit: emit,
       isUpdate: isUpdate,
       flyerUrl: flyerUrl,
       showNotifcation: showNotifcation,
@@ -25666,7 +25549,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore,
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_6__.useEventStore,
       toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_7__.toast,
-      compareStrings: _helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__.compareStrings
+      compareStrings: _helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__.compareStrings,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_9__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_9__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25757,8 +25642,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
+/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/LocationStore */ "./resources/js/stores/LocationStore.js");
@@ -25770,31 +25656,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Location',
-  props: {
-    showLocation: {
-      required: true,
-      type: Number,
-      "default": null
-    }
-  },
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
-    var props = __props;
     var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore)();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
     var locationStore = (0,_stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore)();
-    var show = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)('upcoming');
-    var location = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
-    var upcomingEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
-    var pastEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_5__.useRoute)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter)();
+    var show = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)('upcoming');
+    var location = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var upcomingEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var pastEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
     var getLocation = function getLocation() {
-      location.value = locationStore.getLocationById(props.showLocation);
-      upcomingEvents.value = eventStore.getEventsInLocation(props.showLocation);
+      location.value = locationStore.getLocationById(route.params.locationId);
+      upcomingEvents.value = eventStore.getEventsInLocation(route.params.locationId);
       upcomingEvents.value.forEach(function (event, eIndex) {
         event.artists.forEach(function (artist, aIndex) {
           if (Number.isInteger(artist)) {
@@ -25802,7 +25681,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       });
-      pastEvents.value = eventStore.getPastEventsInLocation(props.showLocation);
+      pastEvents.value = eventStore.getPastEventsInLocation(route.params.locationId);
       pastEvents.value.forEach(function (event, eIndex) {
         event.artists.forEach(function (artist, aIndex) {
           if (Number.isInteger(artist)) {
@@ -25848,18 +25727,15 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById('location-details-description').innerHTML = desc;
       }, 1);
     };
-    var showEventPage = function showEventPage(eventId) {
-      return emit('show-event-page', eventId);
-    };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.onMounted)(function () {
-      if (props.showLocation != null) getLocation();
+    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__.onMounted)(function () {
+      if (route.params.locationId != null) getLocation();
     });
     var __returned__ = {
       artistStore: artistStore,
       eventStore: eventStore,
       locationStore: locationStore,
-      props: props,
-      emit: emit,
+      route: route,
+      router: router,
       show: show,
       location: location,
       upcomingEvents: upcomingEvents,
@@ -25869,9 +25745,10 @@ __webpack_require__.r(__webpack_exports__);
       getBarrierFree: getBarrierFree,
       locationUpdated: locationUpdated,
       updateDescription: updateDescription,
-      showEventPage: showEventPage,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.ref,
+      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__.onMounted,
+      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter,
       useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore,
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       useLocationStore: _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore,
@@ -25900,6 +25777,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
@@ -25907,24 +25785,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SearchResults',
-  props: {
-    searchQuery: {
-      required: true,
-      type: String,
-      "default": null
-    }
-  },
   emits: ['show-artist-page', 'show-event-page', 'show-location-page'],
   setup: function setup(__props, _ref) {
     var expose = _ref.expose,
       emit = _ref.emit;
     expose();
-    var props = __props;
     var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_1__.useArtistStore)();
     var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_2__.useEventStore)();
     var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_4__.useRoute)();
     var searchDone = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var result = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       artists: null,
@@ -25932,24 +25805,24 @@ __webpack_require__.r(__webpack_exports__);
       locations: null
     });
     var search = function search() {
-      result.artists = artistStore.getArtistsByString(props.searchQuery);
-      result.events = eventStore.getEventsByString(props.searchQuery);
-      result.locations = locationStore.getLocationsByString(props.searchQuery);
+      result.artists = artistStore.getArtistsByString(route.params.query);
+      result.events = eventStore.getEventsByString(route.params.query);
+      result.locations = locationStore.getLocationsByString(route.params.query);
       searchDone.value = true;
     };
     var showArtistPage = function showArtistPage(artistId) {
-      return emit('show-artist-page', artistId);
+      return router.push("/k\xFCnstler/".concat(artistId));
     };
     var showEventPage = function showEventPage(eventId) {
-      return emit('show-event-page', eventId);
+      return router.push("/event/".concat(eventId));
     };
     var showLocationPage = function showLocationPage(locationId) {
-      return emit('show-location-page', locationId);
+      return router.push("/venue/".concat(locationId));
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
-      return props.searchQuery;
+      return route.params.query;
     }, function (newQuery, oldQuery) {
-      if (newQuery != oldQuery) search();
+      if (newQuery != oldQuery && newQuery != null) search();
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       search();
@@ -25958,7 +25831,8 @@ __webpack_require__.r(__webpack_exports__);
       artistStore: artistStore,
       eventStore: eventStore,
       locationStore: locationStore,
-      props: props,
+      router: router,
+      route: route,
       emit: emit,
       searchDone: searchDone,
       result: result,
@@ -25970,6 +25844,8 @@ __webpack_require__.r(__webpack_exports__);
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_4__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter,
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_1__.useArtistStore,
       useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_2__.useEventStore,
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore
@@ -26149,15 +26025,7 @@ var _hoisted_3 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_view = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-view");
-  return $setup.dataLoaded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Navbar"], {
-    currentPage: $setup.currentPage,
-    onPageChange: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.changePage($event);
-    }),
-    onSearchQuery: _cache[1] || (_cache[1] = function ($event) {
-      return $setup.showSearchResults($event);
-    })
-  }, null, 8 /* PROPS */, ["currentPage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dashboard\r\n                v-if=\"currentPage == 'home'\"\r\n                @show-event-page=\"showEventPage($event)\"\r\n            />\r\n\r\n            <Event\r\n                v-else-if=\"currentPage == 'event'\"\r\n                :eventId=\"showEvent\"\r\n                @show-artist-page=\"showArtistPage($event)\"\r\n                @show-event-update=\"showEventUpdatePage($event)\"\r\n            />\r\n\r\n            <EventForm\r\n                v-if=\"currentPage == 'eventform'\"\r\n                :eventToUpdate=\"eventToUpdate\"\r\n                @event-created=\"addEvent($event)\"\r\n                @discard-update=\"discardUpdate()\"\r\n                @event-updated=\"eventUpdated($event)\"\r\n            />\r\n\r\n            <SearchResults\r\n                v-else-if=\"currentPage == 'search'\"\r\n                :searchQuery=\"searchQuery\"\r\n                @show-artist-page=\"showArtistPage($event)\"\r\n                @show-event-page=\"showEventPage($event)\"\r\n                @show-location-page=\"showLocationPage($event)\"\r\n            />\r\n\r\n            <Artist\r\n                v-else-if=\"currentPage == 'artist'\"\r\n                :artistId=\"showArtist\"\r\n                @show-event-page=\"showEventPage($event)\"\r\n            />\r\n\r\n            <Location\r\n                v-else-if=\"currentPage == 'location'\"\r\n                :showLocation=\"showLocation\"\r\n                @show-event-page=\"showEventPage($event)\"\r\n            />\r\n\r\n            <Friends\r\n                v-else-if=\"currentPage == 'friends'\"\r\n            />\r\n\r\n            <Account\r\n                v-else-if=\"currentPage == 'account'\"\r\n            /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Toast"])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3));
+  return $setup.dataLoaded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Navbar"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" includes all main pages. to see every page go to router.js "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Toast"])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3));
 }
 
 /***/ }),
@@ -26569,10 +26437,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventTeaser"], {
               status: event.status != undefined ? event.status : null,
-              event: event.event != undefined ? event.event : event,
-              onShowEventPage: _cache[0] || (_cache[0] = function ($event) {
-                return $setup.showEventPage($event);
-              })
+              event: event.event != undefined ? event.event : event
             }, null, 8 /* PROPS */, ["status", "event"])])];
           }),
           _: 2 /* DYNAMIC */
@@ -26699,31 +26564,31 @@ var _hoisted_14 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   var _component_FontAwesomeIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FontAwesomeIcon");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a :class=\"`nav-link ${props.currentPage == 'home' ? 'active' : ''}`\" aria-current=\"page\" @click=\"changePage('home')\">Home</a>\r\n                    <a :class=\"`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`\" @click=\"changePage('eventform')\">Neues Event</a>\r\n                    <a :class=\"`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`\" @click=\"changePage('friends')\">Freunde</a> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link ".concat($setup.props.currentPage == 'home' ? 'active' : ''))
+    "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_7];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/neues-event",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link ".concat($setup.props.currentPage == 'eventform' ? 'active' : ''))
+    "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_8];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/freunde",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link ".concat($setup.props.currentPage == 'friends' ? 'active' : ''))
+    "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_9];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "search",
     placeholder: "Search",
@@ -26749,20 +26614,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "hidden",
     name: "_token",
     value: $setup.csrf
-  }, null, 8 /* PROPS */, _hoisted_13)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("nav-link account-link ".concat($setup.props.currentPage == 'account' ? 'active' : '')),
-    onClick: _cache[4] || (_cache[4] = function ($event) {
-      return $setup.changePage('account');
-    })
-  }, [$setup.userStore.getUserPicture == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FontAwesomeIcon, {
-    key: 0,
-    "class": "navbar-profile-picture",
-    icon: "fa-solid fa-circle-user"
-  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 1,
-    "class": "navbar-profile-picture",
-    src: '/storage' + $setup.userStore.getUserPicture
-  }, null, 8 /* PROPS */, _hoisted_14))], 2 /* CLASS */)])])])]);
+  }, null, 8 /* PROPS */, _hoisted_13)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/account",
+    "class": "nav-link account-link"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$setup.userStore.getUserPicture == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FontAwesomeIcon, {
+        key: 0,
+        "class": "navbar-profile-picture",
+        icon: "fa-solid fa-circle-user"
+      })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+        key: 1,
+        "class": "navbar-profile-picture",
+        src: '/storage' + $setup.userStore.getUserPicture
+      }, null, 8 /* PROPS */, _hoisted_14))];
+    }),
+    _: 1 /* STABLE */
+  })])])])]);
 }
 
 /***/ }),
@@ -27608,16 +27476,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, " Vergangene Veranstaltungen ", 2 /* CLASS */)])])]), $setup.show == 'upcoming' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.upcomingEvents,
-    parentModel: 'artist',
-    onShowEventPage: _cache[4] || (_cache[4] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    parentModel: 'artist'
   }, null, 8 /* PROPS */, ["events"])])) : $setup.show == 'past' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.pastEvents,
-    parentModel: 'artist',
-    onShowEventPage: _cache[5] || (_cache[5] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    parentModel: 'artist'
   }, null, 8 /* PROPS */, ["events"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
@@ -27651,20 +27513,9 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit existieren keine aktuellen Events. Erstelle ein paar!", -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"], {
-    onShowEventPage: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.showEventPage($event);
-    })
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"], {
-    onShowEventPage: _cache[1] || (_cache[1] = function ($event) {
-      return $setup.showEventPage($event);
-    })
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.eventStore.getAllEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.eventStore.getAllEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
     key: 1,
-    events: $setup.eventStore.getAllEvents,
-    onShowEventPage: _cache[2] || (_cache[2] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    events: $setup.eventStore.getAllEvents
   }, null, 8 /* PROPS */, ["events"]))])])]);
 }
 
@@ -27975,7 +27826,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), $setup.isUpdate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["LineUpModal"], {
     key: 0,
     lineup: $setup.event.artists,
-    eventId: $props.eventToUpdate,
+    eventId: $setup.event.id,
     onAddedArtist: _cache[1] || (_cache[1] = function ($event) {
       return $setup.addArtist($event);
     }),
@@ -28058,7 +27909,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("em", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(search), 1 /* TEXT */), _hoisted_24], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("em", _hoisted_25, "Fange an zu Tippen um eine Venue zu finden."))];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["class", "options", "modelValue"]), _hoisted_26]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" artists "), $setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_27, "Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.notificationText != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notificationText), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.eventToUpdate == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
+  }, 8 /* PROPS */, ["class", "options", "modelValue"]), _hoisted_26]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" artists "), $setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_27, "Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.notificationText != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notificationText), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.event.id == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
     multiple: "",
     taggable: "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("form-control ".concat($setup.errorClass('artists'))),
@@ -28265,16 +28116,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, " Vergangene Veranstaltungen ", 2 /* CLASS */)])])]), $setup.show == 'upcoming' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.upcomingEvents,
-    parentModel: 'location',
-    onShowEventPage: _cache[3] || (_cache[3] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    parentModel: 'location'
   }, null, 8 /* PROPS */, ["events"])])) : $setup.show == 'past' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventList"], {
     events: $setup.pastEvents,
-    parentModel: 'location',
-    onShowEventPage: _cache[4] || (_cache[4] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    parentModel: 'location'
   }, null, 8 /* PROPS */, ["events"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
@@ -28324,7 +28169,7 @@ var _hoisted_13 = {
 };
 var _hoisted_14 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $setup.searchDone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Suchanfrage zu: \"" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.searchQuery) + "\"", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, $setup.result.artists.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, "Keine Künstler gefunden.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.result.artists, function (artist, index) {
+  return $setup.searchDone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Suchanfrage zu: \"" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.route.params.query) + "\"", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, $setup.result.artists.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, "Keine Künstler gefunden.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.result.artists, function (artist, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -28770,6 +28615,9 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
     path: '/neues-event',
     component: _components_pages_EventForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
+    path: '/event-aktualisieren/:eventId',
+    component: _components_pages_EventForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }, {
     path: '/event/:eventId',
     component: _components_pages_Event_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
@@ -28782,7 +28630,7 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
     path: '/account',
     component: _components_pages_Account_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, {
-    path: '/künstler/:artistId',
+    path: '/kuenstler/:artistId',
     component: _components_pages_Artist_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/venue/:locationId',

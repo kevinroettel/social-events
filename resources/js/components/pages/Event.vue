@@ -118,23 +118,14 @@ import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useUserStore } from '../../stores/UserStore.js';
 import { toast } from '../helpers/toast.js';
+import { useRoute, useRouter } from 'vue-router';
 const eventStore = useEventStore();
 const locationStore = useLocationStore();
 const artistStore = useArtistStore();
 const userStore = useUserStore();
 
-const props = defineProps({
-    eventId: {
-        required: true,
-        type: [Number, null],
-        default: null
-    }
-});
-
-const emit = defineEmits([
-    'show-artist-page',
-    'show-event-update'
-]);
+const route = useRoute();
+const router = useRouter();
 
 const event = ref(null);
 const posts = ref(null);
@@ -145,7 +136,7 @@ const attendingCount = ref(0);
 const distance = ref(null);
 
 const getEventData = () =>  {
-    let eventFromStore = eventStore.getEventById(props.eventId);
+    let eventFromStore = eventStore.getEventById(route.params.eventId);
 
     if (eventFromStore.hasOwnProperty('status')) {
         event.value = eventFromStore.event;
@@ -161,7 +152,7 @@ const getEventData = () =>  {
 
 const getEventPosts = () => {
     axios.get(
-        `/events/${props.eventId}/posts`
+        `/events/${route.params.eventId}/posts`
     ).then((response) => {
         posts.value = response.data;
     }).catch((error) => {
@@ -199,11 +190,11 @@ const getWatchlistEntriesCount = () => {
 }
 
 const showArtistPage = (artistId) => {
-    emit('show-artist-page', artistId);
+    router.push(`/kuenstler/${artistId}`);
 }
 
 const openEventUpdateForm = () => {
-    emit('show-event-update', props.eventId);
+    router.push(`/event-aktualisieren/${route.params.eventId}`);
 }
 
 const getDistance = () => {
@@ -231,7 +222,7 @@ watch(
 );
 
 onMounted(() => {
-    if (props.eventId != null) {
+    if (route.params.eventId != null) {
         getEventData();
         getWatchlistEntriesCount();
         getDistance();

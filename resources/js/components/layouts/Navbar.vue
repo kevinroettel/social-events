@@ -15,12 +15,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <!-- <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
-                    <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
-                    <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a> -->
-                    <router-link to="/" :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`">Home</router-link>
-                    <router-link to="/neues-event" :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`">Neues Event</router-link>
-                    <router-link to="/freunde" :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`">Freunde</router-link>
+                    <router-link to="/" class="nav-link">Home</router-link>
+                    <router-link to="/neues-event" class="nav-link">Neues Event</router-link>
+                    <router-link to="/freunde" class="nav-link">Freunde</router-link>
 
                     <div class="display-inline-flex">
                         <input 
@@ -59,10 +56,10 @@
                         </form>
                     </div>
 
-                    <a :class="`nav-link account-link ${props.currentPage == 'account' ? 'active' : ''}`" @click="changePage('account')">
+                    <router-link to="/account" class="nav-link account-link">
                         <FontAwesomeIcon class="navbar-profile-picture" v-if="userStore.getUserPicture == null" icon="fa-solid fa-circle-user" />
                         <img class="navbar-profile-picture" v-else :src="'/storage' + userStore.getUserPicture">
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -70,30 +67,14 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from '../../stores/UserStore.js';
 
 const userStore = useUserStore();
+const router = useRouter();
 
-const props = defineProps({
-    currentPage: {
-        required: true,
-        type: String,
-        default: null
-    },
-});
-
-const emit = defineEmits([
-    'page-change',
-    'search-query'
-]);
-
-const currentPage = ref("home");
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const searchQuery = ref(null);
-
-const changePage = (newPage) => {
-    emit('page-change', newPage);
-}
 
 const submitLogoutForm = (event) => {
     event.preventDefault();
@@ -101,7 +82,8 @@ const submitLogoutForm = (event) => {
 }
 
 const startSearch = () => {
-    if (searchQuery.value != null && searchQuery.value != "") emit('search-query', searchQuery.value);
+    if (searchQuery.value != null && searchQuery.value != "") {
+        router.push(`/suche/${searchQuery.value}`);
+    } 
 }
-
 </script>

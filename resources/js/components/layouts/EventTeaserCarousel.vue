@@ -5,7 +5,6 @@
                 <EventTeaser 
                     :status="(event.status != undefined ? event.status : null)"
                     :event="(event.event != undefined ? event.event : event)"
-                    @show-event-page="showEventPage($event)"
                 />
             </div>
         </Slide>
@@ -46,12 +45,4 @@ const breakpoints = reactive({
         snapAlign: 'start',
     },
 })
-
-const emit = defineEmits([
-    'show-event-page'
-]);
-
-const showEventPage = (eventId) => {
-    emit('show-event-page', eventId);
-}
 </script>
