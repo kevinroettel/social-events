@@ -7,7 +7,9 @@
         />
 
         <div class="main-content">
-            <Dashboard
+            <router-view></router-view>
+
+            <!-- <Dashboard
                 v-if="currentPage == 'home'"
                 @show-event-page="showEventPage($event)"
             />
@@ -20,7 +22,7 @@
             />
 
             <EventForm
-                v-else-if="currentPage == 'eventform'"
+                v-if="currentPage == 'eventform'"
                 :eventToUpdate="eventToUpdate"
                 @event-created="addEvent($event)"
                 @discard-update="discardUpdate()"
@@ -53,7 +55,7 @@
 
             <Account
                 v-else-if="currentPage == 'account'"
-            />
+            /> -->
 
             <Toast />
         </div>

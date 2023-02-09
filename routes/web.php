@@ -29,7 +29,6 @@ Route::get('/login', function () { return view('auth.login'); });
 Route::post('/login', [LoginController::class, 'authentication'])->name('login');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/', function () { return view('app'); });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -67,5 +66,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/users/{userId}/watchlists', [WatchlistController::class, 'getUserWatchlistEntries']);
     Route::get('/users/{userId}/watchlists/{eventId}', [WatchlistController::class, 'getInterestedFriends']);
     Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'updateEntryStatus']);
-    
+
+    Route::get('/{any}', function () { return view('app'); })->where('any', '.*');
 });

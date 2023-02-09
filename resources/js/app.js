@@ -33,6 +33,8 @@ import vSelect from "vue-select";
 
 import App from './components/App.vue';
 
+import { router } from './router.js';
+
 if (document.getElementById('app')) {
     const app = Vue.createApp({});
     const pinia = createPinia();
@@ -41,6 +43,7 @@ if (document.getElementById('app')) {
     app.component('FontAwesomeIcon', FontAwesomeIcon);
     app.component('v-select', vSelect);
     app.use(pinia);
+    app.use(router);
     app.use(VueAxios, axios);
     app.provide('axios', app.config.globalProperties.axios);
     app.mount('#app');

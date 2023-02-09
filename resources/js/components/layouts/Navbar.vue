@@ -15,9 +15,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
+                    <!-- <a :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`" aria-current="page" @click="changePage('home')">Home</a>
                     <a :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`" @click="changePage('eventform')">Neues Event</a>
-                    <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a>
+                    <a :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`" @click="changePage('friends')">Freunde</a> -->
+                    <router-link to="/" :class="`nav-link ${props.currentPage == 'home' ? 'active' : ''}`">Home</router-link>
+                    <router-link to="/neues-event" :class="`nav-link ${props.currentPage == 'eventform' ? 'active' : ''}`">Neues Event</router-link>
+                    <router-link to="/freunde" :class="`nav-link ${props.currentPage == 'friends' ? 'active' : ''}`">Freunde</router-link>
 
                     <div class="display-inline-flex">
                         <input 
