@@ -67,6 +67,8 @@ export const useEventStore = defineStore('events', {
                 event = this.watchlist.filter(e => e.event_id == id);
             }
 
+            if (event.length == 0) return null;
+
             return event[0];
         },
 

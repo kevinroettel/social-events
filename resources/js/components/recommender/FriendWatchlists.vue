@@ -11,7 +11,6 @@
             <EventTeaserCarousel
                 v-else
                 :events="events"
-                @show-event-page="showEventPage($event)"
             />
         </div>
     </div>
@@ -25,27 +24,25 @@ import { useUserStore } from "../../stores/UserStore";
 const eventStore = useEventStore();
 const userStore = useUserStore();
 
-const emit = defineEmits([
-    'show-event-page'
-]);
-
 const events = ref([]);
 const friendsWatchlists = ref([]);
 
 const getData = () => {
     friendsWatchlists.value = userStore.getFriendWatchlistEntries
 
-    // event id, weight
-    
+    // calculates weights of event priorization
+    // interested friend adds 1, attending friend adds 2
     friendsWatchlists.value.forEach(entry => {
         if (events.value.length != 0) {
 
+            // if event hasnt been inserted into array yet, do it
             if (!events.value.find(event => event.event_id === entry.event_id)) {
                 events.value.push({
                     event_id: entry.event_id,
                     weight: (entry.status == 'interested' ? 1 : 2)
                 })
             } else {
+                // goes through events and adds weight to event
                 events.value.forEach((event, index) => {
                     if (event.event_id == entry.event_id) {
                         events[index].weight += (entry.status == 'interested' ? 1 : 2);
@@ -54,6 +51,7 @@ const getData = () => {
             }
 
         } else {
+            // first event push
             events.value.push({
                 event_id: entry.event_id,
                 weight: (entry.status == 'interested' ? 1 : 2)
@@ -61,15 +59,18 @@ const getData = () => {
         }
     });
 
+    // sort events descending by weight
     events.value = events.value.sort((eventA, eventB) => eventB.weight - eventA.weight)
 
-    events.value.forEach((event, index) => {
-        events.value[index] = eventStore.getEventById(event.event_id)
-    })
-}
+    // gets eventdata from store, if null event is in the past and gets removed
+    let index = events.value.length - 1;
 
-const showEventPage = (eventId) => {
-    emit('show-event-page', eventId);
+    while (index >= 0) {
+        let eventData = eventStore.getEventById(events.value[index].event_id);
+        if (eventData === null) events.value.splice(index, 1);
+        else events.value[index] = eventData;
+        index--;
+    }
 }
 
 onMounted(() => {

@@ -1,11 +1,13 @@
 <template v-cloak>
     <div>
         <Watchlist />
+        <SimilarEvents />
         <FriendWatchlists />
+
 
         <div class="card">
             <div class="card-header">
-                Vorschläge (erstmal Platzhalter, soll aber schonmal im Dashboard zu sehen sein)
+                Alle Events
             </div>
             <div class="card-body">
                 <div v-if="eventStore.getAllEvents.length == 0">
@@ -22,6 +24,7 @@
 </template>
 <script setup>
 import Watchlist from '../recommender/Watchlist.vue';
+import SimilarEvents from '../recommender/SimilarEvents.vue';
 import FriendWatchlists from '../recommender/FriendWatchlists.vue'
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from '../../stores/EventStore.js';

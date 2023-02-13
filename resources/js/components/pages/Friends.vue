@@ -1,52 +1,70 @@
 <template>
     <div>
         <div class="row">
-            <div  class="col">
-                <h4>Freunde:</h4>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Freunde:</h4>
+                    </div>
 
-                <p v-if="userStore.getFriends == null || userStore.getFriends.length == 0">
-                    Noch hast du hier keine Freunde. Füge doch welche hinzu!
-                </p>
+                    <div class="card-body">
+                        <p v-if="userStore.getFriends == null || userStore.getFriends.length == 0">
+                            Noch hast du hier keine Freunde. Füge doch welche hinzu!
+                        </p>
 
-                <UserBox 
-                    v-for="(friend, index) in userStore.getFriends"
-                    :key="index"
-                    :user="friend" 
-                    :friendStatus="'friend'"
-                />
+                        <UserBox 
+                            v-for="(friend, index) in userStore.getFriends"
+                            :key="index"
+                            :user="friend" 
+                            :friendStatus="'friend'"
+                        />
+                    </div>
+                </div>
             </div>
 
             <div class="col">
-                <h4>Ausstehende Anfragen:</h4>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Ausstehende Anfragen:</h4>
+                    </div>
 
-                <p v-if="userStore.getFriendRequests == null || userStore.getFriendRequests.length == 0">
-                    Es gibt momentan keine ausstehenden Freundschaftsanfragen.
-                </p>
+                    <div class="card-body">
+                        <p v-if="userStore.getFriendRequests == null || userStore.getFriendRequests.length == 0">
+                            Es gibt momentan keine ausstehenden Freundschaftsanfragen.
+                        </p>
 
-                <UserBox
-                    v-for="(user, index) in userStore.getFriendRequests"
-                    :key="index"
-                    :user="user"
-                    :friendStatus="'pending'"
-                />
+                        <UserBox
+                            v-for="(user, index) in userStore.getFriendRequests"
+                            :key="index"
+                            :user="user"
+                            :friendStatus="'pending'"
+                        />
+                    </div>
+                </div>
             </div>
 
             <div class="col">
-                <h4>Nach neuen Freunden suchen:</h4>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Nach neuen Freunden suchen:</h4>
+                    </div>
 
-                <input 
-                    type="text" 
-                    class="form-control w-50" 
-                    v-model="searchUser" 
-                    @input="filterUsers()"
-                >
+                    <div class="card-body">
+                        <input 
+                            type="text" 
+                            class="form-control w-50" 
+                            v-model="searchUser" 
+                            @input="filterUsers()"
+                        >
 
-                <div v-if="searchUser != ''">
-                    <UserBox
-                        v-for="(user, index) in possibleUsers"
-                        :key="index"
-                        :user="user"
-                    />
+                        <div v-if="searchUser != ''">
+                            <UserBox
+                                v-for="(user, index) in possibleUsers"
+                                :key="index"
+                                :user="user"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
