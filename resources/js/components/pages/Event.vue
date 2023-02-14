@@ -20,10 +20,14 @@
                                 <span>Beginn: {{ event.begin }}<br></span>
                             </div>
                             <div class="col">
-                                <span v-if="event.location != null">
+                                <a 
+                                    v-if="event.location != null"
+                                    @click="showLocationPage(event.location.id)"
+                                    class="list-item-link"
+                                >
                                     {{ event.location.name }} in {{ event.location.city }}
                                     <br>
-                                </span>
+                                </a>
                                 <span v-if="distance != null">
                                     ~ {{ distance }}km 
                                     <button 
@@ -187,6 +191,10 @@ const getWatchlistEntriesCount = () => {
             else if (entry.status == 'attending') attendingCount.value++;
         }
     });
+}
+
+const showLocationPage = (locationId) => {
+    router.push(`/venue/${locationId}`);
 }
 
 const showArtistPage = (artistId) => {

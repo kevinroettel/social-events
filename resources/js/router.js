@@ -12,6 +12,9 @@ import Account from './components/pages/Account.vue';
 export const router = createRouter({
     history: createWebHistory(),
     routes: [
+        { path: '/login', redirect: '/' },
+        { path: '/js/bootstrap.esm.js.map', redirect: '/' },
+
         { path: '/', component: Dashboard },
         { path: '/neues-event', component: EventForm },
         { path: '/event-aktualisieren/:eventId', component: EventForm },

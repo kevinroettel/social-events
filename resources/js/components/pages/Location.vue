@@ -151,8 +151,10 @@ const locationUpdated = (newLocationData) => {
 
 const updateDescription = () => {
     setTimeout(() => {
-        let desc = location.value.description.replace('\n', '<br>');
-        document.getElementById('location-details-description').innerHTML = desc;
+        if (location.value.description != null) {
+            let desc = location.value.description.replace('\n', '<br>');
+            document.getElementById('location-details-description').innerHTML = desc;
+        }
     }, 1);
 }
 
