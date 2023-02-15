@@ -19,13 +19,24 @@
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from "../../stores/EventStore";
 import { onMounted, ref } from 'vue';
+import { useArtistStore } from '../../stores/ArtistStore';
 
 const eventStore = useEventStore();
+const artistStore = useArtistStore();
 
 const events = ref([]);
 
 const getData = () => {
-    
+    let watchlist = eventStore.getWatchlist
+    let oldWatchlist = eventStore.getOldWatchlist
+
+    let tags = [];
+
+    watchlist.forEach(entry => {
+        entry.event.artists.forEach(artist => {
+            
+        })
+    })
 }
 
 onMounted(() => {

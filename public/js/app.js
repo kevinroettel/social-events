@@ -26022,7 +26022,11 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
     var events = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
-    var getData = function getData() {};
+    var getData = function getData() {
+      var watchlist = eventStore.getWatchlist;
+      var oldWatchlist = eventStore.getOldWatchlist;
+      var tags = [];
+    };
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getData();
     });
@@ -28873,13 +28877,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "useEventStore": () => (/* binding */ useEventStore)
 /* harmony export */ });
 /* harmony import */ var pinia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pinia */ "./node_modules/pinia/dist/pinia.mjs");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events', {
   state: function state() {
     return {
       events: [],
       oldEvents: [],
-      watchlist: []
+      watchlist: [],
+      oldWatchlist: []
     };
   },
   getters: {
@@ -28888,6 +28899,9 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
     },
     getWatchlist: function getWatchlist(state) {
       return state.watchlist;
+    },
+    getOldWatchlist: function getOldWatchlist(state) {
+      return state.oldWatchlist;
     },
     isWatchlistEmpty: function isWatchlistEmpty(state) {
       return state.watchlist.length == 0;
@@ -28904,11 +28918,24 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
       });
     },
     initializeWatchlist: function initializeWatchlist(data) {
+      var _this2 = this;
       this.watchlist = data;
       for (var index = 0; index < this.watchlist.length; index++) {
         var event = this.removeEventById(this.watchlist[index].event_id);
-        if (event == null) this.watchlist.splice(index--, 1);else this.watchlist[index].event = event[0];
+        if (event == null) {
+          var _this$oldWatchlist;
+          var oldWatchlistEntry = this.watchlist.splice(index--, 1);
+          (_this$oldWatchlist = this.oldWatchlist).push.apply(_this$oldWatchlist, _toConsumableArray(oldWatchlistEntry));
+        } else {
+          this.watchlist[index].event = event[0];
+        }
       }
+      this.oldWatchlist.forEach(function (entry, index) {
+        var oldEvent = _this2.oldEvents.filter(function (e) {
+          return e.id == entry.event_id;
+        });
+        _this2.oldWatchlist[index].event = oldEvent[0];
+      });
     },
     removeEventById: function removeEventById(id) {
       var index = this.events.findIndex(function (event) {
@@ -28932,33 +28959,39 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
       if (event.length == 0) return null;
       return event[0];
     },
+    getOldEventById: function getOldEventById(id) {
+      var event = this.oldEvents.filter(function (e) {
+        return e.id == id;
+      });
+      if (event.length == 0) return null;else return event[0];
+    },
     updateEventData: function updateEventData(eventData) {
-      var _this2 = this;
+      var _this3 = this;
       this.events.forEach(function (event, index) {
         if (event.id == eventData.id) {
           var location = event.location;
           var watchlistEntries = event.watchlists;
-          _this2.events[index] = eventData;
-          _this2.events[index].location = location;
-          _this2.events[index].watchlists = watchlistEntries;
+          _this3.events[index] = eventData;
+          _this3.events[index].location = location;
+          _this3.events[index].watchlists = watchlistEntries;
         }
       });
       this.watchlist.forEach(function (entry, index) {
         if (entry.event.id == eventData.id) {
           var location = entry.event.location;
           var watchlistEntries = entry.event.watchlists;
-          _this2.watchlist[index].event = eventData;
-          _this2.watchlist[index].event.location = location;
-          _this2.watchlist[index].event.watchlists = watchlistEntries;
+          _this3.watchlist[index].event = eventData;
+          _this3.watchlist[index].event.location = location;
+          _this3.watchlist[index].event.watchlists = watchlistEntries;
         }
       });
     },
     updateWatchlist: function updateWatchlist(updatedEntry) {
-      var _this3 = this;
+      var _this4 = this;
       var isNewEntry = true;
       this.watchlist.forEach(function (entry, index) {
         if (entry.id == updatedEntry.id) {
-          _this3.watchlist[index].status = updatedEntry.status;
+          _this4.watchlist[index].status = updatedEntry.status;
           isNewEntry = false;
         }
       });

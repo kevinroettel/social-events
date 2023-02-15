@@ -8,6 +8,7 @@ export const useEventStore = defineStore('events', {
 
         watchlist: [],
 
+        oldWatchlist: [],
     }),
 
     getters: {
@@ -17,6 +18,10 @@ export const useEventStore = defineStore('events', {
 
         getWatchlist(state) {
             return state.watchlist;
+        },
+
+        getOldWatchlist(state) {
+            return state.oldWatchlist
         },
 
         isWatchlistEmpty(state) {
@@ -42,9 +47,18 @@ export const useEventStore = defineStore('events', {
             for (let index = 0; index < this.watchlist.length; index++) {
                 let event = this.removeEventById(this.watchlist[index].event_id);
 
-                if (event == null) this.watchlist.splice(index--, 1);
-                else this.watchlist[index].event = event[0];
+                if (event == null) {
+                    let oldWatchlistEntry = this.watchlist.splice(index--, 1);
+                    this.oldWatchlist.push(...oldWatchlistEntry);
+                } else {
+                    this.watchlist[index].event = event[0];
+                }
             }
+
+            this.oldWatchlist.forEach((entry, index) => {
+                let oldEvent = this.oldEvents.filter(e => e.id == entry.event_id);
+                this.oldWatchlist[index].event = oldEvent[0];
+            });
         },
 
         removeEventById(id) {
@@ -71,6 +85,13 @@ export const useEventStore = defineStore('events', {
 
             return event[0];
         },
+
+        getOldEventById(id) {
+            let event = this.oldEvents.filter(e => e.id == id);
+
+            if (event.length == 0) return null;
+            else return event[0];
+        }, 
 
         updateEventData(eventData) {
             this.events.forEach((event, index) => {
