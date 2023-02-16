@@ -24,6 +24,8 @@ import { useArtistStore } from '../../stores/ArtistStore';
 const eventStore = useEventStore();
 const artistStore = useArtistStore();
 
+const interests = ref([]);
+
 const events = ref([]);
 
 const getData = () => {
@@ -32,11 +34,27 @@ const getData = () => {
 
     let tags = [];
 
-    watchlist.forEach(entry => {
+    tags.push(...getTagsFromArtists(watchlist));
+    tags.push(...getTagsFromArtists(oldWatchlist));
+    
+    console.log(tags)
+}
+
+const getTagsFromArtists = (watchlistArray) => {
+    let tags = [];
+    
+    watchlistArray.forEach(entry => {
         entry.event.artists.forEach(artist => {
-            
+            if (Number.isInteger(artist)) {
+                let artistTags = artistStore.getArtistById(artist).tags.map(tag => tag.name);
+                tags.push(...artistTags);
+            } else {
+                tags.push(...artist.tags.map(tag => tag.name))
+            }
         })
-    })
+    });
+
+    return tags;
 }
 
 onMounted(() => {
