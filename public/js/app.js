@@ -26035,11 +26035,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var interests = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var events = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var getData = function getData() {
-      var watchlist = eventStore.getWatchlist;
-      var oldWatchlist = eventStore.getOldWatchlist;
-      var tags = [];
-      tags.push.apply(tags, _toConsumableArray(getTagsFromArtists(watchlist)));
-      tags.push.apply(tags, _toConsumableArray(getTagsFromArtists(oldWatchlist)));
+      var tagsFromEvents = [];
+      tagsFromEvents.push.apply(tagsFromEvents, _toConsumableArray(getTagsFromArtists(eventStore.getWatchlist)));
+      tagsFromEvents.push.apply(tagsFromEvents, _toConsumableArray(getTagsFromArtists(eventStore.getOldWatchlist)));
+      var tags = countTags(tagsFromEvents);
       console.log(tags);
     };
     var getTagsFromArtists = function getTagsFromArtists(watchlistArray) {
@@ -26060,6 +26059,33 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       return tags;
     };
+    var countTags = function countTags(tagArray) {
+      var tags = [];
+      tagArray.forEach(function (tagFromEvent, index) {
+        if (tags.length == 0) {
+          tags.push({
+            'name': tagFromEvent,
+            'count': 1
+          });
+        } else {
+          var isNotInTags = true;
+          tags.forEach(function (tag, index) {
+            if (tag.name == tagFromEvent) {
+              tags[index].count++;
+              isNotInTags = false;
+              return;
+            }
+          });
+          if (isNotInTags) {
+            tags.push({
+              'name': tagFromEvent,
+              'count': 1
+            });
+          }
+        }
+      });
+      return tags;
+    };
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getData();
     });
@@ -26070,6 +26096,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       events: events,
       getData: getData,
       getTagsFromArtists: getTagsFromArtists,
+      countTags: countTags,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,

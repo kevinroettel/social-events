@@ -29,13 +29,13 @@ const interests = ref([]);
 const events = ref([]);
 
 const getData = () => {
-    let watchlist = eventStore.getWatchlist
-    let oldWatchlist = eventStore.getOldWatchlist
+    let tagsFromEvents = [];
 
-    let tags = [];
-
-    tags.push(...getTagsFromArtists(watchlist));
-    tags.push(...getTagsFromArtists(oldWatchlist));
+    tagsFromEvents.push(...getTagsFromArtists(eventStore.getWatchlist));
+    tagsFromEvents.push(...getTagsFromArtists(eventStore.getOldWatchlist));
+    
+    let tags = countTags(tagsFromEvents);
+    
     
     console.log(tags)
 }
@@ -53,6 +53,32 @@ const getTagsFromArtists = (watchlistArray) => {
             }
         })
     });
+
+    return tags;
+}
+
+const countTags = (tagArray) => {
+    let tags = [];
+
+    tagArray.forEach((tagFromEvent, index) => {
+        if (tags.length == 0) {
+            tags.push({'name': tagFromEvent, 'count': 1});
+        } else {
+            let isNotInTags = true;
+
+            tags.forEach((tag, index) => {
+                if (tag.name == tagFromEvent) {
+                    tags[index].count++;
+                    isNotInTags = false;
+                    return;
+                }
+            })
+
+            if (isNotInTags) {
+                tags.push({'name': tagFromEvent, 'count': 1});
+            }
+        }
+    })
 
     return tags;
 }
