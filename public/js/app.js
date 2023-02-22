@@ -26015,12 +26015,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -26035,57 +26029,121 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var interests = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var events = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var getData = function getData() {
-      var tagsFromEvents = [];
-      tagsFromEvents.push.apply(tagsFromEvents, _toConsumableArray(getTagsFromArtists(eventStore.getWatchlist)));
-      tagsFromEvents.push.apply(tagsFromEvents, _toConsumableArray(getTagsFromArtists(eventStore.getOldWatchlist)));
-      var tags = countTags(tagsFromEvents);
-      console.log(tags);
-    };
-    var getTagsFromArtists = function getTagsFromArtists(watchlistArray) {
-      var tags = [];
-      watchlistArray.forEach(function (entry) {
-        entry.event.artists.forEach(function (artist) {
-          if (Number.isInteger(artist)) {
-            var artistTags = artistStore.getArtistById(artist).tags.map(function (tag) {
-              return tag.name;
-            });
-            tags.push.apply(tags, _toConsumableArray(artistTags));
-          } else {
-            tags.push.apply(tags, _toConsumableArray(artist.tags.map(function (tag) {
-              return tag.name;
-            })));
-          }
+      var events = [];
+      var entries = eventStore.getWatchlist.concat(eventStore.getOldWatchlist);
+      entries.forEach(function (entry) {
+        events.push({
+          id: entry.event_id,
+          artistsTags: entry.event.artists,
+          average: []
         });
       });
-      return tags;
-    };
-    var countTags = function countTags(tagArray) {
-      var tags = [];
-      tagArray.forEach(function (tagFromEvent, index) {
-        if (tags.length == 0) {
-          tags.push({
-            'name': tagFromEvent,
-            'count': 1
-          });
-        } else {
-          var isNotInTags = true;
-          tags.forEach(function (tag, index) {
-            if (tag.name == tagFromEvent) {
-              tags[index].count++;
-              isNotInTags = false;
-              return;
-            }
-          });
-          if (isNotInTags) {
-            tags.push({
-              'name': tagFromEvent,
-              'count': 1
+      var longestAverage = 0;
+      events.forEach(function (event, eIndex) {
+        var longestTagList = 0;
+        event.artistsTags.forEach(function (artist, aIndex) {
+          if (Number.isInteger(artist)) {
+            events[eIndex].artistsTags[aIndex] = artistStore.getArtistById(artist).tags.map(function (tag) {
+              return tag.id;
+            });
+          } else {
+            events[eIndex].artistsTags[aIndex] = artist.tags.map(function (tag) {
+              return tag.id;
             });
           }
+          if (longestTagList < events[eIndex].artistsTags[aIndex].length) longestTagList = events[eIndex].artistsTags[aIndex].length;
+        });
+        var _loop = function _loop(i) {
+          var sum = 0;
+          var count = 0;
+          event.artistsTags.forEach(function (tags, index) {
+            if (tags[i] != undefined) {
+              sum += tags[i];
+              count++;
+            }
+          });
+          event.average[i] = sum / count;
+        };
+        for (var i = 0; i < longestTagList; i++) {
+          _loop(i);
         }
+        if (longestAverage < event.average.length) longestAverage = event.average.length;
       });
-      return tags;
+      events = events.filter(function (event) {
+        return event.average.length !== 0;
+      });
+      var overallAverage = [];
+      var _loop2 = function _loop2(i) {
+        var sum = 0;
+        var count = 0;
+        events.forEach(function (event, index) {
+          if (event.average[i] != undefined) {
+            sum += event.average[i];
+            count++;
+          }
+        });
+        overallAverage[i] = sum / count;
+      };
+      for (var i = 0; i < longestAverage; i++) {
+        _loop2(i);
+      }
+      console.log(overallAverage);
     };
+
+    // const getData = () => {
+    //     let tagsFromEvents = [];
+
+    //     tagsFromEvents.push(...getTagsFromArtists(eventStore.getWatchlist));
+    //     tagsFromEvents.push(...getTagsFromArtists(eventStore.getOldWatchlist));
+
+    //     let tags = countTags(tagsFromEvents);
+
+    //     console.log(tags)
+    // }
+
+    // const getTagsFromArtists = (watchlistArray) => {
+    //     let tags = [];
+
+    //     watchlistArray.forEach(entry => {
+    //         entry.event.artists.forEach(artist => {
+    //             if (Number.isInteger(artist)) {
+    //                 let artistTags = artistStore.getArtistById(artist).tags.map(tag => tag.name);
+    //                 tags.push(...artistTags);
+    //             } else {
+    //                 tags.push(...artist.tags.map(tag => tag.name))
+    //             }
+    //         })
+    //     });
+
+    //     return tags;
+    // }
+
+    // const countTags = (tagArray) => {
+    //     let tags = [];
+
+    //     tagArray.forEach((tagFromEvent, index) => {
+    //         if (tags.length == 0) {
+    //             tags.push({'name': tagFromEvent, 'count': 1});
+    //         } else {
+    //             let isNotInTags = true;
+
+    //             tags.forEach((tag, index) => {
+    //                 if (tag.name == tagFromEvent) {
+    //                     tags[index].count++;
+    //                     isNotInTags = false;
+    //                     return;
+    //                 }
+    //             })
+
+    //             if (isNotInTags) {
+    //                 tags.push({'name': tagFromEvent, 'count': 1});
+    //             }
+    //         }
+    //     })
+
+    //     return tags;
+    // }
+
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getData();
     });
@@ -26095,8 +26153,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       interests: interests,
       events: events,
       getData: getData,
-      getTagsFromArtists: getTagsFromArtists,
-      countTags: countTags,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
