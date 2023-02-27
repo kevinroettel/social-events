@@ -142,6 +142,9 @@ const distance = ref(null);
 const getEventData = () =>  {
     let eventFromStore = eventStore.getEventById(route.params.eventId);
 
+    if (eventFromStore == null)
+        eventFromStore = eventStore.getOldEventById(route.params.eventId);
+
     if (eventFromStore.hasOwnProperty('status')) {
         event.value = eventFromStore.event;
         watchlistStatus.value = eventFromStore.status;
@@ -149,9 +152,9 @@ const getEventData = () =>  {
         event.value = eventFromStore;
     }
 
+    getArtists()
     getEventPosts()
     getLocation()
-    getArtists()
 }
 
 const getEventPosts = () => {

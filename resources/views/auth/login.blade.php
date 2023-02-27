@@ -40,7 +40,7 @@
                 </form>
 
                 @if ($errors->has('login'))
-                    <span class="invalid-feedback">
+                    <span class="login-error">
                         <strong>{{ $errors->first('login') }}</strong>
                     </span>
                 @endif

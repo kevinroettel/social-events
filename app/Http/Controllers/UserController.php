@@ -60,7 +60,10 @@ class UserController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            // return response()->json(['error' => $validator->errors()], 400);
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validator->errors());
         }
 
         $validated = $validator->validated();

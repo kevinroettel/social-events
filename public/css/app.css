@@ -11263,6 +11263,9 @@ body .guest-page .guest-page-teaser .teaser-text {
   left: 50%;
   transform: translateX(-50%);
 }
+body .guest-page .login-error {
+  color: red;
+}
 body .website-content .main-content {
   padding: 50px;
 }

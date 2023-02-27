@@ -64,7 +64,7 @@
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
 
-                @if ($errors->any())
+                @if ($errors != null)
                     <span>
                         <ul>
                             @foreach ($errors->all() as $error)

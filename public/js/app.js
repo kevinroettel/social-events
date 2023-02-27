@@ -23791,7 +23791,7 @@ __webpack_require__.r(__webpack_exports__);
     };
     var createTag = function createTag() {
       axios.post('/tags', {
-        name: newTag.value
+        name: newTag.value.name
       }).then(function (response) {
         emit('tag-added', response.data);
         newTag.value = null;
@@ -25126,9 +25126,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../recommender/Watchlist.vue */ "./resources/js/components/recommender/Watchlist.vue");
-/* harmony import */ var _recommender_SimilarEvents_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/SimilarEvents.vue */ "./resources/js/components/recommender/SimilarEvents.vue");
-/* harmony import */ var _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/FriendWatchlists.vue */ "./resources/js/components/recommender/FriendWatchlists.vue");
-/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
+/* harmony import */ var _recommender_CosineSimilatity_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/CosineSimilatity.vue */ "./resources/js/components/recommender/CosineSimilatity.vue");
+/* harmony import */ var _recommender_JaccardIndex_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/JaccardIndex.vue */ "./resources/js/components/recommender/JaccardIndex.vue");
+/* harmony import */ var _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/FriendWatchlists.vue */ "./resources/js/components/recommender/FriendWatchlists.vue");
+/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
+
 
 
 
@@ -25140,9 +25142,10 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var __returned__ = {
       Watchlist: _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      SimilarEvents: _recommender_SimilarEvents_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+      CosineSimilatity: _recommender_CosineSimilatity_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      JaccardIndex: _recommender_JaccardIndex_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25214,15 +25217,16 @@ __webpack_require__.r(__webpack_exports__);
     var distance = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
     var getEventData = function getEventData() {
       var eventFromStore = eventStore.getEventById(route.params.eventId);
+      if (eventFromStore == null) eventFromStore = eventStore.getOldEventById(route.params.eventId);
       if (eventFromStore.hasOwnProperty('status')) {
         event.value = eventFromStore.event;
         watchlistStatus.value = eventFromStore.status;
       } else {
         event.value = eventFromStore;
       }
+      getArtists();
       getEventPosts();
       getLocation();
-      getArtists();
     };
     var getEventPosts = function getEventPosts() {
       axios.get("/events/".concat(route.params.eventId, "/posts")).then(function (response) {
@@ -25902,6 +25906,170 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
+/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'CosineSimilatity',
+  setup: function setup(__props, _ref) {
+    var expose = _ref.expose;
+    expose();
+    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
+    var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__.useArtistStore)();
+    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var cosines = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var getData = function getData() {
+      // muss getan werden, damit reactivity von vue verschwindet
+      var entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
+      if (entries.length == 0) return;
+      entries.forEach(function (entry, eIndex) {
+        entries[eIndex].event.tags = [];
+        entry.event.artists.forEach(function (artist, aIndex) {
+          var _entries$eIndex$event;
+          if (Number.isInteger(artist)) {
+            entries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
+          }
+          (_entries$eIndex$event = entries[eIndex].event.tags).push.apply(_entries$eIndex$event, _toConsumableArray(entries[eIndex].event.artists[aIndex].tags.map(function (tag) {
+            return tag.name;
+          })));
+        });
+      });
+      var events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
+      events.forEach(function (event, eIndex) {
+        events[eIndex].tags = [];
+        event.artists.forEach(function (artist, aIndex) {
+          var _events$eIndex$tags;
+          if (Number.isInteger(artist)) {
+            events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
+          }
+          (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
+            return tag.name;
+          })));
+        });
+      });
+      events.forEach(function (event, index) {
+        entries.forEach(function (entry) {
+          var wordCountA = wordCountMap(entry.event.tags.map(function (tag) {
+            return tag.replace(/\s/g, '');
+          }));
+          var wordCountB = wordCountMap(event.tags.map(function (tag) {
+            return tag.replace(/\s/g, '');
+          }));
+          var dictonary = {};
+          addWordsToDictionary(wordCountA, dictonary);
+          addWordsToDictionary(wordCountB, dictonary);
+          var vectorA = wordMapToVector(wordCountA, dictonary);
+          var vectorB = wordMapToVector(wordCountB, dictonary);
+          var cosine = cosineSimilarity(vectorA, vectorB);
+          cosines.value.push({
+            entry: entry.event_id,
+            event: event.id,
+            cosine: cosine
+          });
+          if (cosine >= 0.25) {
+            var isAlreadyInSimilar = false;
+            similarEvents.value.forEach(function (similar) {
+              if (similar.id == event.id) {
+                isAlreadyInSimilar = true;
+                return;
+              }
+            });
+            if (!isAlreadyInSimilar) {
+              similarEvents.value.push(event);
+            }
+          }
+        });
+      });
+    };
+    var wordCountMap = function wordCountMap(wordArray) {
+      var wordCount = {};
+      wordArray.forEach(function (word) {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+      return wordCount;
+    };
+    var addWordsToDictionary = function addWordsToDictionary(wordCountmap, dictonary) {
+      for (var key in wordCountmap) {
+        dictonary[key] = true;
+      }
+    };
+    var wordMapToVector = function wordMapToVector(map, dictonary) {
+      var wordCountVector = [];
+      for (var term in dictonary) {
+        wordCountVector.push(map[term] || 0);
+      }
+      return wordCountVector;
+    };
+    var dotProduct = function dotProduct(vectorA, vectorB) {
+      var dotProduct = 0;
+      for (var i = 0; i < vectorA.length; i++) {
+        dotProduct += vectorA[i] * vectorB[i];
+      }
+      return dotProduct;
+    };
+    var magnitude = function magnitude(vector) {
+      var sum = 0;
+      for (var i = 0; i < vector.length; i++) {
+        sum += vector[i] * vector[i];
+      }
+      return Math.sqrt(sum);
+    };
+    var cosineSimilarity = function cosineSimilarity(vectorA, vectorB) {
+      return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+      getData();
+    });
+    var __returned__ = {
+      eventStore: eventStore,
+      artistStore: artistStore,
+      similarEvents: similarEvents,
+      cosines: cosines,
+      getData: getData,
+      wordCountMap: wordCountMap,
+      addWordsToDictionary: addWordsToDictionary,
+      wordMapToVector: wordMapToVector,
+      dotProduct: dotProduct,
+      magnitude: magnitude,
+      cosineSimilarity: cosineSimilarity,
+      EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_2__.ref,
+      useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__.useArtistStore
+    };
+    Object.defineProperty(__returned__, '__isScriptSetup', {
+      enumerable: false,
+      value: true
+    });
+    return __returned__;
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js ***!
@@ -26000,10 +26168,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -26015,144 +26183,107 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'SimilarEvents',
+  name: 'JaccardIndex',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
     var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__.useArtistStore)();
-    var interests = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
-    var events = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var jaccards = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var getData = function getData() {
-      var events = [];
-      var entries = eventStore.getWatchlist.concat(eventStore.getOldWatchlist);
-      entries.forEach(function (entry) {
-        events.push({
-          id: entry.event_id,
-          artistsTags: entry.event.artists,
-          average: []
-        });
-      });
-      var longestAverage = 0;
-      events.forEach(function (event, eIndex) {
-        var longestTagList = 0;
-        event.artistsTags.forEach(function (artist, aIndex) {
+      var wishlistEntries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
+      if (wishlistEntries.length == 0) return;
+      wishlistEntries.forEach(function (entry, eIndex) {
+        wishlistEntries[eIndex].event.tags = [];
+        entry.event.artists.forEach(function (artist, aIndex) {
+          var _wishlistEntries$eInd;
           if (Number.isInteger(artist)) {
-            events[eIndex].artistsTags[aIndex] = artistStore.getArtistById(artist).tags.map(function (tag) {
-              return tag.id;
-            });
-          } else {
-            events[eIndex].artistsTags[aIndex] = artist.tags.map(function (tag) {
-              return tag.id;
-            });
+            wishlistEntries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
           }
-          if (longestTagList < events[eIndex].artistsTags[aIndex].length) longestTagList = events[eIndex].artistsTags[aIndex].length;
+          (_wishlistEntries$eInd = wishlistEntries[eIndex].event.tags).push.apply(_wishlistEntries$eInd, _toConsumableArray(wishlistEntries[eIndex].event.artists[aIndex].tags.map(function (tag) {
+            return tag.name;
+          })));
         });
-        var _loop = function _loop(i) {
-          var sum = 0;
-          var count = 0;
-          event.artistsTags.forEach(function (tags, index) {
-            if (tags[i] != undefined) {
-              sum += tags[i];
-              count++;
-            }
+      });
+
+      // console.log('Wishlists: ', wishlistEntries)
+
+      var events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
+      events.forEach(function (event, eIndex) {
+        events[eIndex].tags = [];
+        event.artists.forEach(function (artist, aIndex) {
+          var _events$eIndex$tags;
+          if (Number.isInteger(artist)) {
+            events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
+          }
+          (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
+            return tag.name;
+          })));
+        });
+      });
+
+      // console.log('Rest of the Events: ', events);
+
+      events.forEach(function (event, index) {
+        wishlistEntries.forEach(function (entry) {
+          var jaccard = jaccard_index(new Set(event.tags), new Set(entry.event.tags));
+          jaccards.value.push({
+            jaccard: jaccard,
+            entry: entry.event_id,
+            similar: event.id
           });
-          event.average[i] = sum / count;
-        };
-        for (var i = 0; i < longestTagList; i++) {
-          _loop(i);
-        }
-        if (longestAverage < event.average.length) longestAverage = event.average.length;
-      });
-      events = events.filter(function (event) {
-        return event.average.length !== 0;
-      });
-      var overallAverage = [];
-      var _loop2 = function _loop2(i) {
-        var sum = 0;
-        var count = 0;
-        events.forEach(function (event, index) {
-          if (event.average[i] != undefined) {
-            sum += event.average[i];
-            count++;
+          if (jaccard >= 0.12) {
+            var isAlreadyInSimilar = false;
+            similarEvents.value.forEach(function (similar) {
+              if (similar.id == event.id) {
+                isAlreadyInSimilar = true;
+                return;
+              }
+            });
+            if (!isAlreadyInSimilar) {
+              similarEvents.value.push(event);
+            }
           }
         });
-        overallAverage[i] = sum / count;
-      };
-      for (var i = 0; i < longestAverage; i++) {
-        _loop2(i);
-      }
-      console.log(overallAverage);
+      });
     };
-
-    // const getData = () => {
-    //     let tagsFromEvents = [];
-
-    //     tagsFromEvents.push(...getTagsFromArtists(eventStore.getWatchlist));
-    //     tagsFromEvents.push(...getTagsFromArtists(eventStore.getOldWatchlist));
-
-    //     let tags = countTags(tagsFromEvents);
-
-    //     console.log(tags)
-    // }
-
-    // const getTagsFromArtists = (watchlistArray) => {
-    //     let tags = [];
-
-    //     watchlistArray.forEach(entry => {
-    //         entry.event.artists.forEach(artist => {
-    //             if (Number.isInteger(artist)) {
-    //                 let artistTags = artistStore.getArtistById(artist).tags.map(tag => tag.name);
-    //                 tags.push(...artistTags);
-    //             } else {
-    //                 tags.push(...artist.tags.map(tag => tag.name))
-    //             }
-    //         })
-    //     });
-
-    //     return tags;
-    // }
-
-    // const countTags = (tagArray) => {
-    //     let tags = [];
-
-    //     tagArray.forEach((tagFromEvent, index) => {
-    //         if (tags.length == 0) {
-    //             tags.push({'name': tagFromEvent, 'count': 1});
-    //         } else {
-    //             let isNotInTags = true;
-
-    //             tags.forEach((tag, index) => {
-    //                 if (tag.name == tagFromEvent) {
-    //                     tags[index].count++;
-    //                     isNotInTags = false;
-    //                     return;
-    //                 }
-    //             })
-
-    //             if (isNotInTags) {
-    //                 tags.push({'name': tagFromEvent, 'count': 1});
-    //             }
-    //         }
-    //     })
-
-    //     return tags;
-    // }
-
+    var intersection = function intersection(a, b) {
+      var intersect = new Set(_toConsumableArray(a).filter(function (i) {
+        return b.has(i);
+      }));
+      return intersect;
+    };
+    var jaccard_index = function jaccard_index(s1, s2) {
+      var size_s1 = s1.size;
+      var size_s2 = s2.size;
+      var intersect = intersection(s1, s2);
+      var size_in = intersect.size;
+      var jaccard_in = size_in / (size_s1 + size_s2 - size_in);
+      return jaccard_in;
+    };
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getData();
     });
     var __returned__ = {
       eventStore: eventStore,
       artistStore: artistStore,
-      interests: interests,
-      events: events,
+      similarEvents: similarEvents,
+      jaccards: jaccards,
       getData: getData,
+      intersection: intersection,
+      jaccard_index: jaccard_index,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
@@ -27713,7 +27844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["SimilarEvents"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CosineSimilatity"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JaccardIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
 }
 
 /***/ }),
@@ -28462,6 +28593,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "card mb-3"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card-header"
+}, " Vorschläge basierend auf ihren Events (Cosine Similarity) ", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "card-body"
+};
+var _hoisted_4 = {
+  key: 0
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Events basierend auf ihren Präferenzen anzeigen.", -1 /* HOISTED */);
+var _hoisted_6 = [_hoisted_5];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+    key: 1,
+    events: $setup.similarEvents
+  }, null, 8 /* PROPS */, ["events"]))])]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35 ***!
@@ -28498,10 +28665,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267 ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -28516,7 +28683,7 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "card-header"
-}, " Vorschläge basierend auf ihren Events ", -1 /* HOISTED */);
+}, " Vorschläge basierend auf ihren Events (Jaccard Index) ", -1 /* HOISTED */);
 var _hoisted_3 = {
   "class": "card-body"
 };
@@ -28526,9 +28693,9 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Events basierend auf ihren Präferenzen anzeigen.", -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.events.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
     key: 1,
-    events: $setup.events
+    events: $setup.similarEvents
   }, null, 8 /* PROPS */, ["events"]))])]);
 }
 
@@ -29083,7 +29250,13 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
       var event = this.oldEvents.filter(function (e) {
         return e.id == id;
       });
-      if (event.length == 0) return null;else return event[0];
+      if (event.length == 0) {
+        event = this.oldWatchlist.filter(function (e) {
+          return e.event_id == id;
+        });
+      }
+      if (event.length == 0) return null;
+      return event[0];
     },
     updateEventData: function updateEventData(eventData) {
       var _this3 = this;
@@ -53357,6 +53530,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/recommender/CosineSimilatity.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/recommender/CosineSimilatity.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CosineSimilatity_vue_vue_type_template_id_a684836a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CosineSimilatity.vue?vue&type=template&id=a684836a */ "./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a");
+/* harmony import */ var _CosineSimilatity_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CosineSimilatity.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_CosineSimilatity_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CosineSimilatity_vue_vue_type_template_id_a684836a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/CosineSimilatity.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/recommender/FriendWatchlists.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/recommender/FriendWatchlists.vue ***!
@@ -53385,10 +53586,10 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/SimilarEvents.vue":
-/*!***************************************************************!*\
-  !*** ./resources/js/components/recommender/SimilarEvents.vue ***!
-  \***************************************************************/
+/***/ "./resources/js/components/recommender/JaccardIndex.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/recommender/JaccardIndex.vue ***!
+  \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -53396,15 +53597,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _SimilarEvents_vue_vue_type_template_id_5842223a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SimilarEvents.vue?vue&type=template&id=5842223a */ "./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a");
-/* harmony import */ var _SimilarEvents_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SimilarEvents.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _JaccardIndex_vue_vue_type_template_id_331c4267__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./JaccardIndex.vue?vue&type=template&id=331c4267 */ "./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267");
+/* harmony import */ var _JaccardIndex_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./JaccardIndex.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js");
 /* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_SimilarEvents_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_SimilarEvents_vue_vue_type_template_id_5842223a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/SimilarEvents.vue"]])
+const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_JaccardIndex_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_JaccardIndex_vue_vue_type_template_id_331c4267__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/JaccardIndex.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -53841,6 +54042,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CosineSimilatity_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CosineSimilatity_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CosineSimilatity.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=script&setup=true&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js":
 /*!*****************************************************************************************************!*\
   !*** ./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js ***!
@@ -53857,18 +54074,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js ***!
+  \*************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SimilarEvents_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_JaccardIndex_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SimilarEvents_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SimilarEvents.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_JaccardIndex_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./JaccardIndex.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=script&setup=true&lang=js");
  
 
 /***/ }),
@@ -54321,6 +54538,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CosineSimilatity_vue_vue_type_template_id_a684836a__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CosineSimilatity_vue_vue_type_template_id_a684836a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CosineSimilatity.vue?vue&type=template&id=a684836a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/CosineSimilatity.vue?vue&type=template&id=a684836a");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35":
 /*!************************************************************************************************!*\
   !*** ./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35 ***!
@@ -54337,18 +54570,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267 ***!
+  \********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SimilarEvents_vue_vue_type_template_id_5842223a__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_JaccardIndex_vue_vue_type_template_id_331c4267__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SimilarEvents_vue_vue_type_template_id_5842223a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SimilarEvents.vue?vue&type=template&id=5842223a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SimilarEvents.vue?vue&type=template&id=5842223a");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_JaccardIndex_vue_vue_type_template_id_331c4267__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./JaccardIndex.vue?vue&type=template&id=331c4267 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/JaccardIndex.vue?vue&type=template&id=331c4267");
 
 
 /***/ }),

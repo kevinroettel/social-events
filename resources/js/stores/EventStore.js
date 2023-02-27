@@ -89,8 +89,13 @@ export const useEventStore = defineStore('events', {
         getOldEventById(id) {
             let event = this.oldEvents.filter(e => e.id == id);
 
+            if (event.length == 0) {
+                event = this.oldWatchlist.filter(e => e.event_id == id);
+            }
+            
             if (event.length == 0) return null;
-            else return event[0];
+            
+            return event[0];
         }, 
 
         updateEventData(eventData) {

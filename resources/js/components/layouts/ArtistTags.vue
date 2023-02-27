@@ -80,8 +80,9 @@ const addTagToArtist = () => {
 
 const createTag = () => {
     axios.post(
-        '/tags',
-        {name: newTag.value}
+        '/tags', {
+            name: newTag.value.name
+        }
     ).then((response) => {
         emit('tag-added', response.data);
         newTag.value = null;
