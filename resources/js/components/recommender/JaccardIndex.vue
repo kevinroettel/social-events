@@ -29,26 +29,24 @@ const similarEvents = ref([]);
 const jaccards = ref([]);
 
 const getData = () => {
-    let wishlistEntries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
+    let entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
 
-    if (wishlistEntries.length == 0) return;
+    if (entries.length == 0) return;
 
-    wishlistEntries.forEach((entry, eIndex) => {
-        wishlistEntries[eIndex].event.tags = [];
+    entries.forEach((entry, eIndex) => {
+        entries[eIndex].event.tags = [];
         
         entry.event.artists.forEach((artist, aIndex) => {
             if (Number.isInteger(artist)) {
-                wishlistEntries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
+                entries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
             }
 
-            wishlistEntries[eIndex].event.tags.push(
-                ...wishlistEntries[eIndex].event.artists[aIndex].tags.map(tag => tag.name)
+            entries[eIndex].event.tags.push(
+                ...entries[eIndex].event.artists[aIndex].tags.map(tag => tag.name)
             );
         });
     });
     
-    // console.log('Wishlists: ', wishlistEntries)
-
     let events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
     
     events.forEach((event, eIndex) => {
@@ -65,17 +63,15 @@ const getData = () => {
         });
     });
 
-    // console.log('Rest of the Events: ', events);
-
     events.forEach((event, index) => {
 
-        wishlistEntries.forEach((entry) => {
+        entries.forEach((entry) => {
             let jaccard = jaccard_index(new Set(event.tags), new Set(entry.event.tags));
             
             jaccards.value.push({
-                jaccard: jaccard,
                 entry: entry.event_id,
-                similar: event.id
+                event: event.id,
+                jaccard: jaccard,
             });
 
             if (jaccard >= 0.12) {

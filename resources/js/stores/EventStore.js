@@ -38,7 +38,7 @@ export const useEventStore = defineStore('events', {
                 let eventDate = new Date(event.date);
                 if (eventDate < today) this.oldEvents.push(event);
                 else this.events.push(event);
-            })
+            });
         },
 
         initializeWatchlist(data) {
