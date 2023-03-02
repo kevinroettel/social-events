@@ -78,9 +78,18 @@ const postContribution = () => {
         post
     ).then((response) => {
         emit('created-post', response.data);
+        resetCreatePost();
     }).catch((error) => {
         toast(error.message, 'error');
     })
+}
+
+const resetCreatePost = () => {
+    post.event_id = null;
+    post.user_id = null;
+    post.content = null;
+    post.answerTo = null;
+    showPostForm.value = false;
 }
 
 onMounted(() => {

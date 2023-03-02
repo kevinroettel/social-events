@@ -76,7 +76,7 @@ const search = () => {
     searchDone.value = true;
 }
 
-const showArtistPage = (artistId) => router.push(`/künstler/${artistId}`);
+const showArtistPage = (artistId) => router.push(`/kuenstler/${artistId}`);
 const showEventPage = (eventId) => router.push(`/event/${eventId}`);
 const showLocationPage = (locationId) => router.push(`/venue/${locationId}`);
 

@@ -32,9 +32,7 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL)
-            ? 'email'
-            : 'username';
+        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         $request->merge([
             $loginType => $request->input('login')
@@ -44,7 +42,8 @@ class LoginController extends Controller
             return redirect()->intended('/');
         }
 
-        return redirect()->back()
+        return redirect()
+            ->back()
             ->withInput()
             ->withErrors([
                 'login' => 'Ihre Anmeldedaten stimmen nicht mit unseren Nutzern überein.'

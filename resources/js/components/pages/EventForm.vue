@@ -103,8 +103,7 @@
                         v-model="event.artists"
                         @option:created="showNotifcationWithSimilarArtists($event)"
                     >
-                        <!-- search ist in diesem Fall ein spezifischer Enum Wert für v-select -->
-                        <!-- eslint-disable-next-line -->
+                        <!-- search ist hier ein spezifischer Enum Wert für v-select-->
                         <template v-slot:no-options="search">
                             <em style="opacity: 0.5">Hier die Künstler eingeben.</em>
                         </template>

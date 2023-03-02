@@ -57,8 +57,12 @@ const props = defineProps({
 
 const posts = ref(null);
 
-const addPost = (newPost) => {
-    posts.value.push(newPost);
+const addPost = (newComment) => {
+    posts.value.forEach((post, index) => {
+        if (post.id == newComment.answerTo) {
+            posts.value[index].comments.push(newComment);
+        }
+    });
 }
 
 onMounted(() => {

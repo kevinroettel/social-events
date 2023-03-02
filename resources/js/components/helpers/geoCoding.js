@@ -1,5 +1,3 @@
-import axios from "axios";
-
 // https://nominatim.org/release-docs/develop/api/Search/
 const requestUrl = "https://nominatim.openstreetmap.org/search";
 const responseFormat = "format=json";

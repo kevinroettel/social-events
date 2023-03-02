@@ -1,19 +1,10 @@
 Praxis-Projekt:
 
 Artist
-- Überprüfen ob Name bereits vorhanden ist
-- Überprüfen ob Tippfehler im Namen und Künstler eigentlich schon existiert (maybe über frontend?)
-- Webseite entfernen? Wird vermutlich sowieso nicht genutzt
-- Künstler Page entfernen und Erstellung nur über Event-Erstellung zulassen => es wird vermutlich sowieso immer wieder vergessen vorher die Künstler zu erstellen, deshalb lieber direkt zusammen mit Event Erstellung. Tags können danach hinzugefügt werden.
+- Künstler Similarity verbessern, statt Levenshtein vielleicht npm package string-similarity nutzen
 
 Friend
-- Mal überlegen ob es Sinn machen würde die jeweiligen Freundes Stati im Controller zu trennen und über eigene Routen zu behandeln
 - Frontend Page besser gestalten
 
 Location
-- Updates für Locations
 - Eventuell auch Kommentare für Nutzer-"Bewertungen"
-- Erstellung eventuell auch in Event-Erstellung einbringen. Bedeutet wenn über Select die Location nicht gefunden wird, kann über Button und Modal eine neue erstellt werden => Schneller und Nutzer muss nicht mittendrin die Event-Erstellung abbrechen
-
-User
-- Wohnort hinzufügen für Vorschläge basierend auf Entfernung

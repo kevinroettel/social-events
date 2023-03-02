@@ -121,7 +121,7 @@ const checkInputs = () => {
         } else hasError.password_confirmation = false;
         
         if (userData.password.length < 6) {
-            el.innerHTML = "Das Passwort benötigt mindestens 8 Zeichen.";
+            el.innerHTML = "Das Passwort benötigt mindestens 6 Zeichen.";
             hasError.password = true;
         } else hasError.password = false;
     }
