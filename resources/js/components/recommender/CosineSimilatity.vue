@@ -66,8 +66,8 @@ const getData = () => {
 
     events.forEach((event, index) => {
         entries.forEach((entry) => {
-            let wordCountA = wordCountMap(entry.event.tags.map(tag => tag.replace(/\s/g, '')));
-            let wordCountB = wordCountMap(event.tags.map(tag => tag.replace(/\s/g, '')));
+            let wordCountA = wordCountMap(entry.event.tags);
+            let wordCountB = wordCountMap(event.tags);
 
             let dictonary = {};
             addWordsToDictionary(wordCountA, dictonary);

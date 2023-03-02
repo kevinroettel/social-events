@@ -12,7 +12,7 @@
     <div v-else class="spinner-border spinner-middle" role="status"></div>
 </template>
 <script setup>
-import { reactive, onMounted, ref, inject, computed } from 'vue';
+import { reactive, onMounted, inject, computed } from 'vue';
 import Navbar from './layouts/Navbar.vue';
 import Toast from './layouts/Toast.vue';
 

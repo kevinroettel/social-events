@@ -23721,7 +23721,6 @@ __webpack_require__.r(__webpack_exports__);
       getFriends: getFriends,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
-      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
       Navbar: _layouts_Navbar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -25971,12 +25970,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       events.forEach(function (event, index) {
         entries.forEach(function (entry) {
-          var wordCountA = wordCountMap(entry.event.tags.map(function (tag) {
-            return tag.replace(/\s/g, '');
-          }));
-          var wordCountB = wordCountMap(event.tags.map(function (tag) {
-            return tag.replace(/\s/g, '');
-          }));
+          var wordCountA = wordCountMap(entry.event.tags);
+          var wordCountB = wordCountMap(event.tags);
           var dictonary = {};
           addWordsToDictionary(wordCountA, dictonary);
           addWordsToDictionary(wordCountB, dictonary);
@@ -26203,23 +26198,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var jaccards = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
     var getData = function getData() {
-      var wishlistEntries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
-      if (wishlistEntries.length == 0) return;
-      wishlistEntries.forEach(function (entry, eIndex) {
-        wishlistEntries[eIndex].event.tags = [];
+      var entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
+      if (entries.length == 0) return;
+      entries.forEach(function (entry, eIndex) {
+        entries[eIndex].event.tags = [];
         entry.event.artists.forEach(function (artist, aIndex) {
-          var _wishlistEntries$eInd;
+          var _entries$eIndex$event;
           if (Number.isInteger(artist)) {
-            wishlistEntries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
+            entries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
           }
-          (_wishlistEntries$eInd = wishlistEntries[eIndex].event.tags).push.apply(_wishlistEntries$eInd, _toConsumableArray(wishlistEntries[eIndex].event.artists[aIndex].tags.map(function (tag) {
+          (_entries$eIndex$event = entries[eIndex].event.tags).push.apply(_entries$eIndex$event, _toConsumableArray(entries[eIndex].event.artists[aIndex].tags.map(function (tag) {
             return tag.name;
           })));
         });
       });
-
-      // console.log('Wishlists: ', wishlistEntries)
-
       var events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
       events.forEach(function (event, eIndex) {
         events[eIndex].tags = [];
@@ -26233,16 +26225,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           })));
         });
       });
-
-      // console.log('Rest of the Events: ', events);
-
       events.forEach(function (event, index) {
-        wishlistEntries.forEach(function (entry) {
+        entries.forEach(function (entry) {
           var jaccard = jaccard_index(new Set(event.tags), new Set(entry.event.tags));
           jaccards.value.push({
-            jaccard: jaccard,
             entry: entry.event_id,
-            similar: event.id
+            event: event.id,
+            jaccard: jaccard
           });
           if (jaccard >= 0.12) {
             var isAlreadyInSimilar = false;
