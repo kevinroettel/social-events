@@ -26261,19 +26261,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       });
     };
-    var intersection = function intersection(a, b) {
-      var intersect = new Set(_toConsumableArray(a).filter(function (i) {
-        return b.has(i);
-      }));
-      return intersect;
-    };
     var jaccard_index = function jaccard_index(s1, s2) {
-      var size_s1 = s1.size;
-      var size_s2 = s2.size;
-      var intersect = intersection(s1, s2);
-      var size_in = intersect.size;
-      var jaccard_in = size_in / (size_s1 + size_s2 - size_in);
-      return jaccard_in;
+      var intersection = new Set(_toConsumableArray(s1).filter(function (i) {
+        return s2.has(i);
+      }));
+      return intersection.size / (s1.size + s2.size - intersection.size);
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       getData();
@@ -26284,7 +26276,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       similarEvents: similarEvents,
       jaccards: jaccards,
       getData: getData,
-      intersection: intersection,
       jaccard_index: jaccard_index,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,

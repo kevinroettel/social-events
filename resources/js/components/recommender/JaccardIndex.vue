@@ -92,21 +92,9 @@ const getData = () => {
     })
 }
 
-const intersection = (a, b) => {
-    let intersect = new Set([...a].filter(i => b.has(i)));
-    return intersect;
-}
-
 const jaccard_index = (s1, s2) => {
-    let size_s1 = s1.size;
-    let size_s2 = s2.size;
-
-    let intersect = intersection(s1, s2);
-    let size_in = intersect.size;
-
-    let jaccard_in = size_in / (size_s1 + size_s2 - size_in);
-
-    return jaccard_in;
+    let intersection = new Set([...s1].filter(i => s2.has(i)));
+    return intersection.size / (s1.size + s2.size - intersection.size);
 }
 
 onMounted(() => {
