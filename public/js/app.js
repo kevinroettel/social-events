@@ -25369,7 +25369,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
-/* harmony import */ var _helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../helpers/compareStrings.js */ "./resources/js/components/helpers/compareStrings.js");
+/* harmony import */ var string_similarity__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! string-similarity */ "./node_modules/string-similarity/src/index.js");
+/* harmony import */ var string_similarity__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(string_similarity__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -25515,8 +25516,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var similar = [];
       var allArtists = artistStore.getArtists;
       allArtists.forEach(function (artist) {
-        var similarity = (0,_helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__.compareStrings)(createdArtist.name, artist.name);
-        if (similarity > 0.85) similar.push(artist.name);
+        var similarity = (0,string_similarity__WEBPACK_IMPORTED_MODULE_8__.compareTwoStrings)(createdArtist.name.toLowerCase(), artist.name.toLowerCase());
+        if (similarity > 0.6) similar.push(artist.name);
       });
       if (similar.length != 0) {
         notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
@@ -25569,7 +25570,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore,
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_6__.useEventStore,
       toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_7__.toast,
-      compareStrings: _helpers_compareStrings_js__WEBPACK_IMPORTED_MODULE_8__.compareStrings,
+      compareTwoStrings: string_similarity__WEBPACK_IMPORTED_MODULE_8__.compareTwoStrings,
       useRoute: vue_router__WEBPACK_IMPORTED_MODULE_9__.useRoute,
       useRouter: vue_router__WEBPACK_IMPORTED_MODULE_9__.useRouter
     };
@@ -26240,7 +26241,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       events.forEach(function (event, index) {
         entries.forEach(function (entry) {
-          var jaccard = jaccard_index(new Set(event.tags), new Set(entry.event.tags));
+          var jaccard = jaccardIndex(new Set(event.tags), new Set(entry.event.tags));
           jaccards.value.push({
             entry: entry.event_id,
             event: event.id,
@@ -26261,7 +26262,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       });
     };
-    var jaccard_index = function jaccard_index(s1, s2) {
+    var jaccardIndex = function jaccardIndex(s1, s2) {
       var intersection = new Set(_toConsumableArray(s1).filter(function (i) {
         return s2.has(i);
       }));
@@ -26276,7 +26277,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       similarEvents: similarEvents,
       jaccards: jaccards,
       getData: getData,
-      jaccard_index: jaccard_index,
+      jaccardIndex: jaccardIndex,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
@@ -28820,58 +28821,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/components/helpers/compareStrings.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/helpers/compareStrings.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "compareStrings": () => (/* binding */ compareStrings)
-/* harmony export */ });
-// Levenshtein distance
-// Code taken from: 
-// https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
-
-function compareStrings(s1, s2) {
-  var longer = s1;
-  var shorter = s2;
-  if (s1.length < s2.length) {
-    longer = s2;
-    shorter = s1;
-  }
-  if (longer.length == 0) return 1.0;
-  return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
-}
-function editDistance(s1, s2) {
-  s1 = s1.toLowerCase();
-  s2 = s2.toLowerCase();
-  var costs = new Array();
-  for (var i = 0; i <= s1.length; i++) {
-    var lastValue = i;
-    for (var j = 0; j <= s2.length; j++) {
-      if (i == 0) {
-        costs[j] = j;
-      } else {
-        if (j > 0) {
-          var newValue = costs[j - 1];
-          if (s1.charAt(i - 1) != s2.charAt(j - 1)) {
-            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-          }
-          costs[j - 1] = lastValue;
-          lastValue = newValue;
-        }
-      }
-    }
-    if (i > 0) costs[s2.length] = lastValue;
-  }
-  return costs[s2.length];
-}
 
 /***/ }),
 
@@ -52725,6 +52674,82 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/string-similarity/src/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/string-similarity/src/index.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+module.exports = {
+	compareTwoStrings:compareTwoStrings,
+	findBestMatch:findBestMatch
+};
+
+function compareTwoStrings(first, second) {
+	first = first.replace(/\s+/g, '')
+	second = second.replace(/\s+/g, '')
+
+	if (first === second) return 1; // identical or empty
+	if (first.length < 2 || second.length < 2) return 0; // if either is a 0-letter or 1-letter string
+
+	let firstBigrams = new Map();
+	for (let i = 0; i < first.length - 1; i++) {
+		const bigram = first.substring(i, i + 2);
+		const count = firstBigrams.has(bigram)
+			? firstBigrams.get(bigram) + 1
+			: 1;
+
+		firstBigrams.set(bigram, count);
+	};
+
+	let intersectionSize = 0;
+	for (let i = 0; i < second.length - 1; i++) {
+		const bigram = second.substring(i, i + 2);
+		const count = firstBigrams.has(bigram)
+			? firstBigrams.get(bigram)
+			: 0;
+
+		if (count > 0) {
+			firstBigrams.set(bigram, count - 1);
+			intersectionSize++;
+		}
+	}
+
+	return (2.0 * intersectionSize) / (first.length + second.length - 2);
+}
+
+function findBestMatch(mainString, targetStrings) {
+	if (!areArgsValid(mainString, targetStrings)) throw new Error('Bad arguments: First argument should be a string, second should be an array of strings');
+	
+	const ratings = [];
+	let bestMatchIndex = 0;
+
+	for (let i = 0; i < targetStrings.length; i++) {
+		const currentTargetString = targetStrings[i];
+		const currentRating = compareTwoStrings(mainString, currentTargetString)
+		ratings.push({target: currentTargetString, rating: currentRating})
+		if (currentRating > ratings[bestMatchIndex].rating) {
+			bestMatchIndex = i
+		}
+	}
+	
+	
+	const bestMatch = ratings[bestMatchIndex]
+	
+	return { ratings: ratings, bestMatch: bestMatch, bestMatchIndex: bestMatchIndex };
+}
+
+function areArgsValid(mainString, targetStrings) {
+	if (typeof mainString !== 'string') return false;
+	if (!Array.isArray(targetStrings)) return false;
+	if (!targetStrings.length) return false;
+	if (targetStrings.find( function (s) { return typeof s !== 'string'})) return false;
+	return true;
+}
 
 
 /***/ }),

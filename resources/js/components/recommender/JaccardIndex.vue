@@ -66,7 +66,7 @@ const getData = () => {
     events.forEach((event, index) => {
 
         entries.forEach((entry) => {
-            let jaccard = jaccard_index(new Set(event.tags), new Set(entry.event.tags));
+            let jaccard = jaccardIndex(new Set(event.tags), new Set(entry.event.tags));
             
             jaccards.value.push({
                 entry: entry.event_id,
@@ -92,7 +92,7 @@ const getData = () => {
     })
 }
 
-const jaccard_index = (s1, s2) => {
+const jaccardIndex = (s1, s2) => {
     let intersection = new Set([...s1].filter(i => s2.has(i)));
     return intersection.size / (s1.size + s2.size - intersection.size);
 }

@@ -151,7 +151,7 @@ import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
 import { toast } from "../helpers/toast";
-import { compareStrings } from '../helpers/compareStrings.js';
+import { compareTwoStrings } from 'string-similarity';
 import { useRoute, useRouter } from "vue-router";
 
 const eventStore = useEventStore();
@@ -297,9 +297,9 @@ const showNotifcationWithSimilarArtists = (createdArtist) => {
     let allArtists = artistStore.getArtists;
 
     allArtists.forEach(artist => {
-        let similarity = compareStrings(createdArtist.name, artist.name);
+        let similarity = compareTwoStrings(createdArtist.name.toLowerCase(), artist.name.toLowerCase());
 
-        if (similarity > 0.85) similar.push(artist.name);
+        if (similarity > 0.6) similar.push(artist.name);
     });
 
     if (similar.length != 0) {
