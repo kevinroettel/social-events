@@ -15,7 +15,7 @@
     </Carousel>
 </template>
 <script setup>
-import { defineComponent, reactive } from 'vue'
+import { reactive } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import EventTeaser from '../layouts/EventTeaser.vue';
 import { useEventStore } from '../../stores/EventStore.js';

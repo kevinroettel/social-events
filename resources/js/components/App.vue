@@ -15,6 +15,7 @@
 import { reactive, onMounted, inject, computed } from 'vue';
 import Navbar from './layouts/Navbar.vue';
 import Toast from './layouts/Toast.vue';
+import { toast } from "./helpers/toast";
 
 import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';
@@ -61,7 +62,7 @@ const getEvents = () => {
         dataDone.events = true;
         getWatchlistEntries();
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     });
 }
 
@@ -72,7 +73,7 @@ const getWatchlistEntries = () => {
         eventStore.initializeWatchlist(response.data);
         dataDone.watchlist = true
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 
@@ -83,7 +84,7 @@ const getLocations = () => {
         locationStore.initializeLocations(response.data);
         dataDone.locations = true
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 
@@ -94,7 +95,7 @@ const getArtists = () => {
         artistStore.initializeArtists(response.data);
         dataDone.artists = true
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 
@@ -105,7 +106,7 @@ const getUsers = () => {
         userStore.initializeUsers(response.data);
         dataDone.users = true
     }).catch((error) => {
-        console.log(error)
+        toast(error.message, 'error');
     })
 }
 
@@ -116,7 +117,7 @@ const getFriends = () => {
         userStore.initializeFriends(response.data);
         dataDone.friends = true
     }).catch((error) => {
-        console.log(error);
+        toast(error.message, 'error');
     })
 }
 

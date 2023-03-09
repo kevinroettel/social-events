@@ -23606,10 +23606,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _layouts_Navbar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/Navbar.vue */ "./resources/js/components/layouts/Navbar.vue");
 /* harmony import */ var _layouts_Toast_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layouts/Toast.vue */ "./resources/js/components/layouts/Toast.vue");
-/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
-/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/toast */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
+/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
+/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
+
 
 
 
@@ -23630,10 +23632,10 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore)();
-    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__.useArtistStore)();
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__.useUserStore)();
-    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__.useEventStore)();
+    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_4__.useLocationStore)();
+    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore)();
+    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_6__.useUserStore)();
+    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
     var dataDone = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       events: false,
@@ -23652,7 +23654,7 @@ __webpack_require__.r(__webpack_exports__);
         dataDone.events = true;
         getWatchlistEntries();
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var getWatchlistEntries = function getWatchlistEntries() {
@@ -23660,7 +23662,7 @@ __webpack_require__.r(__webpack_exports__);
         eventStore.initializeWatchlist(response.data);
         dataDone.watchlist = true;
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var getLocations = function getLocations() {
@@ -23668,7 +23670,7 @@ __webpack_require__.r(__webpack_exports__);
         locationStore.initializeLocations(response.data);
         dataDone.locations = true;
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var getArtists = function getArtists() {
@@ -23676,7 +23678,7 @@ __webpack_require__.r(__webpack_exports__);
         artistStore.initializeArtists(response.data);
         dataDone.artists = true;
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var getUsers = function getUsers() {
@@ -23684,7 +23686,7 @@ __webpack_require__.r(__webpack_exports__);
         userStore.initializeUsers(response.data);
         dataDone.users = true;
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var getFriends = function getFriends() {
@@ -23692,7 +23694,7 @@ __webpack_require__.r(__webpack_exports__);
         userStore.initializeFriends(response.data);
         dataDone.friends = true;
       })["catch"](function (error) {
-        console.log(error);
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
@@ -23725,10 +23727,11 @@ __webpack_require__.r(__webpack_exports__);
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed,
       Navbar: _layouts_Navbar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       Toast: _layouts_Toast_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_3__.useLocationStore,
-      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_4__.useArtistStore,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_5__.useUserStore,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_6__.useEventStore
+      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast,
+      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_4__.useLocationStore,
+      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore,
+      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_6__.useUserStore,
+      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24255,7 +24258,6 @@ __webpack_require__.r(__webpack_exports__);
       props: props,
       settings: settings,
       breakpoints: breakpoints,
-      defineComponent: vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
       Carousel: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel,
       Navigation: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Navigation,
