@@ -28924,6 +28924,12 @@ function _calculateRouteDistance() {
             return destinationResponse.json();
           case 15:
             destinationJson = _context.sent;
+            if (!(destinationJson.length == 0)) {
+              _context.next = 18;
+              break;
+            }
+            return _context.abrupt("return", null);
+          case 18:
             destination = {
               "lat": destinationJson[0].lat,
               "lon": destinationJson[0].lon
@@ -28932,17 +28938,17 @@ function _calculateRouteDistance() {
             coordinates = "".concat(origin.lon, ",").concat(origin.lat, ";").concat(destination.lon, ",").concat(destination.lat);
             options = "?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false";
             url = "".concat(base).concat(coordinates).concat(options);
-            _context.next = 23;
+            _context.next = 25;
             return fetch(url);
-          case 23:
+          case 25:
             routeResponse = _context.sent;
-            _context.next = 26;
+            _context.next = 28;
             return routeResponse.json();
-          case 26:
+          case 28:
             routeJson = _context.sent;
             distance = Math.round(routeJson.routes[0].distance / 1000);
             return _context.abrupt("return", distance);
-          case 29:
+          case 31:
           case "end":
             return _context.stop();
         }

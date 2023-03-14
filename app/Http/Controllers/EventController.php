@@ -29,10 +29,8 @@ class EventController extends Controller
         return $events;
     }
 
-    public function createEvent(Request $request) {
-        $request['artists'] = json_decode($request['artists']);
-
-        $request = $request->validate([
+    private function rules($isUpdate = false, $isFlyerPathString = false) {
+        $rules = [
             'name' => 'required|string',
             'description' => 'nullable|string',
             'flyer' => 'nullable|image',
@@ -42,7 +40,18 @@ class EventController extends Controller
             'ticketLink' => 'nullable|string',
             'location' => 'required|integer|min:1',
             'artists' => 'required|array|min:1',
-        ]);
+        ];
+
+        if ($isUpdate) unset($rules['artists']);
+        if ($isFlyerPathString) $rules['flyer'] = 'nullable|string';
+
+        return $rules;
+    }
+    
+    public function createEvent(Request $request) {
+        $request['artists'] = json_decode($request['artists']);
+
+        $request = $request->validate($this->rules());
 
         $name = null;
 
@@ -80,25 +89,15 @@ class EventController extends Controller
 
         if (empty($event)) return false;
 
-        $rules = [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'date' => 'required|date',
-            'doors' => 'nullable|string',
-            'begin' => 'required|string',
-            'ticketLink' => 'nullable|string',
-            'location' => 'required|numeric|min:1'
-        ];
-
         $isFlyerPathString = is_string($request['flyer']);
-        if ($isFlyerPathString) $rules['flyer'] = 'nullable|string';
-        else $rules['flyer'] = 'nullable|image';
 
-        $request = $request->validate($rules);
+        $request = $request->validate($this->rules(true, $isFlyerPathString));
 
-        if (!$isFlyerPathString) {
-            $oldImage = public_path() . '/storage' . $event->flyer;
-            unlink($oldImage);
+        if (isset($request['flyer']) && !$isFlyerPathString) {
+            if ($event->flyer != null) {
+                $oldImage = public_path() . '/storage' . $event->flyer;
+                unlink($oldImage);
+            }
 
             $file = $request['flyer'];
             $name = "/flyers/flyer-" . $request['name'] . "." . $file->extension();
@@ -108,7 +107,7 @@ class EventController extends Controller
 
         $event->name = $request['name'];
         $event->description = ($request['description'] ?? null);
-        $event->flyer = $request['flyer'];
+        $event->flyer = ($request['flyer'] ?? null);
         $event->date = $request['date'];
         $event->doors = ($request['doors'] ?? null);
         $event->begin = $request['begin'];

@@ -21,6 +21,7 @@ export async function calculateRouteDistance(userAddress, userCity, locationName
     let destinationUrl = `${requestUrl}?q=${locationName},${locationCity}&${responseFormat}`;
     let destinationResponse = await fetch(destinationUrl);
     let destinationJson = await destinationResponse.json();
+    if (destinationJson.length == 0) return null;
     let destination = {
         "lat": destinationJson[0].lat,
         "lon": destinationJson[0].lon
