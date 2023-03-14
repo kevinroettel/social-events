@@ -109,7 +109,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from '@vue/runtime-core';
+import { onMounted, ref, watch } from 'vue';
 import { calculateRouteDistance } from '../helpers/geoCoding.js';
 import ImageModal from '../modals/ImageModal.vue';
 import DistanceInfoModal from '../modals/DistanceInfoModal.vue';
@@ -214,7 +214,8 @@ const getDistance = () => {
             userStore.getUserAddress, 
             userStore.getUserCity, 
             event.value.location.name, 
-            event.value.location.city
+            event.value.location.city,
+            event.value.location.streetAndNumber
         ).then((response) => {
             distance.value = response
         })

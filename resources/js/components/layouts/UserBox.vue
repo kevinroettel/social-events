@@ -124,5 +124,4 @@ const acceptRequestHandling = (response) => {
     userStore.acceptFriend(props.user.id);
 }
 
-
 </script>

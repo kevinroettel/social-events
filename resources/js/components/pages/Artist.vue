@@ -65,7 +65,7 @@ import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { toast } from '../helpers/toast';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const artistStore = useArtistStore();
 const eventStore = useEventStore();

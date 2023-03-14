@@ -5,9 +5,8 @@ const responseFormat = "format=json";
 // http://project-osrm.org/docs/v5.24.0/api/?language=cURL#general-options
 // http://router.project-osrm.org/route/v1/driving/7.373286149018651,51.0195563;7.324050764224658,51.47162635?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false
 
-export async function calculateRouteDistance(userAddress, userCity, locationName, locationCity) {
+export async function calculateRouteDistance(userAddress, userCity, locationName, locationCity, locationStreet) {
     let originUrl = null;
-
     if (userAddress == null) originUrl = `${requestUrl}?city=${userCity}&${responseFormat}`;
     else originUrl = `${requestUrl}?street=${userAddress}&city=${userCity}&${responseFormat}`;
     
@@ -18,7 +17,10 @@ export async function calculateRouteDistance(userAddress, userCity, locationName
         "lon": originJson[0].lon
     }
 
-    let destinationUrl = `${requestUrl}?q=${locationName},${locationCity}&${responseFormat}`;
+    let destinationUrl = null;
+    if (locationStreet == null) destinationUrl = `${requestUrl}?q=${locationName},${locationCity}&${responseFormat}`;
+    else destinationUrl = `${requestUrl}?street=${locationStreet}&city=${locationCity}&${responseFormat}`;
+
     let destinationResponse = await fetch(destinationUrl);
     let destinationJson = await destinationResponse.json();
     if (destinationJson.length == 0) return null;

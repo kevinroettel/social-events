@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "allowJs": true
+    },
+
+    "volar.inlayHints.eventArgumentInInlineHandlers": false,
+}

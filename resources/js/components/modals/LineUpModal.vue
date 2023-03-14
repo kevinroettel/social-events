@@ -25,6 +25,7 @@
 
                     <div v-if="showArtistSelection">
                         <p v-if="showNotifcation">Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher sie den Namen korrekt geschrieben haben.</p>
+                        <p v-if="notificationText != null">{{ notificationText }}</p>
                         
                         <v-select 
                             taggable 
@@ -34,7 +35,7 @@
                             :options="artistStore.artists" 
                             label="name" 
                             v-model="newArtist"
-                            @option:created="showNotifcation = true"
+                            @option:created="showNotifcationWithSimilarArtists($event)"
                         ></v-select>
 
                         <button
@@ -52,9 +53,10 @@
 </template>
 <script setup>
 import LineUpArtist from '../layouts/LineUpArtist.vue';
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useArtistStore } from "../../stores/ArtistStore";
 import { toast } from '../helpers/toast';
+import { compareTwoStrings } from 'string-similarity';
 const artistStore = useArtistStore();
 
 const props = defineProps({
@@ -79,6 +81,7 @@ const emit = defineEmits([
 const newArtist = ref(null);
 const showArtistSelection = ref(false);
 const showNotifcation = ref(false);
+const notificationText = ref(null);
 
 const addArtistToLineUp = () => {
     if (newArtist.value.id !== undefined) {
@@ -104,6 +107,24 @@ const createArtist = () => {
     }).catch((error) => {
         toast(error.message, 'error');
     })
+}
+
+const showNotifcationWithSimilarArtists = (createdArtist) => {
+    let similar = [];
+    let allArtists = artistStore.getArtists;
+
+    allArtists.forEach(artist => {
+        let similarity = compareTwoStrings(createdArtist.name.toLowerCase(), artist.name.toLowerCase());
+
+        if (similarity > 0.6) similar.push(artist.name);
+    });
+
+    if (similar.length != 0) {
+        notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
+        similar.forEach((artist, index) => notificationText.value += artist + (index == similar.length - 1 ? "" : ", "));
+    }
+
+    showNotifcation.value = true;
 }
 
 const artistRemoved = (artistId) => emit('artist-removed', artistId);

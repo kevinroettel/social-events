@@ -34,7 +34,6 @@
     </div>
 </template>
 <script setup>
-import { onMounted } from '@vue/runtime-core';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

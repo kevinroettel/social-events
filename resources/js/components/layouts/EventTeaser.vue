@@ -21,12 +21,8 @@
 <script setup>
 import EventStatusButtons from './EventStatusButtons.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
-import { inject, onMounted, ref, watch } from '@vue/runtime-core';
-import { useUserStore } from '../../stores/UserStore.js';
-import { useEventStore } from '../../stores/EventStore.js';
+import { inject } from 'vue';
 import { useRouter } from 'vue-router';
-const userStore = useUserStore();
-const eventStore = useEventStore();
 
 const router = useRouter();
 

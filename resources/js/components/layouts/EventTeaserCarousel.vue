@@ -18,8 +18,6 @@
 import { reactive } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import EventTeaser from '../layouts/EventTeaser.vue';
-import { useEventStore } from '../../stores/EventStore.js';
-const eventStore = useEventStore();
 
 const props = defineProps({
     events: {

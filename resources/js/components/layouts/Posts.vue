@@ -45,7 +45,7 @@
 <script setup>
 import PostContent from './PostContent.vue';
 import CreatePost from './CreatePost.vue';
-import { onMounted, reactive, ref } from '@vue/runtime-core';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
     postsData: {

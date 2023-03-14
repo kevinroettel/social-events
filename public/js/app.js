@@ -23939,9 +23939,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'EventList',
@@ -23982,7 +23980,6 @@ __webpack_require__.r(__webpack_exports__);
       showEventPage: showEventPage,
       getDate: getDate,
       getYear: getYear,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       useRouter: vue_router__WEBPACK_IMPORTED_MODULE_0__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -24138,13 +24135,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventStatusButtons.vue */ "./resources/js/components/layouts/EventStatusButtons.vue");
 /* harmony import */ var _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/dateFormat.js */ "./resources/js/components/helpers/dateFormat.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 
 
 
@@ -24172,29 +24164,20 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
-    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
-    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
-    var axios = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.inject)('axios');
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
+    var axios = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('axios');
     var showEventPage = function showEventPage() {
       router.push("/event/".concat(props.event.id));
     };
     var __returned__ = {
-      userStore: userStore,
-      eventStore: eventStore,
       router: router,
       axios: axios,
       props: props,
       showEventPage: showEventPage,
       EventStatusButtons: _EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       getFormattedDate: _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_1__.getFormattedDate,
-      inject: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.inject,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref,
-      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_5__.watch,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore,
-      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter
+      inject: vue__WEBPACK_IMPORTED_MODULE_2__.inject,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24220,8 +24203,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var vue3_carousel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue3-carousel */ "./node_modules/vue3-carousel/dist/carousel.es.js");
 /* harmony import */ var _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layouts/EventTeaser.vue */ "./resources/js/components/layouts/EventTeaser.vue");
-/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
-
 
 
 
@@ -24238,7 +24219,6 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
     var settings = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       itemsToShow: 1,
       snapAlign: 'center'
@@ -24254,7 +24234,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     var __returned__ = {
-      eventStore: eventStore,
       props: props,
       settings: settings,
       breakpoints: breakpoints,
@@ -24262,8 +24241,7 @@ __webpack_require__.r(__webpack_exports__);
       Carousel: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel,
       Navigation: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Navigation,
       Slide: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Slide,
-      EventTeaser: _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_3__.useEventStore
+      EventTeaser: _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24481,8 +24459,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _PostContent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostContent.vue */ "./resources/js/components/layouts/PostContent.vue");
 /* harmony import */ var _CreatePost_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreatePost.vue */ "./resources/js/components/layouts/CreatePost.vue");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 
@@ -24499,7 +24476,7 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var posts = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
+    var posts = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
     var addPost = function addPost(newComment) {
       posts.value.forEach(function (post, index) {
         if (post.id == newComment.answerTo) {
@@ -24507,7 +24484,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
       posts.value = props.postsData;
     });
     var __returned__ = {
@@ -24516,9 +24493,8 @@ __webpack_require__.r(__webpack_exports__);
       addPost: addPost,
       PostContent: _PostContent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       CreatePost: _CreatePost_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.onMounted,
-      reactive: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.reactive,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.ref
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_2__.ref
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24683,6 +24659,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var string_similarity__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! string-similarity */ "./node_modules/string-similarity/src/index.js");
+/* harmony import */ var string_similarity__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(string_similarity__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -24711,6 +24690,7 @@ __webpack_require__.r(__webpack_exports__);
     var newArtist = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
     var showArtistSelection = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
     var showNotifcation = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false);
+    var notificationText = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
     var addArtistToLineUp = function addArtistToLineUp() {
       if (newArtist.value.id !== undefined) {
         axios.patch("/events/".concat(props.eventId, "/artists/").concat(newArtist.value.id)).then(function (response) {
@@ -24730,6 +24710,21 @@ __webpack_require__.r(__webpack_exports__);
         (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
+    var showNotifcationWithSimilarArtists = function showNotifcationWithSimilarArtists(createdArtist) {
+      var similar = [];
+      var allArtists = artistStore.getArtists;
+      allArtists.forEach(function (artist) {
+        var similarity = (0,string_similarity__WEBPACK_IMPORTED_MODULE_4__.compareTwoStrings)(createdArtist.name.toLowerCase(), artist.name.toLowerCase());
+        if (similarity > 0.6) similar.push(artist.name);
+      });
+      if (similar.length != 0) {
+        notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
+        similar.forEach(function (artist, index) {
+          return notificationText.value += artist + (index == similar.length - 1 ? "" : ", ");
+        });
+      }
+      showNotifcation.value = true;
+    };
     var artistRemoved = function artistRemoved(artistId) {
       return emit('artist-removed', artistId);
     };
@@ -24740,14 +24735,16 @@ __webpack_require__.r(__webpack_exports__);
       newArtist: newArtist,
       showArtistSelection: showArtistSelection,
       showNotifcation: showNotifcation,
+      notificationText: notificationText,
       addArtistToLineUp: addArtistToLineUp,
       createArtist: createArtist,
+      showNotifcationWithSimilarArtists: showNotifcationWithSimilarArtists,
       artistRemoved: artistRemoved,
       LineUpArtist: _layouts_LineUpArtist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
       useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_2__.useArtistStore,
-      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast
+      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast,
+      compareTwoStrings: string_similarity__WEBPACK_IMPORTED_MODULE_4__.compareTwoStrings
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24911,10 +24908,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _helpers_toast_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/toast.js */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _helpers_toast_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/toast.js */ "./resources/js/components/helpers/toast.js");
 
 
 
@@ -24923,11 +24919,11 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_0__.useUserStore)();
-    var axios = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.inject)('axios');
-    var changeDetected = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.ref)(false);
-    var profilePictureUrl = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.ref)(null);
-    var userData = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.reactive)({
+    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore)();
+    var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
+    var changeDetected = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var profilePictureUrl = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var userData = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       id: null,
       username: null,
       email: null,
@@ -24937,7 +24933,7 @@ __webpack_require__.r(__webpack_exports__);
       password: null,
       password_confirmation: null
     });
-    var hasError = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.reactive)({
+    var hasError = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       username: false,
       email: false,
       password: false,
@@ -24974,9 +24970,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/users/".concat(userData.id), formData, {
         'Content-Type': 'multipart/form-data; charset=utf-8;'
       }).then(function (response) {
-        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_1__.toast)('Nutzerdaten erfolgreich aktualisiert.', 'success');
+        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_2__.toast)('Nutzerdaten erfolgreich aktualisiert.', 'success');
       })["catch"](function (error) {
-        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_1__.toast)(error.message, 'error');
+        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_2__.toast)(error.message, 'error');
       });
     };
     var handleFile = function handleFile(input) {
@@ -24984,7 +24980,7 @@ __webpack_require__.r(__webpack_exports__);
       userData.profile_picture = input.target.files[0];
       profilePictureUrl.value = URL.createObjectURL(userData.profile_picture);
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       userData.id = userStore.getUserId;
       userData.username = userStore.getUserName;
       userData.email = userStore.getUserEmail;
@@ -25003,12 +24999,12 @@ __webpack_require__.r(__webpack_exports__);
       checkInputs: checkInputs,
       saveUser: saveUser,
       handleFile: handleFile,
-      inject: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.inject,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.onMounted,
-      reactive: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.reactive,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.ref,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_0__.useUserStore,
-      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_1__.toast
+      inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
+      reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
+      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore,
+      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_2__.toast
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25115,8 +25111,7 @@ __webpack_require__.r(__webpack_exports__);
       useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_4__.useEventStore,
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_5__.useLocationStore,
       toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_6__.toast,
-      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_7__.useRoute,
-      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_7__.useRouter
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_7__.useRoute
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25182,21 +25177,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/geoCoding.js */ "./resources/js/components/helpers/geoCoding.js");
-/* harmony import */ var _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modals/ImageModal.vue */ "./resources/js/components/modals/ImageModal.vue");
-/* harmony import */ var _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modals/DistanceInfoModal.vue */ "./resources/js/components/modals/DistanceInfoModal.vue");
-/* harmony import */ var _layouts_EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../layouts/EventStatusButtons.vue */ "./resources/js/components/layouts/EventStatusButtons.vue");
-/* harmony import */ var _layouts_CreatePost_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../layouts/CreatePost.vue */ "./resources/js/components/layouts/CreatePost.vue");
-/* harmony import */ var _layouts_Posts_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../layouts/Posts.vue */ "./resources/js/components/layouts/Posts.vue");
-/* harmony import */ var _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/dateFormat.js */ "./resources/js/components/helpers/dateFormat.js");
-/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
-/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
-/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../helpers/toast.js */ "./resources/js/components/helpers/toast.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/geoCoding.js */ "./resources/js/components/helpers/geoCoding.js");
+/* harmony import */ var _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modals/ImageModal.vue */ "./resources/js/components/modals/ImageModal.vue");
+/* harmony import */ var _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modals/DistanceInfoModal.vue */ "./resources/js/components/modals/DistanceInfoModal.vue");
+/* harmony import */ var _layouts_EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../layouts/EventStatusButtons.vue */ "./resources/js/components/layouts/EventStatusButtons.vue");
+/* harmony import */ var _layouts_CreatePost_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../layouts/CreatePost.vue */ "./resources/js/components/layouts/CreatePost.vue");
+/* harmony import */ var _layouts_Posts_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../layouts/Posts.vue */ "./resources/js/components/layouts/Posts.vue");
+/* harmony import */ var _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../helpers/dateFormat.js */ "./resources/js/components/helpers/dateFormat.js");
+/* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../stores/LocationStore.js */ "./resources/js/stores/LocationStore.js");
+/* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
+/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _helpers_toast_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../helpers/toast.js */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 
 
 
@@ -25216,19 +25210,19 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore)();
-    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_8__.useLocationStore)();
-    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__.useArtistStore)();
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__.useUserStore)();
-    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.useRoute)();
-    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.useRouter)();
-    var event = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
-    var posts = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
-    var watchlistStatus = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
-    var showFullImage = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(false);
-    var interestedCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(0);
-    var attendingCount = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(0);
-    var distance = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref)(null);
+    var eventStore = (0,_stores_EventStore_js__WEBPACK_IMPORTED_MODULE_8__.useEventStore)();
+    var locationStore = (0,_stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_9__.useLocationStore)();
+    var artistStore = (0,_stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_10__.useArtistStore)();
+    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_11__.useUserStore)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.useRoute)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.useRouter)();
+    var event = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var posts = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var watchlistStatus = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var showFullImage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var interestedCount = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
+    var attendingCount = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
+    var distance = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var getEventData = function getEventData() {
       var eventFromStore = eventStore.getEventById(route.params.eventId);
       if (eventFromStore == null) eventFromStore = eventStore.getOldEventById(route.params.eventId);
@@ -25246,7 +25240,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/events/".concat(route.params.eventId, "/posts")).then(function (response) {
         posts.value = response.data;
       })["catch"](function (error) {
-        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__.toast)(error.message, 'error');
+        (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_12__.toast)(error.message, 'error');
       });
     };
     var addPost = function addPost(newPost) {
@@ -25283,16 +25277,16 @@ __webpack_require__.r(__webpack_exports__);
     };
     var getDistance = function getDistance() {
       if (userStore.getUserCity != null) {
-        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_0__.calculateRouteDistance)(userStore.getUserAddress, userStore.getUserCity, event.value.location.name, event.value.location.city).then(function (response) {
+        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance)(userStore.getUserAddress, userStore.getUserCity, event.value.location.name, event.value.location.city, event.value.location.streetAndNumber).then(function (response) {
           distance.value = response;
         });
       }
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.watch)(watchlistStatus, function (newStatus, oldStatus) {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(watchlistStatus, function (newStatus, oldStatus) {
       if (newStatus == 'interested') interestedCount.value++;else if (newStatus == 'attending') attendingCount.value++;
       if (oldStatus == 'interested') interestedCount.value--;else if (oldStatus == 'attending') attendingCount.value--;
     });
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       if (route.params.eventId != null) {
         getEventData();
         getWatchlistEntriesCount();
@@ -25324,23 +25318,23 @@ __webpack_require__.r(__webpack_exports__);
       showArtistPage: showArtistPage,
       openEventUpdateForm: openEventUpdateForm,
       getDistance: getDistance,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_13__.ref,
-      watch: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_14__.watch,
-      calculateRouteDistance: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_0__.calculateRouteDistance,
-      ImageModal: _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      DistanceInfoModal: _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      EventStatusButtons: _layouts_EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      CreatePost: _layouts_CreatePost_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      Posts: _layouts_Posts_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      getFormattedDate: _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_6__.getFormattedDate,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore,
-      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_8__.useLocationStore,
-      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_9__.useArtistStore,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_10__.useUserStore,
-      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_11__.toast,
-      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_12__.useRoute,
-      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_12__.useRouter
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
+      calculateRouteDistance: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance,
+      ImageModal: _modals_ImageModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      DistanceInfoModal: _modals_DistanceInfoModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      EventStatusButtons: _layouts_EventStatusButtons_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      CreatePost: _layouts_CreatePost_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      Posts: _layouts_Posts_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      getFormattedDate: _helpers_dateFormat_js__WEBPACK_IMPORTED_MODULE_7__.getFormattedDate,
+      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_8__.useEventStore,
+      useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_9__.useLocationStore,
+      useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_10__.useArtistStore,
+      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_11__.useUserStore,
+      toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_12__.toast,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_13__.useRoute,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_13__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25598,10 +25592,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _layouts_UserBox_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/UserBox.vue */ "./resources/js/components/layouts/UserBox.vue");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _helpers_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/toast */ "./resources/js/components/helpers/toast.js");
 
 
 
@@ -25611,15 +25604,15 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore)();
-    var axios = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.inject)('axios');
-    var searchUser = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)("");
-    var possibleUsers = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref)(null);
+    var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
+    var axios = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('axios');
+    var searchUser = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)("");
+    var possibleUsers = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
     var getFriendRequests = function getFriendRequests() {
       axios.get("/users/".concat(userStore.getUserId, "/friendrequests")).then(function (response) {
         userStore.initializeRequests(response.data);
       })["catch"](function (error) {
-        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_2__.toast)(error.message, 'error');
+        (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
     var filterUsers = function filterUsers() {
@@ -25627,7 +25620,7 @@ __webpack_require__.r(__webpack_exports__);
         possibleUsers.value = userStore.getUsersALike(searchUser.value);
       }, 500);
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       getFriendRequests();
     });
     var __returned__ = {
@@ -25638,11 +25631,11 @@ __webpack_require__.r(__webpack_exports__);
       getFriendRequests: getFriendRequests,
       filterUsers: filterUsers,
       UserBox: _layouts_UserBox_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      inject: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.inject,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_4__.ref,
-      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore,
-      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_2__.toast
+      inject: vue__WEBPACK_IMPORTED_MODULE_1__.inject,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
+      useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
+      toast: _helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25665,14 +25658,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js");
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-/* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
-/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
-/* harmony import */ var _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/LocationStore */ "./resources/js/stores/LocationStore.js");
-/* harmony import */ var _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../layouts/EventList.vue */ "./resources/js/components/layouts/EventList.vue");
-/* harmony import */ var _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modals/LocationFormModal.vue */ "./resources/js/components/modals/LocationFormModal.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
+/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var _stores_LocationStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/LocationStore */ "./resources/js/stores/LocationStore.js");
+/* harmony import */ var _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../layouts/EventList.vue */ "./resources/js/components/layouts/EventList.vue");
+/* harmony import */ var _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../modals/LocationFormModal.vue */ "./resources/js/components/modals/LocationFormModal.vue");
 
 
 
@@ -25685,15 +25677,14 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore)();
-    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
-    var locationStore = (0,_stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore)();
-    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_5__.useRoute)();
-    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter)();
-    var show = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)('upcoming');
-    var location = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
-    var upcomingEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
-    var pastEvents = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_1__.useArtistStore)();
+    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_2__.useEventStore)();
+    var locationStore = (0,_stores_LocationStore__WEBPACK_IMPORTED_MODULE_3__.useLocationStore)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_6__.useRoute)();
+    var show = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('upcoming');
+    var location = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var upcomingEvents = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var pastEvents = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var getLocation = function getLocation() {
       location.value = locationStore.getLocationById(route.params.locationId);
       upcomingEvents.value = eventStore.getEventsInLocation(route.params.locationId);
@@ -25752,7 +25743,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }, 1);
     };
-    (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       if (route.params.locationId != null) getLocation();
     });
     var __returned__ = {
@@ -25760,7 +25751,6 @@ __webpack_require__.r(__webpack_exports__);
       eventStore: eventStore,
       locationStore: locationStore,
       route: route,
-      router: router,
       show: show,
       location: location,
       upcomingEvents: upcomingEvents,
@@ -25770,15 +25760,14 @@ __webpack_require__.r(__webpack_exports__);
       getBarrierFree: getBarrierFree,
       locationUpdated: locationUpdated,
       updateDescription: updateDescription,
-      onMounted: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_7__.onMounted,
-      ref: _vue_runtime_core__WEBPACK_IMPORTED_MODULE_6__.ref,
-      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRoute,
-      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter,
-      useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_0__.useArtistStore,
-      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
-      useLocationStore: _stores_LocationStore__WEBPACK_IMPORTED_MODULE_2__.useLocationStore,
-      EventList: _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      LocationFormModal: _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_6__.useRoute,
+      useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_1__.useArtistStore,
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_2__.useEventStore,
+      useLocationStore: _stores_LocationStore__WEBPACK_IMPORTED_MODULE_3__.useLocationStore,
+      EventList: _layouts_EventList_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      LocationFormModal: _modals_LocationFormModal_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -27287,6 +27276,9 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   key: 0
 };
+var _hoisted_8 = {
+  key: 1
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_v_select = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("v-select");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.lineup, function (artist, index) {
@@ -27304,7 +27296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $setup.showArtistSelection = true;
     })
-  }, " Neuen Künstler hinzufügen "), $setup.showArtistSelection ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [$setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_7, "Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher sie den Namen korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
+  }, " Neuen Künstler hinzufügen "), $setup.showArtistSelection ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [$setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_7, "Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher sie den Namen korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.notificationText != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notificationText), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
     taggable: "",
     "class": "form-control",
     "aria-label": "Künstler",
@@ -27316,7 +27308,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.newArtist = $event;
     }),
     "onOption:created": _cache[3] || (_cache[3] = function ($event) {
-      return $setup.showNotifcation = true;
+      return $setup.showNotifcationWithSimilarArtists($event);
     })
   }, null, 8 /* PROPS */, ["options", "modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
@@ -28872,7 +28864,7 @@ var responseFormat = "format=json";
 // http://project-osrm.org/docs/v5.24.0/api/?language=cURL#general-options
 // http://router.project-osrm.org/route/v1/driving/7.373286149018651,51.0195563;7.324050764224658,51.47162635?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false
 
-function calculateRouteDistance(_x, _x2, _x3, _x4) {
+function calculateRouteDistance(_x, _x2, _x3, _x4, _x5) {
   return _calculateRouteDistance.apply(this, arguments);
 }
 
@@ -28895,7 +28887,7 @@ function calculateRouteDistance(_x, _x2, _x3, _x4) {
 //     return distance;
 // }
 function _calculateRouteDistance() {
-  _calculateRouteDistance = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(userAddress, userCity, locationName, locationCity) {
+  _calculateRouteDistance = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(userAddress, userCity, locationName, locationCity, locationStreet) {
     var originUrl, originResponse, originJson, origin, destinationUrl, destinationResponse, destinationJson, destination, base, coordinates, options, url, routeResponse, routeJson, distance;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
@@ -28915,21 +28907,22 @@ function _calculateRouteDistance() {
               "lat": originJson[0].lat,
               "lon": originJson[0].lon
             };
-            destinationUrl = "".concat(requestUrl, "?q=").concat(locationName, ",").concat(locationCity, "&").concat(responseFormat);
-            _context.next = 12;
+            destinationUrl = null;
+            if (locationStreet == null) destinationUrl = "".concat(requestUrl, "?q=").concat(locationName, ",").concat(locationCity, "&").concat(responseFormat);else destinationUrl = "".concat(requestUrl, "?street=").concat(locationStreet, "&city=").concat(locationCity, "&").concat(responseFormat);
+            _context.next = 13;
             return fetch(destinationUrl);
-          case 12:
+          case 13:
             destinationResponse = _context.sent;
-            _context.next = 15;
+            _context.next = 16;
             return destinationResponse.json();
-          case 15:
+          case 16:
             destinationJson = _context.sent;
             if (!(destinationJson.length == 0)) {
-              _context.next = 18;
+              _context.next = 19;
               break;
             }
             return _context.abrupt("return", null);
-          case 18:
+          case 19:
             destination = {
               "lat": destinationJson[0].lat,
               "lon": destinationJson[0].lon
@@ -28938,17 +28931,17 @@ function _calculateRouteDistance() {
             coordinates = "".concat(origin.lon, ",").concat(origin.lat, ";").concat(destination.lon, ",").concat(destination.lat);
             options = "?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false";
             url = "".concat(base).concat(coordinates).concat(options);
-            _context.next = 25;
+            _context.next = 26;
             return fetch(url);
-          case 25:
+          case 26:
             routeResponse = _context.sent;
-            _context.next = 28;
+            _context.next = 29;
             return routeResponse.json();
-          case 28:
+          case 29:
             routeJson = _context.sent;
             distance = Math.round(routeJson.routes[0].distance / 1000);
             return _context.abrupt("return", distance);
-          case 31:
+          case 32:
           case "end":
             return _context.stop();
         }

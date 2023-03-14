@@ -78,8 +78,8 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "@vue/runtime-core";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { useArtistStore } from "../../stores/ArtistStore";
 import { useEventStore } from "../../stores/EventStore";
 import { useLocationStore } from "../../stores/LocationStore";
@@ -91,7 +91,6 @@ const eventStore = useEventStore();
 const locationStore = useLocationStore();
 
 const route = useRoute();
-const router = useRouter();
 
 const show = ref('upcoming');
 const location = ref(null);

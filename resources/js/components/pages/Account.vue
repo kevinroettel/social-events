@@ -77,7 +77,7 @@
     </div>
 </template>
 <script setup>
-import { inject, onMounted, reactive, ref } from '@vue/runtime-core';
+import { inject, onMounted, reactive, ref } from 'vue';
 import { useUserStore } from '../../stores/UserStore.js';
 import { toast } from '../helpers/toast.js';
 const userStore = useUserStore();

@@ -72,7 +72,7 @@
 </template>
 <script setup>
 import UserBox from '../layouts/UserBox.vue';
-import { inject, onMounted, ref } from '@vue/runtime-core';
+import { inject, onMounted, ref } from 'vue';
 import { useUserStore } from '../../stores/UserStore.js';
 import { toast } from '../helpers/toast';
 const userStore = useUserStore();
