@@ -33,8 +33,14 @@ class ArtistController extends Controller
     }
 
     public function createArtist(Request $request) {
-        $request = $request->validate(['name' => 'required|unique:artists|string']);
-        $artist = Artist::create(['name' => $request['name']]);
+        $request = $request->validate([
+            'name' => 'required|unique:artists|string'
+        ]);
+
+        $artist = Artist::create([
+            'name' => $request['name']
+        ]);
+
         return $artist;
     }
 
