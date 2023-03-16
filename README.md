@@ -51,11 +51,11 @@ php artisan key:generate
 ```
 
 ## Nutzung
-Für die Nutzung der Applikation gibt es eine eigene [Datei](USAGE.md).<br>
+Für die Nutzung der Applikation gibt es eine eigene [Datei](./docs/USAGE.md).<br>
 Diese richtet sich primär an die tatsächliche Nutzung der Seite.
 
 ## Code
-Für den Fall, dass du bei dem Projekt mithelfen möchtest, gibt es [hier](CODE.md) eine Führung durch die Code-Base.
+Für den Fall, dass du bei dem Projekt mithelfen möchtest, gibt es [hier](./docs/CODE.md) eine Führung durch die Code-Base.
 
 ## License
 [MIT](LICENSE.md)
