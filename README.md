@@ -9,12 +9,11 @@ Dieses Projekt versucht eine Alternative zu Veranstaltungen auf Facebook zu biet
 - Freunde-System
 - Vorschlagssystem
 
-## Change this Screenshot
-![](https://raw.githubusercontent.com/cfpb/open-source-project-template/main/screenshot.png)
+![](./docs/img/dashboard.png)
 
 ## Dependencies
-- Composer 2.0.12
-- PHP 8.1.14
+- Composer 2.4.4
+- PHP 8.1.6
 - MySQL
 
 ## Installation & Konfiguration
