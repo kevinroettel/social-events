@@ -67,5 +67,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/users/{userId}/watchlists/{eventId}', [WatchlistController::class, 'getInterestedFriends']);
     Route::patch('/users/{userId}/watchlists/{eventId}/{status}', [WatchlistController::class, 'updateEntryStatus']);
 
+    // forwarding unknown URLs to vue-router
     Route::get('/{any}', function () { return view('app'); })->where('any', '.*');
 });
