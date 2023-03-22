@@ -84,13 +84,123 @@ Vue-Components bestehen aus zwei Haupt-Blöcken. Einmal das Template, welches zu
 
 ### Template
 Das Template eines Components besteht grundsätzlich aus normalen HTML-Tags mit den gängigen Attributen wie z.B. *id, class, type*.
-Durch Vue kommen aber Kontrollstrukturen wie Schleifen und Bedingungen hinzu. Somit können (hier werden Posts als Beispiel genutzt) sich wiederholende HTML-Elemente oder ganze Blöcke mithilfe einer Iteration dargestellt werden:
+Durch Vue kommen aber Kontrollstrukturen wie Schleifen und Bedingungen hinzu. Somit kann auch eine Liste durch ein Array generiert werden:
 ````html
-<div  
-    v-for="(post, index) in posts"
-    :key="index"
-    class="accordion-item"
->
-    ...
-</div>
+<template>
+    <ul v-if="array.length != 0">
+        <li
+            v-for="(element, index) in array"
+            :key="index"
+            class="item"
+        >
+            {{ element }}
+        </li>
+    </ul>
+</template>
 ````
+
+### Script
+Das Script des Components ist in JavaScript geschrieben (wahlweise kann auch TypeScript genutzt werden).
+Innerhalb des Scriptes müssen im Template genutzte Components importiert werden, sowie einige Vue-Funktionen die im Script genutzt werden:
+````js
+import Component from './Component.vue';
+import { onMounted, ref } from 'vue';
+````
+
+Zudem müssen alle Props im Component deklariert werden. Props sind Daten, welche vom Parent-Component and das Child gegeben werden. Das Child muss sicherstellen das die Props bei ihm deklariert sind:
+````js
+const props = defineProps({
+    propArray: {
+        required: true,
+        type: Array,
+        default: null
+    }
+});
+````
+
+Um automatisch nach/während dem Laden der Seite Daten zu verabeiten, gibt es die Methode ``onMounted``, über welche direkt Anweisungen gegeben werden können, was zu Anfang getan werden soll.
+````js
+onMounted(() => {
+    getData()
+});
+````
+
+Für Components kann man zudem "Globale" bzw. Reaktive Variabeln erstellen, welche Änderungen durch den Nutzer zulassen. Bspw. keine eine dieser Variabeln auf einem Text-Input referenziert sein, welches den durch den Nutzer angegebenen Wert annimmt.
+````js
+// einzelne reaktive Variabel
+const simple_var = ref(null);
+
+// reaktive Objekt Variabel
+const deep_var = reactive({
+    key: 'value'
+});
+````
+
+## Auflistung und Erklärung Components
+### /pages/
+**Account**<br>
+Account Einstellungen
+
+**Artist**<br>
+
+**Dashboard**<br>
+
+**Event**<br>
+
+**EventForm**<br>
+
+**Friends**<br>
+
+**Location**<br>
+
+**SearchResults**<br>
+
+
+### /modals/
+**DistanceInfoModal**<br>
+
+**ImageModal**<br>
+
+**LineUpModal**<br>
+
+**LocationFormModal**<br>
+
+### /layouts/
+**ArtistTags**<br>
+
+**CreatePost**<br>
+
+**EventList**<br>
+
+**EventPreview**<br>
+
+**EventStatusButtons**<br>
+
+**EventTeaser**<br>
+
+**EventTeaserCarousel**<br>
+
+**InterestedList**<br>
+
+**LineUpArtist**<br>
+
+**Navbar**<br>
+
+**PostContent**<br>
+
+**Posts**<br>
+
+**Toast**<br>
+
+**UserBox**<br>
+
+### /recommender/
+**AllEvents**<br>
+
+**CosineSimilarity**<br>
+
+**FriendWatchlists**<br>
+
+**JaccardIndex**<br>
+
+**Watchlist**<br>
