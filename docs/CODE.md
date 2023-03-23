@@ -102,15 +102,21 @@ Durch Vue kommen aber Kontrollstrukturen wie Schleifen und Bedingungen hinzu. So
 ### Script
 Das Script des Components ist in JavaScript geschrieben (wahlweise kann auch TypeScript genutzt werden).
 Innerhalb des Scriptes müssen im Template genutzte Components importiert werden, sowie einige Vue-Funktionen die im Script genutzt werden:
-````js
-import Component from './Component.vue';
+````javascript
+import ChildComponent from './ChildComponent.vue';
 import { onMounted, ref } from 'vue';
 ````
 
-Zudem müssen alle Props im Component deklariert werden. Props sind Daten, welche vom Parent-Component and das Child gegeben werden. Das Child muss sicherstellen das die Props bei ihm deklariert sind:
-````js
+Zudem müssen alle Props im Component deklariert werden. Props sind Daten, welche vom Parent-Component and den Child-Component gegeben werden:
+````html
+<ChildComponent
+    :propName="[1, 2]"
+/>
+````
+Das Child muss dann sicherstellen das die Props bei ihm deklariert sind, damit die übergebenen Daten auch korrekt genutzt werden können:
+````javascript
 const props = defineProps({
-    propArray: {
+    propName: {
         required: true,
         type: Array,
         default: null
@@ -118,15 +124,32 @@ const props = defineProps({
 });
 ````
 
+Anders herum (Child- and Parent-Component) können auch Daten mitgeteilt werden, was durch eigens registrierte Events geschieht:
+````javascript
+const emit = defineEmits([
+    'event-name'
+]);
+````
+Diese können dann einfach und zu jedem beliebigen Zeitpunkt ausgeführt werden. Hier können dann auch, wenn gewünscht, Daten mitgegeben werden:
+````javascript
+emit('event-name', optionalData);
+````
+Im Parent-Component kann dieses Event dann folgendermaßen gecatched werden:
+````html
+<ChildComponent
+    @event-name="handleEvent($event)"
+/>
+````
+
 Um automatisch nach/während dem Laden der Seite Daten zu verabeiten, gibt es die Methode ``onMounted``, über welche direkt Anweisungen gegeben werden können, was zu Anfang getan werden soll.
-````js
+````javascript
 onMounted(() => {
     getData()
 });
 ````
 
 Für Components kann man zudem "Globale" bzw. Reaktive Variabeln erstellen, welche Änderungen durch den Nutzer zulassen. Bspw. keine eine dieser Variabeln auf einem Text-Input referenziert sein, welches den durch den Nutzer angegebenen Wert annimmt.
-````js
+````javascript
 // einzelne reaktive Variabel
 const simple_var = ref(null);
 
@@ -136,71 +159,12 @@ const deep_var = reactive({
 });
 ````
 
-## Auflistung und Erklärung Components
-### /pages/
-**Account**<br>
-Account Einstellungen
-
-**Artist**<br>
-
-**Dashboard**<br>
-
-**Event**<br>
-
-**EventForm**<br>
-
-**Friends**<br>
-
-**Location**<br>
-
-**SearchResults**<br>
-
-
-### /modals/
-**DistanceInfoModal**<br>
-
-**ImageModal**<br>
-
-**LineUpModal**<br>
-
-**LocationFormModal**<br>
-
-### /layouts/
-**ArtistTags**<br>
-
-**CreatePost**<br>
-
-**EventList**<br>
-
-**EventPreview**<br>
-
-**EventStatusButtons**<br>
-
-**EventTeaser**<br>
-
-**EventTeaserCarousel**<br>
-
-**InterestedList**<br>
-
-**LineUpArtist**<br>
-
-**Navbar**<br>
-
-**PostContent**<br>
-
-**Posts**<br>
-
-**Toast**<br>
-
-**UserBox**<br>
-
-### /recommender/
-**AllEvents**<br>
-
-**CosineSimilarity**<br>
-
-**FriendWatchlists**<br>
-
-**JaccardIndex**<br>
-
-**Watchlist**<br>
+Um auf Änderungen von Reaktiven Variabeln zu reagieren, können Watcher-Funktionen genutzt werden. Diese nehmen eine Callback-Funktion entgegen, welche auch den Alten und den Neuen Inhalt der Variabel entgegen nehmen kann:
+````javascript
+watch(
+    var_to_watch,
+    (newValue, oldValue) => {
+        ...
+    }
+);
+````

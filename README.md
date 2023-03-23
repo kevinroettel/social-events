@@ -54,7 +54,11 @@ Für die Nutzung der Applikation gibt es eine eigene [Datei](./docs/USAGE.md).<b
 Diese richtet sich primär an die tatsächliche Nutzung der Seite.
 
 ## Code
-Für den Fall, dass du bei dem Projekt mithelfen möchtest, gibt es [hier](./docs/CODE.md) eine Führung durch die Code-Base.
+Für den Fall, dass du bei dem Projekt mithelfen möchtest, gibt es einen minimalen Crashcourse für Laravel und Vue Funktionalitäten.<br>
+[Crashcourse](./docs/CODE.md)
+
+Sollten diese Inhalte und Funktionalitäten bereits bekannt sein, gibt es auch eine Einführung die die jeweiligen Vue-Components.
+[Vue-Components](./docs/VUE.md)
 
 ## License
 [MIT](LICENSE.md)
