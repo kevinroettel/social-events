@@ -24087,18 +24087,6 @@ __webpack_require__.r(__webpack_exports__);
         (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
       });
     };
-
-    // const showInterestedList = () => {
-
-    // }
-
-    // const getInterestedList = () => {
-    //     axios.get()
-    // }
-
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
-      // getInterestedList()
-    });
     var __returned__ = {
       props: props,
       userStore: userStore,
@@ -24107,7 +24095,6 @@ __webpack_require__.r(__webpack_exports__);
       emit: emit,
       changeStatus: changeStatus,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore,
       useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_2__.useEventStore,
       toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_3__.toast
@@ -26677,7 +26664,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $setup.changeStatus('delete');
     })
-  }, " X Zusage ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button\r\n            class=\"btn btn-secondary\"\r\n            type=\"button\"\r\n            @click=\"showInterestedList()\"\r\n        >\r\n            Teilnehmer\r\n        </button> ")]);
+  }, " X Zusage "))]);
 }
 
 /***/ }),

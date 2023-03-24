@@ -2,8 +2,7 @@
 ## /pages/
 ### Account
 - Account Einstellungen
-- Daten speichern durch FormData Objekt
-- so kann auch einfacher ein Profilbild mitgegeben und gespeichert werden
+- Daten speichern durch FormData Objekt, damit Profilbilder mitgegeben und gespeichert werden können
 
 ### Artist
 - Artist Page
@@ -30,53 +29,114 @@
 - Eingebundenes Formular für Location-Erstellung
 - Bei Update einbinden von LineUpModal
 - v-select für Locations
-- v-select für Artists mit Mehrfachauswahl, inklusive Erstellung und Notification bei ähnlichen Namen
-- 
+- v-select für Artists mit Mehrfachauswahl, inklusive Erstellung
+- Notifications bei erstellung von Künstler mit änhlichem Namen zu vorhandenen, wird bestimmt durch string-similarity Package
+- Eingebundene EventPreview 
+- Daten speichern durch FormData Objekt, damit Eventflyer mitgesendet und gespeichert werden können
 
 ### Friends
+- Auflistung von Freunden und Freundschaftsanfragen
+- Suche nach Usernames und Möglichkeit Freundschaftsanfragen zu senden
+- Nutzer jeweils dargestellt durch UserBox-Component
 
 ### Location
+- Detailseite für Location-Informationen
+- Möglichkeit Location-Daten zu aktualisieren
+- Auflistung von Bevorstehenden und Vergangenen Veranstaltungen
 
 ### SearchResults
-
+- Einfache String-Suche nach Namen von Events, Künstlern oder Locations
+- Verlinkungen zu jeweiligen Seiten
 
 ## /modals/
 ### DistanceInfoModal
+- genutzt in Event Ansicht
+- Simples Modal zur Information das Routen mit Open Source berechnet werden
+- wird aufgerufen durch "?"-Button bei Kilometer-Entfernung
 
 ### ImageModal
+- genutzt in Event Ansicht
+- Simples Modal welches den hochgeladenen Flyer in Bildschirmgröße anzeigt
+- wird aufgerufen durch klicken auf den abgeschnittenen Flyer bei Event  Ansicht
 
 ### LineUpModal
+- genutzt in EventForm für Updates
+- zeigt Artists über LineUpArtist-Component an
+- neue Künstler lassen sich hier durch v-select hinzufügen oder entfernen
+- v-select für Artists mit Mehrfachauswahl, inklusive Erstellung
+- Notifications bei erstellung von Künstler mit änhlichem Namen zu vorhandenen, wird bestimmt durch string-similarity Package
 
 ### LocationFormModal
+- genutzt in EventForm
+- Modal für Location Erstellung
 
 ## /layouts/
 ### ArtistTags
+- wird genutzt in Arist-Pages
+- Anzeigen und Entfernen von Tags
+- v-select für Auswahl und Erstellung von Tags
 
 ### CreatePost
+-  wird genutzt in Event Ansicht und Posts
+-  Erstellung von Posts und Kommentaren zu Posts
 
 ### EventList
+- genutzt in Artist und Location Ansicht
+- Auflistung von Events mit kompakten Informationen
+- Informationen werden je nach Parent-Component angezeigt
+    - Wenn Parent Location, dann werden Lineup Infos gezeigt
+    - Wenn Parent Künstler, dann werden Location Infos gezeigt
 
 ### EventPreview
+- wird genutzt in EventForm
+- zeigt eine Vorschau der eingegebenen Event-Daten
 
 ### EventStatusButtons
+- wird genutzt in Event Ansicht und EventTeaser
+- ändert den Watchlist-Status des Events
+- Anhand von aktuellem Status werden andere Buttons angezeigt
 
 ### EventTeaser
+- wird genutzt auf Dashboard in Carousels
+- kleine Event Ansicht mit kompakten Informationen und EventStatusButtons
+- Klick auf Teaser leitet auf Event Seite weiter
 
 ### EventTeaserCarousel
-
-### InterestedList
+- Carousel durch vue3-carousel
+- zeigt ein Array von Events als EventTeaser an
 
 ### LineUpArtist
+- wird genutzt in LineUpModal
+- zeigt Artist Namen
+- Möglichkeit Künstler zu Entfernen, mit Confirmation Frage
 
 ### Navbar
+- Navigations Bar
+- Links zur Startseite, Event-Erstellung, Freunde und Account
+- Text-Input für Suche
+- Link für Logout
 
 ### PostContent
+- wird genutzt in Posts
+- Zeigt eigentlichen Beitrag oder Kommentar an
+- nutzt UserBox um Verfasser des Beitrages anzuzeigen
+- berechnet ungefähre Zeitspanne seit dem Posten
 
 ### Posts
+- wird genutzt in Event Ansicht
+- rendert Array von Posts mit Kommentaren in einem Accordion
 
 ### Toast
+- wird über App genutzt
+- kleines Pop-Up Fenster in der unteren rechten Ecke
+- wird meist aufgerufen bei Fehlerhaften Requests durch Funktion in */resources/js/components/helpers/toast.js*
+- Funktionalität von Bootstrap
 
 ### UserBox
+- wird genutzt bei Freunde-Seite und Posts
+- anzeigen von Nutzer mit Bild und Name
+- Buttons für Freunde-Status-Änderungen
+- Buttons können über Parent "ausgeschaltet" werden
 
 ## /recommender/
 ### AllEvents

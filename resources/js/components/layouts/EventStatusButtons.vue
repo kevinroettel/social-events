@@ -33,18 +33,10 @@
         >
             X Zusage
         </button>
-
-        <!-- <button
-            class="btn btn-secondary"
-            type="button"
-            @click="showInterestedList()"
-        >
-            Teilnehmer
-        </button> -->
     </div>
 </template>
 <script setup>
-import { inject, onMounted } from "vue";
+import { inject } from "vue";
 import { useUserStore } from '../../stores/UserStore.js';
 import { useEventStore } from '../../stores/EventStore.js';
 import { toast } from "../helpers/toast.js";
@@ -83,16 +75,4 @@ const changeStatus = (status) => {
         toast(error.message, 'error');
     })
 }
-
-// const showInterestedList = () => {
-
-// }
-
-// const getInterestedList = () => {
-//     axios.get()
-// }
-
-onMounted(() => {
-    // getInterestedList()
-})
 </script>
