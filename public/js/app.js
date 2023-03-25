@@ -25962,6 +25962,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       events.forEach(function (event, index) {
         entries.forEach(function (entry) {
+          console.log('---');
           var wordCountA = wordCountMap(entry.event.tags);
           var wordCountB = wordCountMap(event.tags);
           var dictonary = {};
@@ -26289,19 +26290,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Watchlist',
-  emits: ['show-event-page'],
   setup: function setup(__props, _ref) {
-    var expose = _ref.expose,
-      emit = _ref.emit;
+    var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
-    var showEventPage = function showEventPage(eventId) {
-      emit('show-event-page', eventId);
-    };
     var __returned__ = {
       eventStore: eventStore,
-      emit: emit,
-      showEventPage: showEventPage,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore
     };
@@ -28706,10 +28700,7 @@ var _hoisted_6 = [_hoisted_5];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.eventStore.isWatchlistEmpty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
     key: 1,
-    events: $setup.eventStore.getWatchlist,
-    onShowEventPage: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.showEventPage($event);
-    })
+    events: $setup.eventStore.getWatchlist
   }, null, 8 /* PROPS */, ["events"]))])]);
 }
 

@@ -140,11 +140,53 @@
 
 ## /recommender/
 ### AllEvents
-
-### CosineSimilarity
-
-### FriendWatchlists
-
-### JaccardIndex
+- wird genutzt in Dashboard
+- Darstellung von allen aktuellen Events
 
 ### Watchlist
+- wird genutzt in Dashboard
+- Darstellung von allen aktuellen Watchlist-Einträgen
+
+### FriendWatchlists
+- wird genutzt in Dashboard
+- Darstellung von allen aktuellen Events an denen Freunde Interessiert sind oder Zugesagt haben
+- Gewichtete Reihenfolge
+    - ein Freund ist Interessiert erhöht die Gewichtung um 1
+    - eine Zusage eines Freundes erhöht die Gewichtung um 2
+
+### CosineSimilarity
+- wird genutzt in Dashboard
+- Darstellung von Event Vorschlägen anhand der Cosine Similarity
+- Ermittelt Ähnlichkeit zweier Vektoren durch Berechnung des Kosinus-Winkels
+- Möglichkeit zwei Dokumente oder Texte zu vergleichen anhand von Häufigkeitsvektoren
+
+Ablauf Cosine Similarity:
+- Iteration durch Watchlist-Einträge und Extrahieren von ArtistTags in das Event
+- Iteration durch alle Events und Extrahieren von ArtistTags in das Event
+- Iteration durch alle Events
+    - Iteration durch alle Watchlist-Einträge
+        - Wörter zählen in Event-Tags und Watchlist-Eintrag-Tags
+        - "Wörterbuch" aus Wörteranzahlen
+        - Häufigkeitsvektoren für jeweiliges Event anhand von Wörterbuch
+        - Berechnung Cosine Similarity
+        - Bei bestimmten Schwellenwert Event zu Similar-Array pushen
+
+Formel Cosine-Similarity:
+![](./img/cosinesimilarity.PNG)
+
+### JaccardIndex
+- wird genutzt in Dashboard
+- Darstellung von Event Vorschlägen anhand des Jaccard Index
+- Ermittelt Ähnlichkeit zweier Gruppen
+- wird definiert durch die Größe der Schnittmenge geteilt durch die Größe der Vereinigung der jeweiligen Gruppen
+
+Ablauf Jaccard Index:
+- Iteration durch Watchlist-Einträge und Extrahieren von ArtistTags in das Event
+- Iteration durch alle Events und Extrahieren von ArtistTags in das Event
+- Iteration durch alle Events
+    - Iteration durch alle Watchlist-Einträge
+        - Berechnung Jaccard Index
+        - Bei bestimmten Schwellenwert Event zu Similar-Array pushen
+
+Formel Jaccard Index:
+![](./img/jaccardindex.PNG)

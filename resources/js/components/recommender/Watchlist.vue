@@ -11,7 +11,6 @@
             <EventTeaserCarousel
                 v-else
                 :events="eventStore.getWatchlist"
-                @show-event-page="showEventPage($event)"
             />
         </div>
     </div>
@@ -19,14 +18,5 @@
 <script setup>
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from "../../stores/EventStore";
-
 const eventStore = useEventStore();
-
-const emit = defineEmits([
-    'show-event-page'
-]);
-
-const showEventPage = (eventId) => {
-    emit('show-event-page', eventId);
-}
 </script>

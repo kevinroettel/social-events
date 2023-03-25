@@ -66,6 +66,7 @@ const getData = () => {
 
     events.forEach((event, index) => {
         entries.forEach((entry) => {
+            console.log('---')
             let wordCountA = wordCountMap(entry.event.tags);
             let wordCountB = wordCountMap(event.tags);
 
@@ -75,6 +76,7 @@ const getData = () => {
 
             let vectorA = wordMapToVector(wordCountA, dictonary);
             let vectorB = wordMapToVector(wordCountB, dictonary);
+
             let cosine = cosineSimilarity(vectorA, vectorB);
 
             cosines.value.push({
