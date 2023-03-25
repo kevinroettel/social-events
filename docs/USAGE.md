@@ -15,7 +15,7 @@ Außerdem können Nutzer ihren Wohnort mit Adresse festlegen. Diese Angaben sind
 ## Event Erstellen
 Über die Navbar lässt sich die Seite für die Eventerstellung öffnen. Diese besteht aus dem Formular und einer Vorschau der Eventansicht. <br>
 Das Formular besteht aus neun Eingabefeldern, welche die wichtigsten Informationen für eine Veranstaltung abdecken sollen. Verpflichtende Angaben sind der Name der Veranstaltung, das Datum mit einer beginnenden Uhrzeit, sowie einen Veranstaltungsort und Künstler. <br>
-Zusätzliche Angaben sind eine Beschreibung, ein Flyer, sowie einen Einlasszeitpunkt und einen Ticket-Link. 
+Zusätzliche Angaben sind eine Beschreibung, ein Flyer, sowie ein Einlasszeitpunkt und Ticket-Link. 
 
 ![](./img/eventerstellen.png)
 
@@ -66,7 +66,7 @@ Ebenfalls ist auf dem Dashboard ein Abschnitt vorhanden für Events an denen Fre
 ![](./img/freundesystem.png)
 
 ## Suche
-Über die Navbar lassen sich Suchanfragen starten. Diese Suchanfragen vergleichen den String mit dem Namen von Künstlern, Events und Venues. Übereinstimmungen werden dann als Liste auf einer Ergebnis-Seite angezeigt, und verlinken auf die jeweils eigenständigen Seiten der Künstler, Events und Venues.
+Über die Navbar lassen sich Suchanfragen starten. Diese Suchanfragen vergleichen den eingegebenen Text mit dem Namen von Künstlern, Events und Venues. Übereinstimmungen werden dann als Liste auf einer Ergebnis-Seite angezeigt, und verlinken auf die jeweils eigenständigen Seiten der Künstler, Events und Venues.
 
 ![](./img/suche.png)
 

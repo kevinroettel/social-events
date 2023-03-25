@@ -1,5 +1,5 @@
 # Code
-Dieses Dokument soll eine kurze Einführung in den Source Code geben, damit mögliche Beitragende nicht erst alle an Frameworks lernen müssen.
+Dieses Dokument soll eine kurze Einführung in den Source Code geben, damit mögliche Beitragende nicht erst alle Frameworks lernen müssen.
 
 Hier dennoch die Verlinkungen zu den verschiedenen Dokumentationen:<br>
 [Laravel](https://laravel.com/docs/9.x)<br>
@@ -12,7 +12,7 @@ Hier dennoch die Verlinkungen zu den verschiedenen Dokumentationen:<br>
 ![](./img/domainmodel.png)
 
 ## Datenstruktur
-Unter **/database/migrations** befinden sich Migrations-Dateien, in welchen die Struktur der Models festgelegt werden. Dazu zählen der Typ, der Name und weitere zusätzliche Attribute wie Unique oder Nullable. Ebenfalls können hier vorhandene Fremdbeziehungen mit Forgein-Key-Constraints hinterlegt werden.<br>
+Unter **/database/migrations** befinden sich Migrations-Dateien, in welchen die Struktur der Models festgelegt werden. Dazu zählen der Typ, der Name und weitere zusätzliche Attribute wie Unique oder Nullable. Ebenfalls können hier vorhandene Fremdbeziehungen mit Foreign-Key-Constraints hinterlegt werden.<br>
 Im Falle des Künstlers sieht dies folgendermaßen aus:
 ````php
 Schema::create('artists', function (Blueprint $table) {
@@ -23,8 +23,8 @@ Schema::create('artists', function (Blueprint $table) {
 });
 ````
 
-Die eigentlichen Model-Klassen befinden sich in **/app/Models**. Hier werden nochmals die Relationen in Code-Form aufgeschrieben. Diese setzen sich aus dem Namen der Beziehung, der Art und der Referenzierten Klasse zusammen.<br>
-Hier einmal die Beziehung vom Künstler zu Tags:
+Die eigentlichen Model-Klassen befinden sich in **/app/Models**. Hier werden nochmals die Relationen in Code-Form aufgeschrieben. Diese setzen sich aus dem Namen der Beziehung, der Art und der Referenzierten Klasse zusammen. Damit diese Beziehungen auch korrekt funktionieren, müssen sie immer in beiden Models deklariert werden.<br>
+Hier einmal die m:n-Beziehung vom Künstler zu Tags:
 ````php
 public function tags() {
     return $this->belongsToMany(Tag::class);
@@ -65,19 +65,10 @@ Route::get('/artists', [ArtistController::class, 'getArtists']);
 ## Einstiegspunkt Frontend
 In **/resources/views/app.blade.php** ist die programmatische Startseite zu finden. Hier werden auch das kompilierte JavaScript und CSS eingebunden.<br>
 Ebenfalls wird hier überprüft, ob der Nutzer eingelogged ist, und ihm somit entweder das Dashboard oder die Login-Seite zu zeigen.<br>
-Die Login-Seite wird über die Template-Engine Blade geladen. Das Dashboard hingegen über den Vue-Component namens *app*. Dieser ist in ./resources/js/components/App.vue zu finden<br>
+Die Login-Seite wird über die Template-Engine Blade geladen. Das Dashboard hingegen über den Vue-Component namens *app*. Dieser ist in **/resources/js/components/App.vue** zu finden<br>
 
 In diesem Component befindet sich, unter anderen, ein weiterer Component namens ``<router-view>``. Dieser ist Teil von Vue-Router und an sich nur ein Platzhalter für weitere Components, welche abhängig von der URL geladen werden sollen.<br>
 Die Zuweisung von URLs und Components ist in **/resources/js/router.js** zu finden. Durch diese Nutzung von Vue-Router lässt sich auch eine Browser-Historie erstellen, damit auch z.B. der Zurück-Button genutzt werden kann.<br>
-
-## Storage
-Im App-Component werden außerdem zu Anfang alle benötigten Daten per HTTP-Requests geladen und je nach Zugehörigkeit in einem eigenen Pinia-Store gespeichert. Diese Stores ermöglichen es, Daten über Components hinweg zu verfügbar zu machen, ohne sie mit Events oder Props weitergeben zu müssen.<br>
-Innerhalb eines Stores gibt es den *state*, in welchem die Daten gespeichert werden, *getters*-Funktionen über die auf den State zugegriffen werden kann und *actions*-Funktionen welche den State manipulieren.<br>
-Zurzeit gibt es vier verschiedene Stores die jeweils zugehörige Daten speichern. 
-- ArtistStore für rein die Künstlernamen und -IDs
-- EventStore für alle Veranstaltungen (unterteilt in Aktuell und Vergangen) sowie alle Watchlisteinträge
-- LocationStore für alle Daten der Venues
-- UserStore für die vollständigen Daten des eingeloggten Nutzers, die Freunde und deren Watchlisteinträge, Freundschaftsanfragen und minimale Daten von allen anderen Nutzern
 
 ## Components
 Vue-Components bestehen aus zwei Haupt-Blöcken. Einmal das Template, welches zur Laufzeit dem Nutzer gerendert wird. Und dann der Script Teil, in welchem Daten abgefragt und bearbeitet werden.
@@ -148,7 +139,7 @@ onMounted(() => {
 });
 ````
 
-Für Components kann man zudem "Globale" bzw. Reaktive Variabeln erstellen, welche Änderungen durch den Nutzer zulassen. Bspw. keine eine dieser Variabeln auf einem Text-Input referenziert sein, welches den durch den Nutzer angegebenen Wert annimmt.
+Für Components kann man zudem "Globale" bzw. Reaktive Variabeln erstellen, welche Änderungen durch den Nutzer zulassen. Bspw. kann eine dieser Variabeln auf einem Text-Input referenziert sein, welches den durch den Nutzer angegebenen Wert annimmt.
 ````javascript
 // einzelne reaktive Variabel
 const simple_var = ref(null);
@@ -168,3 +159,12 @@ watch(
     }
 );
 ````
+
+## Storage
+Im App-Component werden außerdem zu Anfang alle benötigten Daten per HTTP-Requests geladen und je nach Zugehörigkeit in einem eigenen Pinia-Store gespeichert. Diese Stores ermöglichen es, Daten über Components hinweg zu verfügbar zu machen, ohne sie mit Events oder Props weitergeben zu müssen.<br>
+Innerhalb eines Stores gibt es den *state*, in welchem die Daten gespeichert werden, *getters*-Funktionen über die auf den State zugegriffen werden kann und *actions*-Funktionen welche den State manipulieren.<br>
+Zurzeit gibt es vier verschiedene Stores die jeweils zugehörige Daten speichern. 
+- ArtistStore für rein die Künstlernamen und -IDs
+- EventStore für alle Veranstaltungen (unterteilt in Aktuell und Vergangen) sowie alle Watchlisteinträge
+- LocationStore für alle Daten der Venues
+- UserStore für die vollständigen Daten des eingeloggten Nutzers, die Freunde und deren Watchlisteinträge, Freundschaftsanfragen und minimale Daten von allen anderen Nutzern
