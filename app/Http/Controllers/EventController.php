@@ -96,7 +96,9 @@ class EventController extends Controller
         if (isset($request['flyer']) && !$isFlyerPathString) {
             if ($event->flyer != null) {
                 $oldImage = public_path() . '/storage' . $event->flyer;
-                unlink($oldImage);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
             }
 
             $file = $request['flyer'];
