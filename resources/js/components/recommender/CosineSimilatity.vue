@@ -66,7 +66,6 @@ const getData = () => {
 
     events.forEach((event, index) => {
         entries.forEach((entry) => {
-            console.log('---')
             let wordCountA = wordCountMap(entry.event.tags);
             let wordCountB = wordCountMap(event.tags);
 

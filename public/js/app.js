@@ -25962,7 +25962,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       events.forEach(function (event, index) {
         entries.forEach(function (entry) {
-          console.log('---');
           var wordCountA = wordCountMap(entry.event.tags);
           var wordCountB = wordCountMap(event.tags);
           var dictonary = {};
