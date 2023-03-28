@@ -95,6 +95,10 @@
                         <button type="submit" @click="checkInputs()" class="btn btn-primary">
                             Save Venue
                         </button>
+
+                        <button type="submit" @click="resetForm()" class="btn btn-secondary">
+                            Abbrechen
+                        </button>
                     </div>
                 </div>
             </div>

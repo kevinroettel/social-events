@@ -8,14 +8,12 @@
         >
             <hr v-if="index != 0">
 
-            <div class="col-2 event-list-date">
-                <div class="row">
-                    <div class="event-list-day-month">{{ getDate(event.date) }}</div>
-                    <div class="event-list-year">{{ getYear(event.date) }}</div>
-                </div>
+            <div class="col-md-2 event-list-date">
+                <div class="event-list-day-month">{{ getDate(event.date) }}</div>
+                <div class="event-list-year">{{ getYear(event.date) }}</div>
             </div>
 
-            <div class="col event-list-details">
+            <div class="col-md event-list-details">
                 <div class="row event-list-name">
                     {{ event.name }}
                 </div>

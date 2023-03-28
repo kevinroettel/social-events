@@ -4,7 +4,7 @@
 
         <DistanceInfoModal />
 
-        <div class="card w-50 mx-auto">
+        <div class="card mx-auto full-page-card">
             <div class="big-flyer-overflow" @click="toggleImage()" data-bs-toggle="modal" data-bs-target="#image-modal">
                 <img :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" class="card-img-top">
             </div>
@@ -12,14 +12,14 @@
                 <h3 class="text-center mb-3">{{ event.name }}</h3>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md">
                                 <span>{{ getFormattedDate(event.date) }}<br></span>
                                 <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
                                 <span>Beginn: {{ event.begin }}<br></span>
                             </div>
-                            <div class="col">
+                            <div class="col-md">
                                 <a 
                                     v-if="event.location != null"
                                     @click="showLocationPage(event.location.id)"
@@ -46,7 +46,7 @@
                         <hr>
                     </div>
 
-                    <div class="col">
+                    <div class="col-md">
                         <EventStatusButtons
                             :event="event.id"
                             :status="watchlistStatus"
@@ -59,8 +59,8 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col pre-wrap">{{ event.description }}</div>
-                    <div class="col">
+                    <div class="col-md pre-wrap">{{ event.description }}</div>
+                    <div class="col-md">
                         <p v-if="event.artists.length != 0">Line-up:</p>
                         <ul>
                             <li 
@@ -79,8 +79,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col"></div>
-                    <div class="col">
+                    <div class="col-md"></div>
+                    <div class="col-md">
                         <button
                             type="button"
                             class="btn btn-secondary w-auto"

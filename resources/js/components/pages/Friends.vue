@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col">
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h4>Freunde:</h4>
@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h4>Ausstehende Anfragen:</h4>
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <div class="card">
                     <div class="card-header">
                         <h4>Nach neuen Freunden suchen:</h4>

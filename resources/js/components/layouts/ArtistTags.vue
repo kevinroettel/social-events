@@ -19,21 +19,23 @@
         </div>
 
         <div class="d-inline">
-            <v-select
-                taggable
-                class="w-25"
-                :options="availableTags"
-                label="name"
-                v-model="newTag"
-            ></v-select>
-            
-            <button
-                type="button"
-                class="btn btn-primary"
-                @click="addTagToArtist()"
-            >
-                Hinzufügen
-            </button>
+            <div class="input-group">
+                <v-select
+                    taggable
+                    class="form-control w-25"
+                    :options="availableTags"
+                    label="name"
+                    v-model="newTag"
+                ></v-select>
+                
+                <button
+                    type="button"
+                    class="btn btn-primary input-group-text"
+                    @click="addTagToArtist()"
+                >
+                    Hinzufügen
+                </button>
+            </div>
         </div>
     </div>
 </template>

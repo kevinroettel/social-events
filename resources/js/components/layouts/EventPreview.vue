@@ -17,7 +17,7 @@
             <h3 class="text-center">{{ event.name }}</h3>
             
             <div class="row">
-                <div class="col">
+                <div class="col-md">
                     <span v-if="event.date">{{ getFormattedDate(event.date) }}<br></span>
                     <span v-if="event.doors">Einlass: {{ event.doors }}<br></span>
                     <span v-if="event.begin">Beginn: {{ event.begin }}<br></span>
@@ -25,7 +25,7 @@
                     <span v-if="event.ticketLink != null"><a target="_blank">Tickets</a><br></span>
                     <hr>
                 </div>
-                <div class="col">
+                <div class="col-md">
                     <button class="btn btn-primary" type="button">Interessiert</button>
                     <button class="btn btn-primary ml-1" type="button">Zusagen</button>
 
@@ -35,8 +35,8 @@
             </div>
 
             <div class="row">
-                <div class="col pre-wrap">{{ event.description }}</div>
-                <div class="col">
+                <div class="col-md pre-wrap">{{ event.description }}</div>
+                <div class="col-md">
                     <p v-if="event.artists.length != 0">Line-up:</p>
                     <ul>
                         <li 

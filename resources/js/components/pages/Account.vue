@@ -6,7 +6,7 @@
 
                 <div 
                     v-if="userData != null"
-                    class="w-25"
+                    class="account-page"
                 >
                     <img 
                         v-if="profilePictureUrl != null"

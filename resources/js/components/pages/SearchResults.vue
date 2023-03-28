@@ -3,7 +3,7 @@
         <h3>Suchanfrage zu: "{{ route.params.query }}"</h3>
 
         <div class="row">
-            <div class="col">
+            <div class="col-md">
                 <h5>Künstler</h5>
                 <p v-if="result.artists.length == 0">Keine Künstler gefunden.</p>
                 <ul>
@@ -15,7 +15,7 @@
                 </ul>
             </div>
 
-            <div class="col">
+            <div class="col-md">
                 <h5>Events</h5>
                 <p v-if="result.events.length == 0">Keine Events gefunden.</p>
                 <ul>
@@ -27,7 +27,7 @@
                 </ul>
             </div>
             
-            <div class="col">
+            <div class="col-md">
                 <h5>Venues</h5>
                 <p v-if="result.locations.length == 0">Keine Venues gefunden.</p>
                 <ul>

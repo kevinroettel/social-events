@@ -1,6 +1,6 @@
 <template>
     <div v-if="artist != null">
-        <div class="card w-50 mx-auto">
+        <div class="card full-page-card mx-auto">
             <div class="card-body">
                 <h3 class="text-center">{{ artist.name }}</h3>
                 <a v-if="artist.website != null" :href="artist.website">Zur Webseite des Künstlers</a>
@@ -21,7 +21,7 @@
                                     :class="`nav-link ${show == 'upcoming' ? 'active' : ''}`"
                                     @click="show = 'upcoming'"
                                 >
-                                    Bevorstehende Veranstaltungen
+                                    Bevorstehend
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -29,7 +29,7 @@
                                     :class="`nav-link ${show == 'past' ? 'active' : ''}`"
                                     @click="show = 'past'"
                                 >
-                                    Vergangene Veranstaltungen
+                                    Vergangen
                                 </a>
                             </li>
                         </ul>

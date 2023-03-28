@@ -5,19 +5,19 @@
             @location-updated="locationUpdated($event)"
         />
 
-        <div class="card w-50 mx-auto">
+        <div class="card mx-auto full-page-card">
             <div class="card-body">
                 <h3 class="text-center">{{ location.name }}</h3>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md">
                         <span v-if="location.streetAndNumber != null">{{ location.streetAndNumber }}, </span>
                         <span>{{ location.city }}<br></span>
                         <span v-if="location.website != null"><a :href="location.website" target="_blank">{{ location.website }}</a><br></span>
                         <span>{{ getParking() }}</span><br>
                         <span>{{ getBarrierFree() }}</span><br>
                     </div>
-                    <div class="col">
+                    <div class="col-md">
                         <span id="location-details-description"></span><br>
                         
                         <button
@@ -41,7 +41,7 @@
                                     :class="`nav-link ${show == 'upcoming' ? 'active' : ''}`"
                                     @click="show = 'upcoming'"
                                 >
-                                    Bevorstehende Veranstaltungen
+                                    Bevorstehend
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -49,7 +49,7 @@
                                     :class="`nav-link ${show == 'past' ? 'active' : ''}`"
                                     @click="show = 'past'"
                                 >
-                                    Vergangene Veranstaltungen
+                                    Vergangen
                                 </a>
                             </li>
                         </ul>

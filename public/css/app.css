@@ -11290,6 +11290,9 @@ body .website-content .main-content .event-teaser-card .card-text-headline {
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+body .website-content .main-content .full-page-card {
+  width: 50%;
+}
 body .user-container {
   display: flex;
   flex-direction: row;
@@ -11362,7 +11365,7 @@ body .image-modal .modal-dialog .modal-content {
   width: fit-content;
 }
 body .image-modal .modal-dialog .modal-content .full-size-image {
-  height: 90vh;
+  width: 100%;
 }
 body .spinner-middle {
   position: absolute;
@@ -11377,4 +11380,36 @@ body .small-info-button {
   background-color: lightgrey;
   width: 24px;
   border-radius: 5px;
+}
+body .account-page {
+  width: 25%;
+}
+
+@media screen and (max-width: 800px) {
+  body .website-content .main-content {
+    padding: 10px;
+  }
+  body .website-content .main-content .full-page-card {
+    width: 100%;
+  }
+  body .website-content .main-content .full-page-card .big-flyer-overflow {
+    height: 100%;
+  }
+  body .website-content .main-content .list-item-link {
+    color: blue;
+  }
+  body .website-content .main-content .account-page {
+    width: 100%;
+  }
+  body .website-content .main-content .create-new-location-button {
+    width: 100%;
+    border-radius: 0.375rem;
+  }
+  body .website-content .main-content .flyer-overflow {
+    height: 100%;
+  }
+  body .carousel .carousel__viewport {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
 }

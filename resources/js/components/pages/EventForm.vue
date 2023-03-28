@@ -13,7 +13,7 @@
         />
 
         <div class="row">
-            <div class="col">
+            <div class="col-md">
                 <h3 v-if="isUpdate">Eventbearbeitung</h3>
                 <h3 v-else>Neues Event</h3>
                 
@@ -42,14 +42,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md">
                         <!-- doors -->
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="doors-input-label">Einlass</span>
                             <input type="time" :class="`form-control`" aria-label="Einlass" aria-describedby="doors-input-label" v-model="event.doors">
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md">
                         <!-- begin -->
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="begin-input-label">Beginn *</span>
@@ -81,7 +81,7 @@
                             <em v-else style="opacity: 0.5">Fange an zu Tippen um eine Venue zu finden.</em>
                         </template>
                     </v-select>
-                    <button type="button" class="btn btn-primary input-group-text" data-bs-toggle="modal" data-bs-target="#location-form-modal">
+                    <button type="button" class="btn btn-primary input-group-text create-new-location-button" data-bs-toggle="modal" data-bs-target="#location-form-modal">
                         Neue Venue erstellen
                     </button>
                 </div>
@@ -128,11 +128,11 @@
                     <span v-else>Event Speichern</span>
                 </button>
 
-                <button v-if="isUpdate" type="button" class="btn btn-secondary ml-2" @click="discardUpdate()">
+                <button v-if="isUpdate" type="button" class="btn btn-secondary ml-3" @click="discardUpdate()">
                     Bearbeitung abbrechen
                 </button>
             </div>
-            <div class="col">
+            <div class="col-md">
                 <h3>Vorschau</h3>
                 <EventPreview
                     :event="event"
@@ -195,7 +195,9 @@ const getEventData = () => {
     event.name = eventData.name;
     event.description = eventData.description;
     event.flyer = eventData.flyer;
-    flyerUrl.value = '/storage/' + eventData.flyer;
+    if (eventData.flyer != null) {
+        flyerUrl.value = '/storage/' + eventData.flyer;
+    }
     event.date = eventData.date;
     event.doors = eventData.doors;
     event.begin = eventData.begin;
