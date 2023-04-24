@@ -2,9 +2,9 @@
     <div>
         <Watchlist />
 
-        <CosineSimilatity />
+        <ContentBased />
 
-        <JaccardIndex />
+        <!-- <JaccardIndex /> -->
 
         <FriendWatchlists />
 
@@ -13,8 +13,8 @@
 </template>
 <script setup>
 import Watchlist from '../recommender/Watchlist.vue';
-import CosineSimilatity from '../recommender/CosineSimilatity.vue';
-import JaccardIndex from '../recommender/JaccardIndex.vue'; 
+import ContentBased from '../recommender/ContentBased.vue';
+// import JaccardIndex from '../recommender/JaccardIndex.vue'; 
 import FriendWatchlists from '../recommender/FriendWatchlists.vue'
 import AllEvents from '../recommender/AllEvents.vue';
 </script>

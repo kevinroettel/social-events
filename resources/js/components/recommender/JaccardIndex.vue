@@ -33,38 +33,8 @@ const getData = () => {
 
     if (entries.length == 0) return;
 
-    entries.forEach((entry, eIndex) => {
-        entries[eIndex].event.tags = [];
-        
-        entry.event.artists.forEach((artist, aIndex) => {
-            if (Number.isInteger(artist)) {
-                entries[eIndex].event.artists[aIndex] = artistStore.getArtistById(artist);
-            }
-
-            entries[eIndex].event.tags.push(
-                ...entries[eIndex].event.artists[aIndex].tags.map(tag => tag.name)
-            );
-        });
-    });
-    
     let events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
     
-    events.forEach((event, eIndex) => {
-        events[eIndex].tags = [];
-
-        event.artists.forEach((artist, aIndex) => {
-            if (Number.isInteger(artist)) {
-                events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
-            }
-
-            if (events[eIndex].artists[aIndex].tags != undefined) {
-                events[eIndex].tags.push(
-                    ...events[eIndex].artists[aIndex].tags.map(tag => tag.name)
-                );
-            }
-        });
-    });
-
     events.forEach((event, index) => {
 
         entries.forEach((entry) => {

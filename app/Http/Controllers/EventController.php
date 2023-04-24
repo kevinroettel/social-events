@@ -14,14 +14,23 @@ class EventController extends Controller
     public function getEvents() {
         $events = Event::with(['artists', 'watchlists'])->get();
         
-        foreach ($events as $index => $event) {
-            foreach ($event->artists as $index => $artist) {
-                $event->artists[$index] = $artist->id;
+        foreach ($events as $event_index => $event) {
+            $event_tags = [];
+            
+            foreach ($event->artists as $artist_index => $artist) {
+                
+                foreach ($artist->tags as $tag_index => $tag) {
+                    array_push($event_tags, $tag->name);
+                }
+                
+                $event->artists[$artist_index] = $artist->id;
             }
 
             foreach ($event->watchlists as $index => $watchlist) {
                 $event->watchlists[$index] = $watchlist->only(['user_id', 'status']);
             }
+
+            $event->tags = $event_tags;
 
             $event->location = Location::find($event->location_id);
         }
