@@ -25953,13 +25953,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       events.forEach(function (event, eIndex) {
         events[eIndex].tags = [];
         event.artists.forEach(function (artist, aIndex) {
-          var _events$eIndex$tags;
           if (Number.isInteger(artist)) {
             events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
           }
-          (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
-            return tag.name;
-          })));
+          if (events[eIndex].artists[aIndex].tags != undefined) {
+            var _events$eIndex$tags;
+            (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
+              return tag.name;
+            })));
+          }
         });
       });
       events.forEach(function (event, index) {
@@ -26210,13 +26212,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       events.forEach(function (event, eIndex) {
         events[eIndex].tags = [];
         event.artists.forEach(function (artist, aIndex) {
-          var _events$eIndex$tags;
           if (Number.isInteger(artist)) {
             events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
           }
-          (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
-            return tag.name;
-          })));
+          if (events[eIndex].artists[aIndex].tags != undefined) {
+            var _events$eIndex$tags;
+            (_events$eIndex$tags = events[eIndex].tags).push.apply(_events$eIndex$tags, _toConsumableArray(events[eIndex].artists[aIndex].tags.map(function (tag) {
+              return tag.name;
+            })));
+          }
         });
       });
       events.forEach(function (event, index) {

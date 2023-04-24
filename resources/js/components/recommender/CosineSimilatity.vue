@@ -58,9 +58,11 @@ const getData = () => {
                 events[eIndex].artists[aIndex] = artistStore.getArtistById(artist);
             }
 
-            events[eIndex].tags.push(
-                ...events[eIndex].artists[aIndex].tags.map(tag => tag.name)
-            );
+            if (events[eIndex].artists[aIndex].tags != undefined) {
+                events[eIndex].tags.push(
+                    ...events[eIndex].artists[aIndex].tags.map(tag => tag.name)
+                );
+            }
         });
     });
 
