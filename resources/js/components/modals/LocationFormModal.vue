@@ -110,6 +110,7 @@ import { inject, onMounted, reactive, ref } from "vue";
 import { Modal } from 'bootstrap';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { toast } from "../helpers/toast.js";
+import { getLocationLongAndLat } from "../helpers/geoCoding.js";
 const locationStore = useLocationStore();
 
 const axios = inject('axios');
@@ -134,7 +135,9 @@ const location = reactive({
     website: null,
     parking: "unknown",
     barrierFree: "unknown",
-    description: null
+    description: null,
+    latitude: null,
+    longitude: null
 });
 
 const hasError = reactive({
@@ -148,12 +151,14 @@ const resetForm = () => {
     Modal.getInstance(modal.value).hide();
 
     location.name = null;
-    location.streetAndNumber = null,
-    location.city = null,
-    location.website = null,
-    location.parking = "unknown",
-    location.barrierFree = "unknown",
-    location.description = null
+    location.streetAndNumber = null;
+    location.city = null;
+    location.website = null;
+    location.parking = "unknown";
+    location.barrierFree = "unknown";
+    location.description = null;
+    location.latitude = null;
+    location.longitude = null;
 
     hasError.name = false;
     hasError.city = false;
@@ -174,8 +179,19 @@ const checkInputs = () => {
     }
 
     if (allInputsOkay) {
-        if (props.locationToUpdate == null) saveLocation();
-        else updateLocation();
+        getLocationLongAndLat(
+            location.name,
+            location.city,
+            location.streetAndNumber
+        ).then((response) => {
+            location.latitude = response.lat;
+            location.longitude = response.lon;
+
+            if (props.locationToUpdate == null) saveLocation();
+            else updateLocation();
+        }).catch((error) => {
+            console.log('should not happen tbh');
+        })
     }
 }
 
@@ -214,6 +230,8 @@ onMounted(() => {
         location.parking = props.locationToUpdate.parking
         location.barrierFree = props.locationToUpdate.barrierFree
         location.description = props.locationToUpdate.description
+        location.latitude = props.locationToUpdate.latitude
+        location.longitude = props.locationToUpdate.longitude
     }
 })
 </script>

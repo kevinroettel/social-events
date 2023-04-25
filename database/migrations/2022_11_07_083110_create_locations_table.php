@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('parking');
             $table->string('barrierFree');
             $table->text('description')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
             $table->timestamps();
         });
     }

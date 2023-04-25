@@ -20,7 +20,9 @@ class LocationController extends Controller
         'website' => 'nullable|string',
         'parking' => 'required|string',
         'barrierFree' => 'required|string',
-        'description' => 'nullable|string'
+        'description' => 'nullable|string',
+        'longitude' => 'nullable|string',
+        'latitude' => 'nullable|string'
     ];
 
     public function createLocation(Request $request) {
@@ -39,7 +41,9 @@ class LocationController extends Controller
             'website' => $validated['website'],
             'parking' => $validated['parking'],
             'barrierFree' => $validated['barrierFree'],
-            'description' => $validated['description']
+            'description' => $validated['description'],
+            'longitude' => $validated['longitude'],
+            'latitude' => $validated['latitude']
         ]);
 
         return $location;
@@ -65,6 +69,8 @@ class LocationController extends Controller
         $location->parking = $validated['parking'];
         $location->barrierFree = $validated['barrierFree'];
         $location->description = $validated['description'];
+        $location->longitude = $validated['longitude'];
+        $location->latitude = $validated['latitude'];
         $location->save();
 
         return $location;

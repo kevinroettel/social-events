@@ -16,7 +16,9 @@ class Location extends Model
         'website',
         'parking',
         'barrierFree',
-        'description'
+        'description',
+        'longitude',
+        'latitude'
     ];
 
     public function events() {

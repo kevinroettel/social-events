@@ -40,6 +40,21 @@ export async function calculateRouteDistance(userAddress, userCity, locationName
     return distance;
 }
 
+export async function getLocationLongAndLat(name, city, street) {
+    let url = null;
+    if (street == null) url = `${requestUrl}?q=${name},${city}&${responseFormat}`;
+    else url = `${requestUrl}?street=${street}&city=${city}&${responseFormat}`;
+
+    let response = await fetch(url);
+    let json = await response.json();
+    if (json.length == 0) return null;
+    
+    return {
+        "lat": json[0].lat,
+        "lon": json[0].lon
+    }
+}
+
 // Luftlinie
 // http://movable-type.co.uk/scripts/latlong.html
 // export function getDistanceBetweenTwoPoints(origin, destination) {
