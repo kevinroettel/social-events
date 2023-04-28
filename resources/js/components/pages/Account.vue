@@ -135,7 +135,7 @@ const checkInputs = () => {
 
 const saveUser = () => {
     let formData = new FormData();
-    if (userDate.profile_picture != null) formData.append('profile_picture', userData.profile_picture);
+    if (userData.profile_picture != null) formData.append('profile_picture', userData.profile_picture);
     formData.append('username', userData.username);
     formData.append('email', userData.email);
     if (userData.address != null) formData.append('address', userData.address);

@@ -9,6 +9,8 @@ export const useUserStore = defineStore('user', {
             profile_picture: null,
             address: null,
             city: null,
+            latitude: null,
+            longitude: null
         },
 
         friends: [],
@@ -25,7 +27,8 @@ export const useUserStore = defineStore('user', {
         getUserAddress(state) { return state.user.address },
         getUserCity(state) { return state.user.city },
         getUserPicture(state) { return state.user.profile_picture },
-        
+        getUserCoordinates(state) { return {'latitude': state.user.latitude, 'longitude': state.user.longitude} },
+
         getFriends(state) { return state.friends },
         getFriendRequests(state) { return state.requested },
 
@@ -48,6 +51,11 @@ export const useUserStore = defineStore('user', {
             this.user.profile_picture = data.profile_picture;
             this.user.address = data.address;
             this.user.city = data.city;
+        },
+
+        setCoordinates(latitude, longitude) {
+            this.user.latitude = latitude;
+            this.user.longitude = longitude;
         },
 
         initializeFriends(data) {

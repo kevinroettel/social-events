@@ -21,6 +21,7 @@ import { useLocationStore } from '../stores/LocationStore.js';
 import { useArtistStore } from '../stores/ArtistStore.js';
 import { useUserStore } from '../stores/UserStore.js';
 import { useEventStore } from '../stores/EventStore.js';
+import { getLongAndLat } from './helpers/geoCoding';
 const locationStore = useLocationStore();
 const artistStore = useArtistStore();
 const userStore = useUserStore();
@@ -53,6 +54,18 @@ const dataLoaded = computed(() => {
         dataDone.users && 
         dataDone.friends;
 })
+
+const getUserCoordinates = () => {
+    getLongAndLat(
+        null,
+        userStore.getUserCity,
+        userStore.getUserAddress
+    ).then((response) => {
+        userStore.setCoordinates(response.latitude, response.longitude);
+    }).catch((error) => {
+        console.log(error)
+    })
+}
 
 const getEvents = () => {
     axios.get(
@@ -125,6 +138,7 @@ onMounted(() => {
     let user = JSON.parse(props.currentuser);
     userStore.initializeUser(user)
 
+    getUserCoordinates();
     getEvents();
     getArtists();
     getLocations();

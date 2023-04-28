@@ -18,17 +18,20 @@
 <script setup>
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from "../../stores/EventStore";
+import { useUserStore } from '../../stores/UserStore';
 import { onMounted, ref } from 'vue';
-import { useArtistStore } from '../../stores/ArtistStore';
+import { getDistanceBetweenTwoPoints } from '../helpers/geoCoding.js';
 
 const eventStore = useEventStore();
-const artistStore = useArtistStore();
+const userStore = useUserStore();
 
 const similarEvents = ref([]);
 
 const cosines = ref([]);
 
 const getData = () => {
+    let userLocation = userStore.getUserCoordinates;
+
     // muss getan werden, damit reactivity von vue verschwindet
     let entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
 
@@ -57,21 +60,40 @@ const getData = () => {
             });
 
             if (cosine >= 0.25) {
-                let isAlreadyInSimilar = false;
+                if (userStore.getUserCity != null) {
+                    let distance = getDistanceBetweenTwoPoints(
+                        userLocation.latitude, 
+                        userLocation.longitude, 
+                        event.location.latitude, 
+                        event.location.longitude
+                    );
 
-                similarEvents.value.forEach((similar) => {
-                    if (similar.id == event.id) {
-                        isAlreadyInSimilar = true;
-                        return;
+                    if (distance <= 100) {
+                        addEventToSimilar(event);
                     }
-                });
-
-                if (!isAlreadyInSimilar) {
-                    similarEvents.value.push(event);
                 }
             }
         })
     })
+}
+
+const getDistance = () => {
+
+}
+
+const addEventToSimilar = (event) => {
+    let isAlreadyInSimilar = false;
+
+    similarEvents.value.forEach((similar) => {
+        if (similar.id == event.id) {
+            isAlreadyInSimilar = true;
+            return;
+        }
+    });
+
+    if (!isAlreadyInSimilar) {
+        similarEvents.value.push(event);
+    }
 }
 
 const wordCountMap = (wordArray) => {

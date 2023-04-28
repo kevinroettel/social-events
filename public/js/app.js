@@ -23611,6 +23611,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../stores/ArtistStore.js */ "./resources/js/stores/ArtistStore.js");
 /* harmony import */ var _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../stores/UserStore.js */ "./resources/js/stores/UserStore.js");
 /* harmony import */ var _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../stores/EventStore.js */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var _helpers_geoCoding__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers/geoCoding */ "./resources/js/components/helpers/geoCoding.js");
+
 
 
 
@@ -23648,6 +23650,13 @@ __webpack_require__.r(__webpack_exports__);
     var dataLoaded = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return dataDone.events && dataDone.watchlist && dataDone.locations && dataDone.artists && dataDone.users && dataDone.friends;
     });
+    var getUserCoordinates = function getUserCoordinates() {
+      (0,_helpers_geoCoding__WEBPACK_IMPORTED_MODULE_8__.getLongAndLat)(null, userStore.getUserCity, userStore.getUserAddress).then(function (response) {
+        userStore.setCoordinates(response.latitude, response.longitude);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    };
     var getEvents = function getEvents() {
       axios.get('/events').then(function (response) {
         eventStore.initializeEvents(response.data);
@@ -23700,6 +23709,7 @@ __webpack_require__.r(__webpack_exports__);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       var user = JSON.parse(props.currentuser);
       userStore.initializeUser(user);
+      getUserCoordinates();
       getEvents();
       getArtists();
       getLocations();
@@ -23715,6 +23725,7 @@ __webpack_require__.r(__webpack_exports__);
       props: props,
       dataDone: dataDone,
       dataLoaded: dataLoaded,
+      getUserCoordinates: getUserCoordinates,
       getEvents: getEvents,
       getWatchlistEntries: getWatchlistEntries,
       getLocations: getLocations,
@@ -23731,7 +23742,8 @@ __webpack_require__.r(__webpack_exports__);
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_4__.useLocationStore,
       useArtistStore: _stores_ArtistStore_js__WEBPACK_IMPORTED_MODULE_5__.useArtistStore,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_6__.useUserStore,
-      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore
+      useEventStore: _stores_EventStore_js__WEBPACK_IMPORTED_MODULE_7__.useEventStore,
+      getLongAndLat: _helpers_geoCoding__WEBPACK_IMPORTED_MODULE_8__.getLongAndLat
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24832,7 +24844,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         } else hasError[key] = false;
       }
       if (allInputsOkay) {
-        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getLocationLongAndLat)(location.name, location.city, location.streetAndNumber).then(function (response) {
+        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getLongAndLat)(location.name, location.city, location.streetAndNumber).then(function (response) {
           location.latitude = response.lat;
           location.longitude = response.lon;
           if (props.locationToUpdate == null) saveLocation();else updateLocation();
@@ -24892,7 +24904,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       Modal: bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal,
       useLocationStore: _stores_LocationStore_js__WEBPACK_IMPORTED_MODULE_2__.useLocationStore,
       toast: _helpers_toast_js__WEBPACK_IMPORTED_MODULE_3__.toast,
-      getLocationLongAndLat: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getLocationLongAndLat
+      getLongAndLat: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getLongAndLat
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -24967,7 +24979,7 @@ __webpack_require__.r(__webpack_exports__);
     };
     var saveUser = function saveUser() {
       var formData = new FormData();
-      if (userDate.profile_picture != null) formData.append('profile_picture', userData.profile_picture);
+      if (userData.profile_picture != null) formData.append('profile_picture', userData.profile_picture);
       formData.append('username', userData.username);
       formData.append('email', userData.email);
       if (userData.address != null) formData.append('address', userData.address);
@@ -25282,7 +25294,8 @@ __webpack_require__.r(__webpack_exports__);
     };
     var getDistance = function getDistance() {
       if (userStore.getUserCity != null) {
-        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance)(userStore.getUserAddress, userStore.getUserCity, event.value.location.name, event.value.location.city, event.value.location.streetAndNumber).then(function (response) {
+        var userLocation = userStore.getUserCoordinates;
+        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance)(userLocation.latitude, userLocation.longitude, event.value.location.latitude, event.value.location.longitude).then(function (response) {
           distance.value = response;
         });
       }
@@ -25930,8 +25943,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/ArtistStore */ "./resources/js/stores/ArtistStore.js");
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/geoCoding.js */ "./resources/js/components/helpers/geoCoding.js");
+
 
 
 
@@ -25942,10 +25957,12 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
-    var artistStore = (0,_stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__.useArtistStore)();
-    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
-    var cosines = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
+    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
+    var cosines = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
     var getData = function getData() {
+      var userLocation = userStore.getUserCoordinates;
+
       // muss getan werden, damit reactivity von vue verschwindet
       var entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
       if (entries.length == 0) return;
@@ -25966,19 +25983,28 @@ __webpack_require__.r(__webpack_exports__);
             cosine: cosine
           });
           if (cosine >= 0.25) {
-            var isAlreadyInSimilar = false;
-            similarEvents.value.forEach(function (similar) {
-              if (similar.id == event.id) {
-                isAlreadyInSimilar = true;
-                return;
+            if (userStore.getUserCity != null) {
+              var distance = (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getDistanceBetweenTwoPoints)(userLocation.latitude, userLocation.longitude, event.location.latitude, event.location.longitude);
+              if (distance <= 100) {
+                addEventToSimilar(event);
               }
-            });
-            if (!isAlreadyInSimilar) {
-              similarEvents.value.push(event);
             }
           }
         });
       });
+    };
+    var getDistance = function getDistance() {};
+    var addEventToSimilar = function addEventToSimilar(event) {
+      var isAlreadyInSimilar = false;
+      similarEvents.value.forEach(function (similar) {
+        if (similar.id == event.id) {
+          isAlreadyInSimilar = true;
+          return;
+        }
+      });
+      if (!isAlreadyInSimilar) {
+        similarEvents.value.push(event);
+      }
     };
     var wordCountMap = function wordCountMap(wordArray) {
       var wordCount = {};
@@ -26016,15 +26042,17 @@ __webpack_require__.r(__webpack_exports__);
     var cosineSimilarity = function cosineSimilarity(vectorA, vectorB) {
       return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
     };
-    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
       getData();
     });
     var __returned__ = {
       eventStore: eventStore,
-      artistStore: artistStore,
+      userStore: userStore,
       similarEvents: similarEvents,
       cosines: cosines,
       getData: getData,
+      getDistance: getDistance,
+      addEventToSimilar: addEventToSimilar,
       wordCountMap: wordCountMap,
       addWordsToDictionary: addWordsToDictionary,
       wordMapToVector: wordMapToVector,
@@ -26033,9 +26061,10 @@ __webpack_require__.r(__webpack_exports__);
       cosineSimilarity: cosineSimilarity,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
-      ref: vue__WEBPACK_IMPORTED_MODULE_2__.ref,
-      useArtistStore: _stores_ArtistStore__WEBPACK_IMPORTED_MODULE_3__.useArtistStore
+      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_3__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_3__.ref,
+      getDistanceBetweenTwoPoints: _helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getDistanceBetweenTwoPoints
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -28672,7 +28701,8 @@ function getFormattedDate(date) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "calculateRouteDistance": () => (/* binding */ calculateRouteDistance),
-/* harmony export */   "getLocationLongAndLat": () => (/* binding */ getLocationLongAndLat)
+/* harmony export */   "getDistanceBetweenTwoPoints": () => (/* binding */ getDistanceBetweenTwoPoints),
+/* harmony export */   "getLongAndLat": () => (/* binding */ getLongAndLat)
 /* harmony export */ });
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
@@ -28685,65 +28715,31 @@ var responseFormat = "format=json";
 // http://project-osrm.org/docs/v5.24.0/api/?language=cURL#general-options
 // http://router.project-osrm.org/route/v1/driving/7.373286149018651,51.0195563;7.324050764224658,51.47162635?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false
 
-function calculateRouteDistance(_x, _x2, _x3, _x4, _x5) {
+function calculateRouteDistance(_x, _x2, _x3, _x4) {
   return _calculateRouteDistance.apply(this, arguments);
 }
 function _calculateRouteDistance() {
-  _calculateRouteDistance = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(userAddress, userCity, locationName, locationCity, locationStreet) {
-    var originUrl, originResponse, originJson, origin, destinationUrl, destinationResponse, destinationJson, destination, base, coordinates, options, url, routeResponse, routeJson, distance;
+  _calculateRouteDistance = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(userLatitude, userLongitude, locationLatitude, locationLongitude) {
+    var base, coordinates, options, url, routeResponse, routeJson, distance;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            originUrl = null;
-            if (userAddress == null) originUrl = "".concat(requestUrl, "?city=").concat(userCity, "&").concat(responseFormat);else originUrl = "".concat(requestUrl, "?street=").concat(userAddress, "&city=").concat(userCity, "&").concat(responseFormat);
-            _context.next = 4;
-            return fetch(originUrl);
-          case 4:
-            originResponse = _context.sent;
-            _context.next = 7;
-            return originResponse.json();
-          case 7:
-            originJson = _context.sent;
-            origin = {
-              "lat": originJson[0].lat,
-              "lon": originJson[0].lon
-            };
-            destinationUrl = null;
-            if (locationStreet == null) destinationUrl = "".concat(requestUrl, "?q=").concat(locationName, ",").concat(locationCity, "&").concat(responseFormat);else destinationUrl = "".concat(requestUrl, "?street=").concat(locationStreet, "&city=").concat(locationCity, "&").concat(responseFormat);
-            _context.next = 13;
-            return fetch(destinationUrl);
-          case 13:
-            destinationResponse = _context.sent;
-            _context.next = 16;
-            return destinationResponse.json();
-          case 16:
-            destinationJson = _context.sent;
-            if (!(destinationJson.length == 0)) {
-              _context.next = 19;
-              break;
-            }
-            return _context.abrupt("return", null);
-          case 19:
-            destination = {
-              "lat": destinationJson[0].lat,
-              "lon": destinationJson[0].lon
-            };
             base = "http://router.project-osrm.org/route/v1/driving/";
-            coordinates = "".concat(origin.lon, ",").concat(origin.lat, ";").concat(destination.lon, ",").concat(destination.lat);
+            coordinates = "".concat(userLongitude, ",").concat(userLatitude, ";").concat(locationLongitude, ",").concat(locationLatitude);
             options = "?alternatives=false&steps=false&geometries=polyline&overview=false&annotations=false";
             url = "".concat(base).concat(coordinates).concat(options);
-            _context.next = 26;
+            _context.next = 6;
             return fetch(url);
-          case 26:
+          case 6:
             routeResponse = _context.sent;
-            _context.next = 29;
+            _context.next = 9;
             return routeResponse.json();
-          case 29:
+          case 9:
             routeJson = _context.sent;
             distance = Math.round(routeJson.routes[0].distance / 1000);
             return _context.abrupt("return", distance);
-          case 32:
+          case 12:
           case "end":
             return _context.stop();
         }
@@ -28752,30 +28748,14 @@ function _calculateRouteDistance() {
   }));
   return _calculateRouteDistance.apply(this, arguments);
 }
-function getLocationLongAndLat(_x6, _x7, _x8) {
-  return _getLocationLongAndLat.apply(this, arguments);
+function getLongAndLat(_x5, _x6, _x7) {
+  return _getLongAndLat.apply(this, arguments);
 }
 
 // Luftlinie
 // http://movable-type.co.uk/scripts/latlong.html
-// export function getDistanceBetweenTwoPoints(origin, destination) {
-//     const R = 6371e3; // earths radius in metres
-//     const φ1 = origin.lat * Math.PI / 180; // φ, λ in radians
-//     const φ2 = destination.lat * Math.PI / 180;
-//     const Δφ = (destination.lat - origin.lat) * Math.PI / 180;
-//     const Δλ = (destination.lon - origin.lon) * Math.PI / 180;
-
-//     const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-//             Math.cos(φ1) * Math.cos(φ2) *
-//             Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-
-//     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-//     const distance = R * c / 1000; // in kilometers
-//     return distance;
-// }
-function _getLocationLongAndLat() {
-  _getLocationLongAndLat = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(name, city, street) {
+function _getLongAndLat() {
+  _getLongAndLat = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(name, city, street) {
     var url, response, json;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
@@ -28798,8 +28778,8 @@ function _getLocationLongAndLat() {
             return _context2.abrupt("return", null);
           case 10:
             return _context2.abrupt("return", {
-              "lat": json[0].lat,
-              "lon": json[0].lon
+              "latitude": json[0].lat,
+              "longitude": json[0].lon
             });
           case 11:
           case "end":
@@ -28808,7 +28788,18 @@ function _getLocationLongAndLat() {
       }
     }, _callee2);
   }));
-  return _getLocationLongAndLat.apply(this, arguments);
+  return _getLongAndLat.apply(this, arguments);
+}
+function getDistanceBetweenTwoPoints(originLat, originLon, destinationLat, destinationLon) {
+  var R = 6371e3; // earths radius in metres
+  var φ1 = originLat * Math.PI / 180; // φ, λ in radians
+  var φ2 = destinationLat * Math.PI / 180;
+  var Δφ = (destinationLat - originLat) * Math.PI / 180;
+  var Δλ = (destinationLon - originLon) * Math.PI / 180;
+  var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var distance = R * c / 1000; // in kilometers
+  return distance;
 }
 
 /***/ }),
@@ -29241,7 +29232,9 @@ var useUserStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('user', {
         email: null,
         profile_picture: null,
         address: null,
-        city: null
+        city: null,
+        latitude: null,
+        longitude: null
       },
       friends: [],
       users: [],
@@ -29267,6 +29260,12 @@ var useUserStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('user', {
     getUserPicture: function getUserPicture(state) {
       return state.user.profile_picture;
     },
+    getUserCoordinates: function getUserCoordinates(state) {
+      return {
+        'latitude': state.user.latitude,
+        'longitude': state.user.longitude
+      };
+    },
     getFriends: function getFriends(state) {
       return state.friends;
     },
@@ -29289,6 +29288,10 @@ var useUserStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('user', {
       this.user.profile_picture = data.profile_picture;
       this.user.address = data.address;
       this.user.city = data.city;
+    },
+    setCoordinates: function setCoordinates(latitude, longitude) {
+      this.user.latitude = latitude;
+      this.user.longitude = longitude;
     },
     initializeFriends: function initializeFriends(data) {
       this.friends = data;

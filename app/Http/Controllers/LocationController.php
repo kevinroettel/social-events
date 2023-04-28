@@ -50,7 +50,7 @@ class LocationController extends Controller
     }
 
     public function updateLocation(Request $request, $locationId) {
-        $location = Location::find($locationId)->first();
+        $location = Location::find($locationId);
 
         if (empty($location)) return false;
 

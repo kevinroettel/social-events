@@ -210,12 +210,13 @@ const openEventUpdateForm = () => {
 
 const getDistance = () => {
     if (userStore.getUserCity != null) {
+        let userLocation = userStore.getUserCoordinates;
+
         calculateRouteDistance(
-            userStore.getUserAddress, 
-            userStore.getUserCity, 
-            event.value.location.name, 
-            event.value.location.city,
-            event.value.location.streetAndNumber
+            userLocation.latitude, 
+            userLocation.longitude, 
+            event.value.location.latitude, 
+            event.value.location.longitude
         ).then((response) => {
             distance.value = response
         })

@@ -110,7 +110,7 @@ import { inject, onMounted, reactive, ref } from "vue";
 import { Modal } from 'bootstrap';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { toast } from "../helpers/toast.js";
-import { getLocationLongAndLat } from "../helpers/geoCoding.js";
+import { getLongAndLat } from "../helpers/geoCoding.js";
 const locationStore = useLocationStore();
 
 const axios = inject('axios');
@@ -179,7 +179,7 @@ const checkInputs = () => {
     }
 
     if (allInputsOkay) {
-        getLocationLongAndLat(
+        getLongAndLat(
             location.name,
             location.city,
             location.streetAndNumber
