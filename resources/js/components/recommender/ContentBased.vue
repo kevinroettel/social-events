@@ -77,10 +77,6 @@ const getData = () => {
     })
 }
 
-const getDistance = () => {
-
-}
-
 const addEventToSimilar = (event) => {
     let isAlreadyInSimilar = false;
 

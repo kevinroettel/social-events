@@ -117,12 +117,19 @@ class UserController extends Controller
         $userId = Auth::user()->id;
         $friends = Auth::user()->friends(['id']);
 
-        return User::where('id', '!=', $userId)
+        $users = User::where('id', '!=', $userId)
             ->whereNotIn('id', $friends)
             ->get()
             ->transform(function ($user, $key) {
                 return $user->only(['id', 'username', 'profile_picture']);
             });
+
+        $users = $users->map(function ($user) {
+            $user['watchlist'] = WatchlistController::getForeignUserWatchlistEntries($user['id']);
+            return $user;
+        });
+
+        return $users;
     }
 
     public function getFriendRequests() {
@@ -133,7 +140,7 @@ class UserController extends Controller
         $friends = Auth::user()->friends(['id', 'username', 'profile_picture']);
         
         $friends = $friends->map(function ($friend) {
-            $friend['watchlist'] = WatchlistController::getFriendWatchlistEntries($friend['id']);
+            $friend['watchlist'] = WatchlistController::getForeignUserWatchlistEntries($friend['id']);
             return $friend;
         });
 
