@@ -60,25 +60,22 @@ const getData = () => {
             });
 
             if (cosine >= 0.25) {
-                if (userStore.getUserCity != null) {
-                    let distance = getDistanceBetweenTwoPoints(
+                let distance = null;
+
+                if (userLocation.latitude != null) {
+                    distance = getDistanceBetweenTwoPoints(
                         userLocation.latitude, 
                         userLocation.longitude, 
                         event.location.latitude, 
                         event.location.longitude
                     );
-
-                    if (distance <= 100) {
-                        addEventToSimilar(event);
-                    }
                 }
+
+                if (distance == null) addEventToSimilar(event);
+                else if (distance <= 100) addEventToSimilar(event);
             }
         })
     })
-}
-
-const getDistance = () => {
-
 }
 
 const addEventToSimilar = (event) => {

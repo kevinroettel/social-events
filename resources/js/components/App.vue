@@ -61,7 +61,9 @@ const getUserCoordinates = () => {
         userStore.getUserCity,
         userStore.getUserAddress
     ).then((response) => {
-        userStore.setCoordinates(response.latitude, response.longitude);
+        if (response != null) {
+            userStore.setCoordinates(response.latitude, response.longitude);
+        }
     }).catch((error) => {
         console.log(error)
     })

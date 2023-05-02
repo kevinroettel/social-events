@@ -212,14 +212,16 @@ const getDistance = () => {
     if (userStore.getUserCity != null) {
         let userLocation = userStore.getUserCoordinates;
 
-        calculateRouteDistance(
-            userLocation.latitude, 
-            userLocation.longitude, 
-            event.value.location.latitude, 
-            event.value.location.longitude
-        ).then((response) => {
-            distance.value = response
-        })
+        if (userLocation.latitude != null) {
+            calculateRouteDistance(
+                userLocation.latitude, 
+                userLocation.longitude, 
+                event.value.location.latitude, 
+                event.value.location.longitude
+            ).then((response) => {
+                distance.value = response
+            })
+        }
     }
 }
 

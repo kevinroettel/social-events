@@ -23652,7 +23652,9 @@ __webpack_require__.r(__webpack_exports__);
     });
     var getUserCoordinates = function getUserCoordinates() {
       (0,_helpers_geoCoding__WEBPACK_IMPORTED_MODULE_8__.getLongAndLat)(null, userStore.getUserCity, userStore.getUserAddress).then(function (response) {
-        userStore.setCoordinates(response.latitude, response.longitude);
+        if (response != null) {
+          userStore.setCoordinates(response.latitude, response.longitude);
+        }
       })["catch"](function (error) {
         console.log(error);
       });
@@ -25295,9 +25297,11 @@ __webpack_require__.r(__webpack_exports__);
     var getDistance = function getDistance() {
       if (userStore.getUserCity != null) {
         var userLocation = userStore.getUserCoordinates;
-        (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance)(userLocation.latitude, userLocation.longitude, event.value.location.latitude, event.value.location.longitude).then(function (response) {
-          distance.value = response;
-        });
+        if (userLocation.latitude != null) {
+          (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_1__.calculateRouteDistance)(userLocation.latitude, userLocation.longitude, event.value.location.latitude, event.value.location.longitude).then(function (response) {
+            distance.value = response;
+          });
+        }
       }
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(watchlistStatus, function (newStatus, oldStatus) {
@@ -25983,17 +25987,15 @@ __webpack_require__.r(__webpack_exports__);
             cosine: cosine
           });
           if (cosine >= 0.25) {
-            if (userStore.getUserCity != null) {
-              var distance = (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getDistanceBetweenTwoPoints)(userLocation.latitude, userLocation.longitude, event.location.latitude, event.location.longitude);
-              if (distance <= 100) {
-                addEventToSimilar(event);
-              }
+            var distance = null;
+            if (userLocation.latitude != null) {
+              distance = (0,_helpers_geoCoding_js__WEBPACK_IMPORTED_MODULE_4__.getDistanceBetweenTwoPoints)(userLocation.latitude, userLocation.longitude, event.location.latitude, event.location.longitude);
             }
+            if (distance == null) addEventToSimilar(event);else if (distance <= 100) addEventToSimilar(event);
           }
         });
       });
     };
-    var getDistance = function getDistance() {};
     var addEventToSimilar = function addEventToSimilar(event) {
       var isAlreadyInSimilar = false;
       similarEvents.value.forEach(function (similar) {
@@ -26051,7 +26053,6 @@ __webpack_require__.r(__webpack_exports__);
       similarEvents: similarEvents,
       cosines: cosines,
       getData: getData,
-      getDistance: getDistance,
       addEventToSimilar: addEventToSimilar,
       wordCountMap: wordCountMap,
       addWordsToDictionary: addWordsToDictionary,
