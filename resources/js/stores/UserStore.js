@@ -40,6 +40,10 @@ export const useUserStore = defineStore('user', {
             });
 
             return entries;
+        },
+
+        getAllUsersWithWatchlistEntries(state) {
+            return state.friends.concat(state.users);
         }
     },
 
