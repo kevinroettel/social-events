@@ -16,6 +16,10 @@ export const useEventStore = defineStore('events', {
             return state.events;
         },
 
+        getOldEvents(state) {
+            return state.oldEvents;
+        },
+
         getWatchlist(state) {
             return state.watchlist;
         },
@@ -26,7 +30,7 @@ export const useEventStore = defineStore('events', {
 
         isWatchlistEmpty(state) {
             return state.watchlist.length == 0;
-        }
+        },
     },
 
     actions: {
@@ -200,6 +204,19 @@ export const useEventStore = defineStore('events', {
 
         getPastEventsInLocation(locationId) {
             return this.oldEvents.filter(event => event.location_id == locationId);
+        },
+
+        checkIfEventIsInWatchlist(eventId) {
+            let isInList = false;
+            
+            this.watchlist.forEach((entry) => {
+                if (entry.event.id == eventId) {
+                    isInList = true;
+                    return;
+                }
+            })
+
+            return isInList;
         }
     }
 })

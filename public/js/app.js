@@ -24550,7 +24550,7 @@ __webpack_require__.r(__webpack_exports__);
     var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore)();
     var axios = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('axios');
     var changeFriendStatus = function changeFriendStatus(status, handlingFunction) {
-      axios.post("/users/".concat(userStore.getUserId, "/friends/").concat(props.user.id, "/").concat(status)).then(function (response) {
+      axios.patch("/users/".concat(userStore.getUserId, "/friends/").concat(props.user.id, "/").concat(status)).then(function (response) {
         return handlingFunction(response);
       })["catch"](function (error) {
         (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_2__.toast)(error.message, 'error');
@@ -25156,10 +25156,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../recommender/Watchlist.vue */ "./resources/js/components/recommender/Watchlist.vue");
-/* harmony import */ var _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/CollaborativeBased.vue */ "./resources/js/components/recommender/CollaborativeBased.vue");
-/* harmony import */ var _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/ContentBased.vue */ "./resources/js/components/recommender/ContentBased.vue");
-/* harmony import */ var _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/FriendWatchlists.vue */ "./resources/js/components/recommender/FriendWatchlists.vue");
-/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
+/* harmony import */ var _recommender_SlopeOneRecommender_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/SlopeOneRecommender.vue */ "./resources/js/components/recommender/SlopeOneRecommender.vue");
+/* harmony import */ var _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/CollaborativeBased.vue */ "./resources/js/components/recommender/CollaborativeBased.vue");
+/* harmony import */ var _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/ContentBased.vue */ "./resources/js/components/recommender/ContentBased.vue");
+/* harmony import */ var _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recommender/HybridRecommender.vue */ "./resources/js/components/recommender/HybridRecommender.vue");
+/* harmony import */ var _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../recommender/FriendWatchlists.vue */ "./resources/js/components/recommender/FriendWatchlists.vue");
+/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
+
+
 
 
 
@@ -25173,10 +25177,12 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var __returned__ = {
       Watchlist: _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      CollaborativeBased: _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      ContentBased: _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+      SlopeOneRecommender: _recommender_SlopeOneRecommender_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      CollaborativeBased: _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      ContentBased: _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      HybridRecommender: _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25952,8 +25958,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
@@ -25967,56 +25976,54 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
     var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-    var diff = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var freq = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var inputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var outputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var allUsers = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var allEvents = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var allRatings = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var similarityMatrix = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var getData = function getData() {
-      userDataToMap();
-      buildDifferencesMatrix();
-      predict();
-    };
-    var userDataToMap = function userDataToMap() {
-      var allUsers = userStore.getAllUsersWithWatchlistEntries;
-      var data = new Map(); // User Id, Map(Event Id, Weight)
-
-      allUsers.forEach(function (user) {
-        var userItemList = new Map(); // Event Id, Weight
-
-        user.watchlist.forEach(function (entry) {
-          userItemList.set(entry.event_id, entry.status == 'interested' ? 0.5 : 1.0);
-        });
-        data.set(user.id, userItemList);
+      var _allEvents$value;
+      var events = eventStore.getAllEvents.concat(eventStore.getOldEvents);
+      (_allEvents$value = allEvents.value).push.apply(_allEvents$value, _toConsumableArray(events.map(function (e) {
+        return e.id;
+      })));
+      var usersWithWatchlists = userStore.getAllUsersWithWatchlistEntries;
+      usersWithWatchlists.push({
+        username: userStore.getUserName,
+        watchlist: eventStore.getWatchlist.concat(eventStore.getOldWatchlist)
       });
-      inputData.value = data;
-    };
-    var buildDifferencesMatrix = function buildDifferencesMatrix() {
-      var _iterator = _createForOfIteratorHelper(inputData.value.values()),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var userEntries = _step.value;
-          // console.log(userEntries)
-          var _iterator2 = _createForOfIteratorHelper(userEntries.entries()),
-            _step2;
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var userEntry = _step2.value;
-              console.log(userEntry);
+      usersWithWatchlists.forEach(function (user) {
+        var _user$id;
+        var uId = (_user$id = user.id) !== null && _user$id !== void 0 ? _user$id : userStore.getUserId;
+        allUsers.value.push(uId);
+        user.watchlist.forEach(function (entry) {
+          var _user$id2;
+          if (!allEvents.value.includes(entry.event_id)) allEvents.value.push(entry.event_id);
+          var uId = (_user$id2 = user.id) !== null && _user$id2 !== void 0 ? _user$id2 : userStore.getUserId;
+          allRatings.value.push([allUsers.value.indexOf(uId), allEvents.value.indexOf(entry.event_id), 1]);
+        });
+      });
+      for (var i = 0; i < allUsers.value.length; i++) {
+        var row = [];
+        for (var j = 0; j < allUsers.value.length; j++) {
+          var similarities = [];
+          for (var k = 0; k < allEvents.value.length; k++) {
+            if (allRatings.value[i][k] && allRatings.value[j][k]) {
+              similarities.push(allRatings.value[i][k] - allRatings.value[j][k]);
             }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
+          }
+          if (similarities.length > 0) {
+            var similarity = similarities.reduce(function (acc, cur) {
+              return acc + cur;
+            }) / similarities.length;
+            row.push("".concat(allUsers.value[i], ", ").concat(allUsers.value[j], ": ") + similarity);
+          } else {
+            row.push(0);
           }
         }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+        similarityMatrix.value.push(row);
       }
+      console.log(similarityMatrix.value);
     };
-    var predict = function predict() {};
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
       getData();
     });
@@ -26024,14 +26031,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       userStore: userStore,
       eventStore: eventStore,
       similarEvents: similarEvents,
-      diff: diff,
-      freq: freq,
-      inputData: inputData,
-      outputData: outputData,
+      allUsers: allUsers,
+      allEvents: allEvents,
+      allRatings: allRatings,
+      similarityMatrix: similarityMatrix,
       getData: getData,
-      userDataToMap: userDataToMap,
-      buildDifferencesMatrix: buildDifferencesMatrix,
-      predict: predict,
       EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
@@ -26278,6 +26282,592 @@ __webpack_require__.r(__webpack_exports__);
       onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
       useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_2__.useEventStore,
       useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_3__.useUserStore
+    };
+    Object.defineProperty(__returned__, '__isScriptSetup', {
+      enumerable: false,
+      value: true
+    });
+    return __returned__;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
+/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'HybridRecommender',
+  setup: function setup(__props, _ref) {
+    var expose = _ref.expose;
+    expose();
+    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
+    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
+    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
+    var contentSimilarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
+    var collaborativeSimilarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
+    var interestedStatistics = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)(null);
+    var eventCosineMatrix = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)(null);
+    var getData = function getData() {
+      collaborativeBased();
+      contentBased();
+      weightSimilarEvents();
+    };
+    var collaborativeBased = function collaborativeBased() {
+      var allUsers = userStore.getAllUsersWithWatchlistEntries;
+      var currentUserWatchlist = eventStore.getWatchlist.map(function (entry) {
+        return {
+          'event_id': entry.event.id,
+          'status': entry.status
+        };
+      });
+      allUsers.push({
+        id: userStore.getUserId,
+        watchlist: currentUserWatchlist
+      });
+      var allRatedEvents = [];
+      allUsers.forEach(function (user) {
+        user.watchlist.forEach(function (entry) {
+          if (!allRatedEvents.includes(entry.event_id)) {
+            allRatedEvents.push(entry.event_id);
+          }
+        });
+      });
+      var data = new Map(); // User Id, Map[EventId, "Rating"]
+
+      allUsers.forEach(function (user) {
+        var userItemList = new Map(); // [EventId, "Rating"]
+
+        allRatedEvents.forEach(function (ratedEvent) {
+          userItemList.set(ratedEvent, 0);
+        });
+        user.watchlist.forEach(function (entry) {
+          userItemList.set(entry.event_id, 1);
+        });
+        data.set(user.id, userItemList);
+      });
+      interestedStatistics.value = data;
+      eventCosineMatrix.value = new Map();
+      allRatedEvents.forEach(function (ratedEvent1) {
+        var eventCosines = new Map(); // EventId, Cosine
+        var eventVector1 = getEventVector(ratedEvent1);
+        allRatedEvents.forEach(function (ratedEvent2) {
+          var eventVector2 = getEventVector(ratedEvent2);
+          var cosine = cosineSimilarity(eventVector1, eventVector2);
+          eventCosines.set(ratedEvent2, parseFloat(cosine.toFixed(2)));
+        });
+        eventCosineMatrix.value.set(ratedEvent1, eventCosines); // EventId, Map[EventId, Cosine]
+      });
+
+      eventStore.getWatchlist.forEach(function (entry) {
+        var cosines = eventCosineMatrix.value.get(entry.event_id);
+        var _iterator = _createForOfIteratorHelper(cosines.entries()),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var _step$value = _slicedToArray(_step.value, 2),
+              event = _step$value[0],
+              cosine = _step$value[1];
+            if (cosine < 0.5) continue;
+            if (entry.event_id == event) continue;
+            if (eventStore.checkIfEventIsInWatchlist(event)) continue;
+            if (collaborativeSimilarEvents.value.includes(event)) continue;
+            var eventData = eventStore.getEventById(event);
+            if (eventData == null) continue;
+            collaborativeSimilarEvents.value.push(eventData);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      });
+    };
+    var getEventVector = function getEventVector(event) {
+      var eventVector = [];
+      var _iterator2 = _createForOfIteratorHelper(interestedStatistics.value.entries()),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = _slicedToArray(_step2.value, 2),
+            user = _step2$value[0],
+            eventStatistic = _step2$value[1];
+          eventVector.push(eventStatistic.get(event));
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      return eventVector;
+    };
+    var contentBased = function contentBased() {
+      var entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
+      if (entries.length == 0) return;
+      var events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
+      events.forEach(function (event, index) {
+        entries.forEach(function (entry) {
+          var wordCountA = wordCountMap(entry.event.tags);
+          var wordCountB = wordCountMap(event.tags);
+          var dictonary = {};
+          addWordsToDictionary(wordCountA, dictonary);
+          addWordsToDictionary(wordCountB, dictonary);
+          var vectorA = wordMapToVector(wordCountA, dictonary);
+          var vectorB = wordMapToVector(wordCountB, dictonary);
+          var cosine = cosineSimilarity(vectorA, vectorB);
+          if (cosine >= 0.3) addEventToSimilar(event);
+        });
+      });
+    };
+    var addEventToSimilar = function addEventToSimilar(event) {
+      var isAlreadyInSimilar = false;
+      contentSimilarEvents.value.forEach(function (similar) {
+        if (similar.id == event.id) {
+          isAlreadyInSimilar = true;
+          return;
+        }
+      });
+      if (!isAlreadyInSimilar) contentSimilarEvents.value.push(event);
+    };
+    var wordCountMap = function wordCountMap(wordArray) {
+      var wordCount = {};
+      wordArray.forEach(function (word) {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+      return wordCount;
+    };
+    var addWordsToDictionary = function addWordsToDictionary(map, dictonary) {
+      for (var key in map) {
+        dictonary[key] = true;
+      }
+    };
+    var wordMapToVector = function wordMapToVector(map, dictonary) {
+      var wordCountVector = [];
+      for (var term in dictonary) {
+        wordCountVector.push(map[term] || 0);
+      }
+      return wordCountVector;
+    };
+    var dotProduct = function dotProduct(vectorA, vectorB) {
+      return vectorA.reduce(function (pv, cv, i) {
+        return pv += cv * vectorB[i];
+      }, 0);
+    };
+    var magnitude = function magnitude(vector) {
+      return Math.sqrt(vector.reduce(function (pv, cv) {
+        return pv += cv * cv;
+      }, 0));
+    };
+    var cosineSimilarity = function cosineSimilarity(vectorA, vectorB) {
+      return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
+    };
+    var weightSimilarEvents = function weightSimilarEvents() {
+      if (collaborativeSimilarEvents.value.length == 0) similarEvents.value = contentSimilarEvents.value;else if (contentSimilarEvents.value.length == 0) similarEvents.value = collaborativeSimilarEvents.value;
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
+      getData();
+    });
+    var __returned__ = {
+      eventStore: eventStore,
+      userStore: userStore,
+      similarEvents: similarEvents,
+      contentSimilarEvents: contentSimilarEvents,
+      collaborativeSimilarEvents: collaborativeSimilarEvents,
+      interestedStatistics: interestedStatistics,
+      eventCosineMatrix: eventCosineMatrix,
+      getData: getData,
+      collaborativeBased: collaborativeBased,
+      getEventVector: getEventVector,
+      contentBased: contentBased,
+      addEventToSimilar: addEventToSimilar,
+      wordCountMap: wordCountMap,
+      addWordsToDictionary: addWordsToDictionary,
+      wordMapToVector: wordMapToVector,
+      dotProduct: dotProduct,
+      magnitude: magnitude,
+      cosineSimilarity: cosineSimilarity,
+      weightSimilarEvents: weightSimilarEvents,
+      EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
+      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_3__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_3__.ref
+    };
+    Object.defineProperty(__returned__, '__isScriptSetup', {
+      enumerable: false,
+      value: true
+    });
+    return __returned__;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'SlopeOneRecommender',
+  setup: function setup(__props, _ref) {
+    var expose = _ref.expose;
+    expose();
+    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
+    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
+    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+    var allUsers = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var diff = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var freq = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var inputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var outputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var getData = function getData() {
+      diff.value = new Map();
+      freq.value = new Map();
+      outputData.value = new Map();
+      allUsers.value = userStore.getAllUsersWithWatchlistEntries;
+      var currentUserWatchlist = eventStore.getWatchlist.map(function (entry) {
+        return {
+          'event_id': entry.event.id,
+          'status': entry.status
+        };
+      });
+      allUsers.value.push({
+        id: userStore.getUserId,
+        watchlist: currentUserWatchlist
+      });
+      userDataToMap();
+      buildDifferencesMatrix();
+      predict();
+      getEventsFromPredictions();
+
+      // printData(outputData.value)
+    };
+
+    var userDataToMap = function userDataToMap() {
+      var data = new Map(); // User Id, Map[EventId, "Rating"]
+
+      allUsers.value.forEach(function (user) {
+        var userItemList = new Map(); // [EventId, "Rating"]
+
+        user.watchlist.forEach(function (entry) {
+          // userItemList.set(entry.event_id, 1);
+          userItemList.set(entry.event_id, entry.status == 'interested' ? 0.5 : 1);
+        });
+        data.set(user.id, userItemList);
+      });
+      inputData.value = data;
+    };
+    var buildDifferencesMatrix = function buildDifferencesMatrix() {
+      var _iterator = _createForOfIteratorHelper(inputData.value.values()),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var userEntries = _step.value;
+          var _iterator3 = _createForOfIteratorHelper(userEntries.entries()),
+            _step3;
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var _step3$value = _slicedToArray(_step3.value, 2),
+                event = _step3$value[0],
+                score = _step3$value[1];
+              if (!diff.value.has(event)) {
+                diff.value.set(event, new Map());
+                freq.value.set(event, new Map());
+              }
+              var _iterator4 = _createForOfIteratorHelper(userEntries.entries()),
+                _step4;
+              try {
+                for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                  var _step4$value = _slicedToArray(_step4.value, 2),
+                    event2 = _step4$value[0],
+                    score2 = _step4$value[1];
+                  var oldCount = 0;
+                  if (freq.value.get(event).has(event2)) {
+                    oldCount = freq.value.get(event).get(event2);
+                  }
+                  var oldDiff = 0.0;
+                  if (diff.value.get(event).has(event2)) {
+                    oldDiff = diff.value.get(event).get(event2);
+                  }
+                  var observedDiff = score - score2;
+                  freq.value.get(event).set(event2, oldCount + 1);
+                  diff.value.get(event).set(event2, oldDiff + observedDiff);
+                }
+              } catch (err) {
+                _iterator4.e(err);
+              } finally {
+                _iterator4.f();
+              }
+            }
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var _iterator2 = _createForOfIteratorHelper(diff.value.keys()),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var j = _step2.value;
+          var _iterator5 = _createForOfIteratorHelper(diff.value.get(j).keys()),
+            _step5;
+          try {
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              var i = _step5.value;
+              var oldValue = diff.value.get(j).get(i);
+              var count = freq.value.get(j).get(i);
+              diff.value.get(j).set(i, oldValue / count);
+            }
+          } catch (err) {
+            _iterator5.e(err);
+          } finally {
+            _iterator5.f();
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+    };
+    var predict = function predict() {
+      var uPred = new Map(); // [Event, double]
+      var uFreq = new Map(); // [Event, integer]
+      var _iterator6 = _createForOfIteratorHelper(diff.value.keys()),
+        _step6;
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var j = _step6.value;
+          uFreq.set(j, 0);
+          uPred.set(j, 0.0);
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+      var _iterator7 = _createForOfIteratorHelper(inputData.value.entries()),
+        _step7;
+      try {
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var _step7$value = _slicedToArray(_step7.value, 2),
+            user = _step7$value[0],
+            events = _step7$value[1];
+          var _iterator8 = _createForOfIteratorHelper(events.keys()),
+            _step8;
+          try {
+            for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+              var _j = _step8.value;
+              var _iterator11 = _createForOfIteratorHelper(diff.value.keys()),
+                _step11;
+              try {
+                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+                  var k = _step11.value;
+                  try {
+                    var predictedValue = diff.value.get(k).get(_j) + events.get(_j);
+                    var finalValue = predictedValue * freq.value.get(k).get(_j);
+                    uPred.set(k, uPred.get(k) + finalValue);
+                    uFreq.set(k, uFreq.get(k) + freq.value.get(k).get(_j));
+                  } catch (error) {
+                    console.warn(error);
+                  }
+                }
+              } catch (err) {
+                _iterator11.e(err);
+              } finally {
+                _iterator11.f();
+              }
+            }
+          } catch (err) {
+            _iterator8.e(err);
+          } finally {
+            _iterator8.f();
+          }
+          var clean = new Map(); // [item, double]
+          var _iterator9 = _createForOfIteratorHelper(uPred.keys()),
+            _step9;
+          try {
+            for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+              var _j2 = _step9.value;
+              if (uFreq.get(_j2) > 0) {
+                clean.set(_j2, uPred.get(_j2) / uFreq.get(_j2));
+              }
+            }
+          } catch (err) {
+            _iterator9.e(err);
+          } finally {
+            _iterator9.f();
+          }
+          var _iterator10 = _createForOfIteratorHelper(eventStore.getAllEvents),
+            _step10;
+          try {
+            for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+              var eventFromStore = _step10.value;
+              if (events.has(eventFromStore.id)) {
+                clean.set(eventFromStore.id, events.get(eventFromStore.id));
+              } else if (!clean.has(eventFromStore.id)) {
+                clean.set(eventFromStore.id, 0);
+              }
+            }
+          } catch (err) {
+            _iterator10.e(err);
+          } finally {
+            _iterator10.f();
+          }
+          outputData.value.set(user, clean);
+        }
+      } catch (err) {
+        _iterator7.e(err);
+      } finally {
+        _iterator7.f();
+      }
+    };
+    var getEventsFromPredictions = function getEventsFromPredictions() {
+      var _iterator12 = _createForOfIteratorHelper(outputData.value.entries()),
+        _step12;
+      try {
+        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+          var users = _step12.value;
+          var _iterator13 = _createForOfIteratorHelper(users[1]),
+            _step13;
+          try {
+            for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+              var event = _step13.value;
+              if (event[1] > 0) {
+                addEventToSimilar(event[0]);
+              }
+            }
+          } catch (err) {
+            _iterator13.e(err);
+          } finally {
+            _iterator13.f();
+          }
+        }
+      } catch (err) {
+        _iterator12.e(err);
+      } finally {
+        _iterator12.f();
+      }
+    };
+    var addEventToSimilar = function addEventToSimilar(eventId) {
+      var eventFromStore = eventStore.getEventById(eventId);
+      if (eventFromStore.event != undefined) eventFromStore = eventFromStore.event;
+      if (eventFromStore == null) return; // Old Event, doesn't need to be recommended
+      else if (eventStore.checkIfEventIsInWatchlist(eventId)) return; // Event is already in Watchlist
+
+      var isInSimilar = false;
+      similarEvents.value.forEach(function (event) {
+        if (event.id == eventId) isInSimilar = true;
+      });
+      if (!isInSimilar) {
+        similarEvents.value.push(eventFromStore);
+      }
+    };
+    var printData = function printData(userMap) {
+      var _iterator14 = _createForOfIteratorHelper(userMap.entries()),
+        _step14;
+      try {
+        for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+          var _step14$value = _slicedToArray(_step14.value, 2),
+            user = _step14$value[0],
+            predictions = _step14$value[1];
+          console.log(user + ":");
+          var _iterator15 = _createForOfIteratorHelper(predictions),
+            _step15;
+          try {
+            for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
+              var _step15$value = _slicedToArray(_step15.value, 2),
+                event = _step15$value[0],
+                value = _step15$value[1];
+              console.log(" " + event + " --> " + value);
+            }
+          } catch (err) {
+            _iterator15.e(err);
+          } finally {
+            _iterator15.f();
+          }
+        }
+      } catch (err) {
+        _iterator14.e(err);
+      } finally {
+        _iterator14.f();
+      }
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      getData();
+    });
+    var __returned__ = {
+      userStore: userStore,
+      eventStore: eventStore,
+      similarEvents: similarEvents,
+      allUsers: allUsers,
+      diff: diff,
+      freq: freq,
+      inputData: inputData,
+      outputData: outputData,
+      getData: getData,
+      userDataToMap: userDataToMap,
+      buildDifferencesMatrix: buildDifferencesMatrix,
+      predict: predict,
+      getEventsFromPredictions: getEventsFromPredictions,
+      addEventToSimilar: addEventToSimilar,
+      printData: printData,
+      EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
+      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_3__.useEventStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -27835,7 +28425,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CollaborativeBased"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ContentBased /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <JaccardIndex /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["HybridRecommender"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <CollaborativeBased /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <SlopeOneRecommender /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ContentBased /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <JaccardIndex /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
 }
 
 /***/ }),
@@ -28692,6 +29282,78 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268 ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "card mb-3"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card-header"
+}, " Vorschläge basierend auf ihren Events ", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "card-body"
+};
+var _hoisted_4 = {
+  key: 0
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Events basierend auf ihren Präferenzen anzeigen.", -1 /* HOISTED */);
+var _hoisted_6 = [_hoisted_5];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+    key: 1,
+    events: $setup.similarEvents
+  }, null, 8 /* PROPS */, ["events"]))])]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "card mb-3"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card-header"
+}, " Nutzer wie Sie, waren auch hieran interessiert ", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "card-body"
+};
+var _hoisted_4 = {
+  key: 0
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Event-Voschläge generieren.", -1 /* HOISTED */);
+var _hoisted_6 = [_hoisted_5];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+    key: 1,
+    events: $setup.similarEvents
+  }, null, 8 /* PROPS */, ["events"]))])]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/Watchlist.vue?vue&type=template&id=7d243cec":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/Watchlist.vue?vue&type=template&id=7d243cec ***!
@@ -29125,6 +29787,9 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
     getAllEvents: function getAllEvents(state) {
       return state.events;
     },
+    getOldEvents: function getOldEvents(state) {
+      return state.oldEvents;
+    },
     getWatchlist: function getWatchlist(state) {
       return state.watchlist;
     },
@@ -29294,6 +29959,16 @@ var useEventStore = (0,pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)('events',
       return this.oldEvents.filter(function (event) {
         return event.location_id == locationId;
       });
+    },
+    checkIfEventIsInWatchlist: function checkIfEventIsInWatchlist(eventId) {
+      var isInList = false;
+      this.watchlist.forEach(function (entry) {
+        if (entry.event.id == eventId) {
+          isInList = true;
+          return;
+        }
+      });
+      return isInList;
     }
   }
 });
@@ -53646,6 +54321,62 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/recommender/HybridRecommender.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/recommender/HybridRecommender.vue ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HybridRecommender.vue?vue&type=template&id=1e7c6268 */ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268");
+/* harmony import */ var _HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HybridRecommender.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/HybridRecommender.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SlopeOneRecommender.vue?vue&type=template&id=6358bf26 */ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26");
+/* harmony import */ var _SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/SlopeOneRecommender.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/recommender/Watchlist.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/recommender/Watchlist.vue ***!
@@ -54118,6 +54849,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FriendWatchlists.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HybridRecommender.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js");
  
 
 /***/ }),
@@ -54614,6 +55377,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FriendWatchlists.vue?vue&type=template&id=7612cd35 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268 ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HybridRecommender.vue?vue&type=template&id=1e7c6268 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26 ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SlopeOneRecommender.vue?vue&type=template&id=6358bf26 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26");
 
 
 /***/ }),

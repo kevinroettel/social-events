@@ -26,50 +26,65 @@ const eventStore = useEventStore();
 
 const similarEvents = ref([]);
 
-const diff = ref(null);
-const freq = ref(null);
-const inputData = ref(null);
-const outputData = ref(null);
+const allUsers = ref([]);
+const allEvents = ref([]);
+const allRatings = ref([]);
+const similarityMatrix = ref([]);
 
 const getData = () => {
-    userDataToMap();
-    buildDifferencesMatrix();
-    predict();
-}
+    let events = eventStore.getAllEvents.concat(eventStore.getOldEvents)
+    allEvents.value.push(...events.map(e => e.id))
 
-const userDataToMap = () => {
-    let allUsers = userStore.getAllUsersWithWatchlistEntries
-    
-    let data = new Map(); // User Id, Map(Event Id, Weight)
-    
-    allUsers.forEach((user) => {
-        let userItemList = new Map(); // Event Id, Weight
+    let usersWithWatchlists = userStore.getAllUsersWithWatchlistEntries
+    usersWithWatchlists.push({
+        username: userStore.getUserName,
+        watchlist: eventStore.getWatchlist.concat(eventStore.getOldWatchlist)
+    });
 
+    usersWithWatchlists.forEach((user) => {
+        let uId = user.id ?? userStore.getUserId
+        allUsers.value.push(uId)
+        
         user.watchlist.forEach((entry) => {
-            userItemList.set(entry.event_id, (entry.status == 'interested' ? 0.5 : 1.0));
-        });
+            if (!allEvents.value.includes(entry.event_id)) allEvents.value.push(entry.event_id);
+            let uId = user.id ?? userStore.getUserId
 
-        data.set(user.id, userItemList);
+            allRatings.value.push([
+                allUsers.value.indexOf(uId),
+                allEvents.value.indexOf(entry.event_id),
+                1
+            ]);
+        })
     })
 
-    inputData.value = data;
-}
+    for (let i = 0; i < allUsers.value.length; i++) {
+        let row = [];
 
-const buildDifferencesMatrix = () => {
-    for (let userEntries of inputData.value.values()) {
-        // console.log(userEntries)
+        for (let j = 0; j < allUsers.value.length; j++) {
+            let similarities = [];
 
-        for (let userEntry of userEntries.entries()) {
-            console.log(userEntry)
+            for (let k = 0; k < allEvents.value.length; k++) {
+                
+                if (allRatings.value[i][k] && allRatings.value[j][k]) {
+                    similarities.push(allRatings.value[i][k] - allRatings.value[j][k])
+                }
+            }
+
+            if (similarities.length > 0) {
+                let similarity = similarities.reduce((acc, cur) => acc + cur) / similarities.length;
+                row.push(`${allUsers.value[i]}, ${allUsers.value[j]}: ` + similarity)
+            } else {
+                row.push(0);
+            }
         }
+
+        similarityMatrix.value.push(row)
     }
-}
 
-const predict = () => {
-
+    console.log(similarityMatrix.value)
 }
 
 onMounted(() => {
-    getData()
-})
+    getData();
+});
 </script>

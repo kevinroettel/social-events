@@ -57,10 +57,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/users/{userId}', [UserController::class, 'updateProfile']);
     
     Route::get('/users/{userId}/friends', [UserController::class, 'getFriends']);
-    Route::patch('/users/{userId}/friends/{friendId}/request', [WatchlistController::class, 'sendFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/accept', [WatchlistController::class, 'acceptFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/deny', [WatchlistController::class, 'removeFriendRequest']);
-    Route::patch('/users/{userId}/friends/{friendId}/remove', [WatchlistController::class, 'removeFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/request', [FriendController::class, 'sendFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/accept', [FriendController::class, 'acceptFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/deny', [FriendController::class, 'removeFriendRequest']);
+    Route::patch('/users/{userId}/friends/{friendId}/remove', [FriendController::class, 'removeFriendRequest']);
 
     Route::get('/users/{userId}/friendrequests', [UserController::class, 'getFriendRequests']);
     Route::get('/users/{userId}/watchlists', [WatchlistController::class, 'getUserWatchlistEntries']);

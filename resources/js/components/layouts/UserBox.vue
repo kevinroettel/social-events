@@ -85,7 +85,7 @@ const props = defineProps({
 });
 
 const changeFriendStatus = (status, handlingFunction) => {
-    axios.post(
+    axios.patch(
         `/users/${userStore.getUserId}/friends/${props.user.id}/${status}`
     ).then((response) => 
         handlingFunction(response)
