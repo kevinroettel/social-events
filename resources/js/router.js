@@ -8,6 +8,8 @@ import SearchResults from './components/pages/SearchResults.vue';
 import Location from './components/pages/Location.vue';
 import Friends from './components/pages/Friends.vue';
 import Account from './components/pages/Account.vue';
+import ExtendedWatchlist from './components/pages/ExtendedWatchlist.vue';
+import ExtendedAllEvents from './components/pages/ExtendedAllEvents.vue';
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -24,5 +26,7 @@ export const router = createRouter({
         { path: '/account', component: Account },
         { path: '/kuenstler/:artistId', component: Artist },
         { path: '/venue/:locationId', component: Location },
+        { path: '/watchlist', component: ExtendedWatchlist },
+        { path: '/allevents', component: ExtendedAllEvents },
     ]
 });

@@ -212,7 +212,7 @@ const getDistance = () => {
     if (userStore.getUserCity != null) {
         let userLocation = userStore.getUserCoordinates;
 
-        if (userLocation.latitude != null) {
+        if (userLocation.latitude != null && event.value.location.latitude != null) {
             calculateRouteDistance(
                 userLocation.latitude, 
                 userLocation.longitude, 

@@ -1,7 +1,14 @@
 <template>
     <div class="card">
         <div class="card-header">
-            Alle Events
+            <div class="row">
+                <div class="col">
+                    Alle Events
+                </div>
+                <div class="col text-end">
+                    <a @click="showExtendedAllEventsPage()" class="btn btn-primary">></a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div v-if="eventStore.getAllEvents.length == 0">
@@ -18,5 +25,10 @@
 <script setup>
 import EventTeaserCarousel from '../layouts/EventTeaserCarousel.vue';
 import { useEventStore } from '../../stores/EventStore.js';
+import { router } from '../../router';
 const eventStore = useEventStore();
+
+const showExtendedAllEventsPage = () => {
+    router.push(`/allevents`);
+}
 </script>
