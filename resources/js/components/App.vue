@@ -89,6 +89,7 @@ const getWatchlistEntries = () => {
         dataDone.watchlist = true
     }).catch((error) => {
         toast(error.message, 'error');
+        console.log(error)
     })
 }
 

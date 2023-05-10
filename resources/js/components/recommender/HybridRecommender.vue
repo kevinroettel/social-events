@@ -191,8 +191,11 @@ const cosineSimilarity = (vectorA, vectorB) => {
 }
 
 const weightSimilarEvents = () => {
-    if (collaborativeSimilarEvents.value.length == 0) similarEvents.value = contentSimilarEvents.value
-    else if (contentSimilarEvents.value.length == 0) similarEvents.value = collaborativeSimilarEvents.value
+    similarEvents.value = [...contentSimilarEvents.value, ...collaborativeSimilarEvents.value];
+    similarEvents.value.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date)
+    });
+
 }
 
 onMounted(() => {

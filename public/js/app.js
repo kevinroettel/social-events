@@ -23674,6 +23674,7 @@ __webpack_require__.r(__webpack_exports__);
         dataDone.watchlist = true;
       })["catch"](function (error) {
         (0,_helpers_toast__WEBPACK_IMPORTED_MODULE_3__.toast)(error.message, 'error');
+        console.log(error);
       });
     };
     var getLocations = function getLocations() {
@@ -25626,6 +25627,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaser.vue */ "./resources/js/components/layouts/EventTeaser.vue");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25634,10 +25637,24 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
+    var events = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var getEvents = function getEvents() {
+      events.value = eventStore.getAllEvents;
+      events.value.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+      getEvents();
+    });
     var __returned__ = {
       eventStore: eventStore,
+      events: events,
+      getEvents: getEvents,
       EventTeaser: _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_2__.ref
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -25662,6 +25679,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaser.vue */ "./resources/js/components/layouts/EventTeaser.vue");
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25670,10 +25689,25 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
+    var interested = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var going = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)([]);
+    var splitEvents = function splitEvents() {
+      eventStore.getWatchlist.forEach(function (entry) {
+        if (entry.status == "interested") interested.value.push(entry);else going.value.push(entry);
+      });
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_2__.onMounted)(function () {
+      splitEvents();
+    });
     var __returned__ = {
       eventStore: eventStore,
+      interested: interested,
+      going: going,
+      splitEvents: splitEvents,
       EventTeaser: _layouts_EventTeaser_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_2__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_2__.ref
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -26387,6 +26421,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
 /* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
@@ -26564,7 +26602,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
     };
     var weightSimilarEvents = function weightSimilarEvents() {
-      if (collaborativeSimilarEvents.value.length == 0) similarEvents.value = contentSimilarEvents.value;else if (contentSimilarEvents.value.length == 0) similarEvents.value = collaborativeSimilarEvents.value;
+      similarEvents.value = [].concat(_toConsumableArray(contentSimilarEvents.value), _toConsumableArray(collaborativeSimilarEvents.value));
+      similarEvents.value.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
     };
     (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
       getData();
@@ -28969,7 +29010,7 @@ var _hoisted_3 = {
   "class": "col mb-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.eventStore.getAllEvents, function (event, index) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.events, function (event, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventTeaser"], {
@@ -28995,17 +29036,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Watchlist", -1 /* HOISTED */);
-var _hoisted_2 = {
-  "class": "row row-cols-5"
-};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Zugesagt", -1 /* HOISTED */);
 var _hoisted_3 = {
+  "class": "row row-cols-lg-5 row-cols-md-2 row-cols-auto"
+};
+var _hoisted_4 = {
+  "class": "col mb-3"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Interessiert", -1 /* HOISTED */);
+var _hoisted_6 = {
+  "class": "row row-cols-lg-5 row-cols-md-2 row-cols-auto"
+};
+var _hoisted_7 = {
   "class": "col mb-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.eventStore.getWatchlist, function (event, index) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.going, function (event, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventTeaser"], {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventTeaser"], {
+      status: event.status,
+      event: event.event
+    }, null, 8 /* PROPS */, ["status", "event"])])]);
+  }), 128 /* KEYED_FRAGMENT */))]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.interested, function (event, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventTeaser"], {
       status: event.status,
       event: event.event
     }, null, 8 /* PROPS */, ["status", "event"])])]);
