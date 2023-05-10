@@ -6,7 +6,9 @@
                     Alle Events
                 </div>
                 <div class="col text-end">
-                    <a @click="showExtendedAllEventsPage()" class="btn btn-primary">></a>
+                    <a @click="showExtendedAllEventsPage()" class="btn btn-primary">
+                        <FontAwesomeIcon icon="fa-solid fa-folder-open" />
+                    </a>
                 </div>
             </div>
         </div>

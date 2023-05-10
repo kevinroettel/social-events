@@ -8,9 +8,9 @@ import "vue3-carousel/dist/carousel.css";
 import * as Vue from 'vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCircleUser, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faTrash, faCheck, faTimes, faMagnifyingGlass, faFolderOpen, faSave } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCircleUser, faTrash, faCheck, faTimes);
+library.add(faCircleUser, faTrash, faCheck, faTimes, faMagnifyingGlass, faFolderOpen, faSave);
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 

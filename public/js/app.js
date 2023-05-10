@@ -25272,6 +25272,11 @@ __webpack_require__.r(__webpack_exports__);
         (0,_helpers_toast_js__WEBPACK_IMPORTED_MODULE_12__.toast)(error.message, 'error');
       });
     };
+    var urlify = function urlify() {
+      var urlRegex = /(https?:\/\/[^\s]+)/g;
+      var newDesc = event.value.description.replace(urlRegex, '<a href="$1">$1</a>');
+      document.getElementById("event-".concat(event.value.id, "-description")).innerHTML = newDesc;
+    };
     var addPost = function addPost(newPost) {
       posts.value.unshift(newPost);
     };
@@ -25323,6 +25328,11 @@ __webpack_require__.r(__webpack_exports__);
         getEventData();
         getWatchlistEntriesCount();
         getDistance();
+        if (event.value.description != null) {
+          setTimeout(function () {
+            urlify();
+          }, 1);
+        }
       }
     });
     var __returned__ = {
@@ -25341,6 +25351,7 @@ __webpack_require__.r(__webpack_exports__);
       distance: distance,
       getEventData: getEventData,
       getEventPosts: getEventPosts,
+      urlify: urlify,
       addPost: addPost,
       getLocation: getLocation,
       getArtists: getArtists,
@@ -27649,7 +27660,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.startSearch();
     })
-  }, " Suchen ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FontAwesomeIcon, {
+    icon: "fa-solid fa-magnifying-glass"
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": "nav-link",
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $setup.submitLogoutForm($event);
@@ -28631,9 +28644,7 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_28 = {
   "class": "row"
 };
-var _hoisted_29 = {
-  "class": "col-md pre-wrap"
-};
+var _hoisted_29 = ["id"];
 var _hoisted_30 = {
   "class": "col-md"
 };
@@ -28684,7 +28695,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onStatusUpdated: _cache[2] || (_cache[2] = function ($event) {
       return $setup.watchlistStatus = $event;
     })
-  }, null, 8 /* PROPS */, ["event", "status"]), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.interestedCount) + " Personen sind interessiert.", 1 /* TEXT */), _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.attendingCount) + " Personen nehmen teil.", 1 /* TEXT */), _hoisted_26, _hoisted_27])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.event.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [$setup.event.artists.length != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_31, "Line-up:")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.event.artists, function (artist, index) {
+  }, null, 8 /* PROPS */, ["event", "status"]), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.interestedCount) + " Personen sind interessiert.", 1 /* TEXT */), _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.attendingCount) + " Personen nehmen teil.", 1 /* TEXT */), _hoisted_26, _hoisted_27])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    id: "event-".concat($setup.event.id, "-description"),
+    "class": "col-md pre-wrap"
+  }, null, 8 /* PROPS */, _hoisted_29), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [$setup.event.artists.length != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_31, "Line-up:")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.event.artists, function (artist, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -28846,18 +28860,13 @@ var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_34 = [_hoisted_33];
 var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "* Benötigte Eingaben", -1 /* HOISTED */);
 var _hoisted_36 = {
-  key: 0
-};
-var _hoisted_37 = {
-  key: 1
-};
-var _hoisted_38 = {
   "class": "col-md"
 };
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Vorschau", -1 /* HOISTED */);
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Vorschau", -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_v_select = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("v-select");
+  var _component_FontAwesomeIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FontAwesomeIcon");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["LocationFormModal"], {
     onLocationSaved: _cache[0] || (_cache[0] = function ($event) {
       return $setup.selectCreated($event);
@@ -28974,14 +28983,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[13] || (_cache[13] = function ($event) {
       return $setup.checkInputs();
     })
-  }, [$setup.isUpdate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_36, "Bearbeitung speichern")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_37, "Event Speichern"))]), $setup.isUpdate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FontAwesomeIcon, {
+    icon: "fa-solid fa-save"
+  })]), $setup.isUpdate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 6,
     type: "button",
     "class": "btn btn-secondary ml-3",
     onClick: _cache[14] || (_cache[14] = function ($event) {
       return $setup.discardUpdate();
     })
-  }, " Bearbeitung abbrechen ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventPreview"], {
+  }, " Bearbeitung abbrechen ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["EventPreview"], {
     event: $setup.event,
     flyer: $setup.flyerUrl
   }, null, 8 /* PROPS */, ["event", "flyer"])])])]);
@@ -29383,12 +29394,15 @@ var _hoisted_7 = {
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit existieren keine aktuellen Events. Erstelle ein paar!", -1 /* HOISTED */);
 var _hoisted_9 = [_hoisted_8];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_FontAwesomeIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FontAwesomeIcon");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $setup.showExtendedAllEventsPage();
     }),
     "class": "btn btn-primary"
-  }, ">")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.eventStore.getAllEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, _hoisted_9)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FontAwesomeIcon, {
+    icon: "fa-solid fa-folder-open"
+  })])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.eventStore.getAllEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, _hoisted_9)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
     key: 1,
     events: $setup.eventStore.getAllEvents
   }, null, 8 /* PROPS */, ["events"]))])]);
@@ -29613,12 +29627,15 @@ var _hoisted_7 = {
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit befinden sich keine Einträge in deiner Watchlist. Füge welche hinzu!", -1 /* HOISTED */);
 var _hoisted_9 = [_hoisted_8];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_FontAwesomeIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FontAwesomeIcon");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $setup.showExtendedWatchlistPage();
     }),
     "class": "btn btn-primary"
-  }, ">")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.eventStore.isWatchlistEmpty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, _hoisted_9)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FontAwesomeIcon, {
+    icon: "fa-solid fa-folder-open"
+  })])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [$setup.eventStore.isWatchlistEmpty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, _hoisted_9)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
     key: 1,
     events: $setup.eventStore.getWatchlist
   }, null, 8 /* PROPS */, ["events"]))])]);
@@ -29657,7 +29674,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCircleUser, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTrash, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTimes);
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCircleUser, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTrash, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faCheck, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faTimes, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faMagnifyingGlass, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faFolderOpen, _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faSave);
 
 
 

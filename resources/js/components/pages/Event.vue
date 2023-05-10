@@ -59,7 +59,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-md pre-wrap">{{ event.description }}</div>
+                    <div :id="`event-${event.id}-description`" class="col-md pre-wrap"></div>
                     <div class="col-md">
                         <p v-if="event.artists.length != 0">Line-up:</p>
                         <ul>
@@ -155,6 +155,7 @@ const getEventData = () =>  {
     getArtists()
     getEventPosts()
     getLocation()
+
 }
 
 const getEventPosts = () => {
@@ -165,6 +166,12 @@ const getEventPosts = () => {
     }).catch((error) => {
         toast(error.message, 'error');
     })
+}
+
+const urlify = () => {
+    let urlRegex = /(https?:\/\/[^\s]+)/g;
+    let newDesc = event.value.description.replace(urlRegex, '<a href="$1">$1</a>');
+    document.getElementById(`event-${event.value.id}-description`).innerHTML = newDesc
 }
 
 const addPost = (newPost) => {
@@ -241,6 +248,12 @@ onMounted(() => {
         getEventData();
         getWatchlistEntriesCount();
         getDistance();
+
+        if (event.value.description != null) {
+            setTimeout(() => {
+                urlify();
+            }, 1);
+        }
     }
 })
 </script>

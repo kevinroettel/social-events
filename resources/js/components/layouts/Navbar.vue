@@ -34,7 +34,7 @@
                             class="btn btn-secondary ml-1"
                             @click="startSearch()"
                         >
-                            Suchen
+                            <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
 

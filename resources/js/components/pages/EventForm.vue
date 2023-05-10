@@ -124,8 +124,7 @@
                 <p>* Benötigte Eingaben</p>
 
                 <button type="button" class="btn btn-primary" @click="checkInputs()">
-                    <span v-if="isUpdate">Bearbeitung speichern</span>
-                    <span v-else>Event Speichern</span>
+                    <FontAwesomeIcon icon="fa-solid fa-save" />
                 </button>
 
                 <button v-if="isUpdate" type="button" class="btn btn-secondary ml-3" @click="discardUpdate()">

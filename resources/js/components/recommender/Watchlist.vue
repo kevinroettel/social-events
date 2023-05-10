@@ -6,7 +6,9 @@
                     Watchlist
                 </div>
                 <div class="col text-end">
-                    <a @click="showExtendedWatchlistPage()" class="btn btn-primary">></a>
+                    <a @click="showExtendedWatchlistPage()" class="btn btn-primary">
+                        <FontAwesomeIcon icon="fa-solid fa-folder-open" />
+                    </a>
                 </div>
             </div>
         </div>
