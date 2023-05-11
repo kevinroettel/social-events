@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <span class="navbar-brand">social-events</span>
+            <span class="navbar-brand">Events Base</span>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -23,8 +23,8 @@
                         <input 
                             class="form-control" 
                             type="search" 
-                            placeholder="Search" 
-                            aria-label="Search"
+                            placeholder="Suche" 
+                            aria-label="Suche"
                             v-model="searchQuery"
                             @keyup.enter="startSearch()"
                         >

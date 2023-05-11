@@ -2,7 +2,7 @@
     <div>
         <h3>Alle Events</h3>
 
-        <div class="row row-cols-5">
+        <div class="row row-cols-lg-5 row-cols-md-2 row-cols-auto">
             <div v-for="(event, index) in events" :key="index">
                 <div class="col mb-3">
                     <EventTeaser
@@ -13,6 +13,8 @@
             </div>
         </div>
     </div>
+
+    <!-- pagination auf 30? -->
 </template>
 <script setup>
 import EventTeaser from '../layouts/EventTeaser.vue';

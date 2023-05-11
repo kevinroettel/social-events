@@ -24,7 +24,7 @@
                     </button>
 
                     <div v-if="showArtistSelection">
-                        <p v-if="showNotifcation">Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher sie den Namen korrekt geschrieben haben.</p>
+                        <p v-if="showNotifcation">Bevor Sie den Künstler endgültig erstellen, gehen Sie bitte sicher das Sie den Namen korrekt geschrieben haben.</p>
                         <p v-if="notificationText != null">{{ notificationText }}</p>
                         
                         <v-select 

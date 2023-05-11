@@ -6,7 +6,7 @@
 
     <div class="guest-page-teaser">
         <div class="teaser-text">
-            <h1>Social Events</h1>
+            <h1>Events Base</h1>
             <p>die neue Platform zum Verwalten von deinen Veranstaltungen!</p>
         </div>
     </div>

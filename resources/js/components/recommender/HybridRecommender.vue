@@ -32,12 +32,19 @@ const interestedStatistics = ref(null);
 const eventCosineMatrix = ref(null);
 
 const getData = () => {
+    let start = Date.now();
+
     collaborativeBased();
     contentBased();
-    weightSimilarEvents()
+    sortSimilarEvents()
+
+    let end = Date.now();
+    console.log(`Overall Execution Time: ${end - start} ms`)
 }
 
 const collaborativeBased = () => {
+    let start = Date.now();
+
     let allUsers = userStore.getAllUsersWithWatchlistEntries
     
     let currentUserWatchlist = eventStore.getWatchlist.map((entry) => {
@@ -110,6 +117,9 @@ const collaborativeBased = () => {
             collaborativeSimilarEvents.value.push(eventData)
         }
     })
+
+    let end = Date.now()
+    console.log(`Collaborative Execution Time: ${end - start} ms`)
 }
 
 const getEventVector = (event) => {
@@ -123,6 +133,8 @@ const getEventVector = (event) => {
 }
 
 const contentBased = () => {
+    let start = Date.now();
+    
     let entries = JSON.parse(JSON.stringify(eventStore.getWatchlist.concat(eventStore.getOldWatchlist)));
     if (entries.length == 0) return;
     let events = JSON.parse(JSON.stringify(eventStore.getAllEvents));
@@ -139,6 +151,9 @@ const contentBased = () => {
             if (cosine >= 0.3) addEventToSimilar(event);
         })
     })
+
+    let end = Date.now();
+    console.log(`Content Execution Time: ${end - start} ms`)
 }
 
 const addEventToSimilar = (event) => {
@@ -190,12 +205,25 @@ const cosineSimilarity = (vectorA, vectorB) => {
     return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
 }
 
-const weightSimilarEvents = () => {
-    similarEvents.value = [...contentSimilarEvents.value, ...collaborativeSimilarEvents.value];
+const sortSimilarEvents = () => {
+    similarEvents.value = [...contentSimilarEvents.value];
+
+    collaborativeSimilarEvents.value.forEach((event) => {
+        let isAlreadyInSimilar = false;
+
+        similarEvents.value.forEach((similarEvent) => {
+            if (similarEvent.id == event.id) {
+                isAlreadyInSimilar = true;
+                return;
+            }
+        })
+
+        if (!isAlreadyInSimilar) similarEvents.value.push(event)
+    })
+
     similarEvents.value.sort((a, b) => {
         return new Date(a.date) - new Date(b.date)
     });
-
 }
 
 onMounted(() => {

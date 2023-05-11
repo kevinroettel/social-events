@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 v-if="locationToUpdate == null">Neue Venue</h3>
-                    <h3 v-else>Neue Venue</h3>
+                    <h3 v-else>Venue Aktualisieren</h3>
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
@@ -86,14 +86,13 @@
                         <textarea class="form-control" aria-label="Description" v-model="location.description"></textarea>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <p>* Benötigt</p><br>
-                        <p>** Eventuelle Erörterungen zu Parkplätzen und Barrierefreiheit.</p>
-                    </div>
+                    <span>* Benötigte Angaben</span>
+                    <br>
+                    <span>** Eventuelle Erörterungen zu Parkplätzen und Barrierefreiheit.</span>
 
                     <div class="input-group mb-3">
                         <button type="submit" @click="checkInputs()" class="btn btn-primary">
-                            Save Venue
+                            Venue Speichern
                         </button>
 
                         <button type="submit" @click="resetForm()" class="btn btn-secondary">
