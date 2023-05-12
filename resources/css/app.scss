@@ -244,6 +244,12 @@ body {
     }
 }
 
+@media (min-width: 768px) { 
+    .navbar-expand-lg .navbar-collapse { 
+        height: auto !important; 
+    } 
+}
+
 @media screen and (max-width: 800px) {
     body {
         .website-content {
