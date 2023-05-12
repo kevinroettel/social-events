@@ -15,9 +15,34 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <router-link to="/" class="nav-link">Home</router-link>
-                    <router-link to="/neues-event" class="nav-link">Neues Event</router-link>
-                    <router-link to="/freunde" class="nav-link">Freunde</router-link>
+                    <a 
+                        class="nav-link" 
+                        @click="routerLink('/')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Home
+                    </a>
+                    
+                    <a 
+                        class="nav-link" 
+                        @click="routerLink('/neues-event')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Neues Event
+                    </a>
+                    
+                    <a 
+                        class="nav-link" 
+                        @click="routerLink('/freunde')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Freunde
+                    </a>
+
+                   
 
                     <div class="display-inline-flex">
                         <input 
@@ -32,11 +57,22 @@
                         <button
                             type="button"
                             class="btn btn-secondary ml-1"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavAltMarkup"
                             @click="startSearch()"
                         >
                             <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
+
+                    <a 
+                        class="nav-link" 
+                        @click="routerLink('/impressum')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Impressum
+                    </a>
 
                     <div class="logout-link">
                         <a 
@@ -75,6 +111,7 @@ const router = useRouter();
 
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const searchQuery = ref(null);
+const visible = ref(false);
 
 const submitLogoutForm = (event) => {
     event.preventDefault();
@@ -86,4 +123,9 @@ const startSearch = () => {
         router.push(`/suche/${searchQuery.value}`);
     } 
 }
+
+const routerLink = (url) => {
+    router.push(url);
+}
+
 </script>

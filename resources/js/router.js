@@ -10,6 +10,7 @@ import Friends from './components/pages/Friends.vue';
 import Account from './components/pages/Account.vue';
 import ExtendedWatchlist from './components/pages/ExtendedWatchlist.vue';
 import ExtendedAllEvents from './components/pages/ExtendedAllEvents.vue';
+import Imprint from './components/pages/Imprint.vue';
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -28,5 +29,6 @@ export const router = createRouter({
         { path: '/venue/:locationId', component: Location },
         { path: '/watchlist', component: ExtendedWatchlist },
         { path: '/allevents', component: ExtendedAllEvents },
+        { path: '/impressum', component: Imprint }
     ]
 });
