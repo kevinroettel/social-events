@@ -42,7 +42,14 @@
                         Freunde
                     </a>
 
-                   
+                    <a 
+                        class="nav-link" 
+                        @click="routerLink('/impressum')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Impressum
+                    </a>
 
                     <div class="display-inline-flex">
                         <input 
@@ -65,15 +72,6 @@
                         </button>
                     </div>
 
-                    <a 
-                        class="nav-link" 
-                        @click="routerLink('/impressum')"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavAltMarkup"
-                    >
-                        Impressum
-                    </a>
-
                     <div class="logout-link">
                         <a 
                             class="nav-link"
@@ -92,10 +90,15 @@
                         </form>
                     </div>
 
-                    <router-link to="/account" class="nav-link account-link">
+                    <a 
+                        class="nav-link account-link"
+                        @click="routerLink('/account')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
                         <FontAwesomeIcon class="navbar-profile-picture" v-if="userStore.getUserPicture == null" icon="fa-solid fa-circle-user" />
                         <img class="navbar-profile-picture" v-else :src="'/storage' + userStore.getUserPicture">
-                    </router-link>
+                    </a>
                 </div>
             </div>
         </div>
