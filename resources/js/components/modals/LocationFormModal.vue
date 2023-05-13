@@ -183,13 +183,13 @@ const checkInputs = () => {
             location.city,
             location.streetAndNumber
         ).then((response) => {
-            location.latitude = response.lat;
-            location.longitude = response.lon;
+            location.latitude = response.latitude;
+            location.longitude = response.longitude;
 
             if (props.locationToUpdate == null) saveLocation();
             else updateLocation();
         }).catch((error) => {
-            console.log('should not happen tbh');
+            console.log('should not happen tbh: ' + error);
         })
     }
 }
