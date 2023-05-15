@@ -92,8 +92,8 @@ class UserController extends Controller
         $user = Auth::user();
         $user->username = $validated['username'];
         $user->email = $validated['email'];
-        $user->address = $validated['address'];
-        $user->city = $validated['city'];
+        $user->address = ($validated['address'] ?? null);
+        $user->city = ($validated['city'] ?? null);
         
         if ($pictureIsString) {
             $user->profile_picture = $validated['profile_picture'];

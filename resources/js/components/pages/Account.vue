@@ -10,12 +10,12 @@
                 >
                     <img 
                         v-if="profilePictureUrl != null"
-                        :src="profilePictureUrl != null"
+                        :src="profilePictureUrl"
                         class="profile-picture"
                     >
 
                     <img
-                        v-if="userData.profile_picture != null"
+                        v-else-if="userData.profile_picture != null"
                         :src="'/storage' + userData.profile_picture"
                         class="profile-picture"
                     >
