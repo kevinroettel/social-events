@@ -24343,9 +24343,10 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var userStore = (0,_stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore)();
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    var route = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute)();
     var csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     var searchQuery = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-    var visible = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var currentPage = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var submitLogoutForm = function submitLogoutForm(event) {
       event.preventDefault();
       document.getElementById('logout-form').submit();
@@ -24358,16 +24359,23 @@ __webpack_require__.r(__webpack_exports__);
     var routerLink = function routerLink(url) {
       router.push(url);
     };
+    var isActive = function isActive(url) {
+      return route.path == url ? ' active' : '';
+    };
     var __returned__ = {
       userStore: userStore,
       router: router,
+      route: route,
       csrf: csrf,
       searchQuery: searchQuery,
-      visible: visible,
+      currentPage: currentPage,
       submitLogoutForm: submitLogoutForm,
       startSearch: startSearch,
       routerLink: routerLink,
+      isActive: isActive,
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      useRoute: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRoute,
       useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter,
       useUserStore: _stores_UserStore_js__WEBPACK_IMPORTED_MODULE_1__.useUserStore
     };
@@ -25574,7 +25582,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
       showNotifcation.value = true;
     };
+    var disablePastDates = function disablePastDates() {
+      var today = new Date();
+      var maxDate = today.toISOString().substring(0, 10);
+      document.getElementById('event-form-date-input').setAttribute('min', maxDate);
+    };
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      disablePastDates();
       if (route.params.eventId != null) {
         event.id = parseInt(route.params.eventId);
         isUpdate.value = true;
@@ -25606,6 +25620,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       selectCreated: selectCreated,
       discardUpdate: discardUpdate,
       showNotifcationWithSimilarArtists: showNotifcationWithSimilarArtists,
+      disablePastDates: disablePastDates,
       inject: vue__WEBPACK_IMPORTED_MODULE_0__.inject,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
@@ -27641,34 +27656,34 @@ var _hoisted_11 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_FontAwesomeIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("FontAwesomeIcon");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": "nav-link",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('nav-link' + $setup.isActive('/')),
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $setup.routerLink('/');
     }),
     "data-bs-toggle": "collapse",
     "data-bs-target": "#navbarNavAltMarkup"
-  }, " Home "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": "nav-link",
+  }, " Home ", 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('nav-link' + $setup.isActive('/neues-event')),
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $setup.routerLink('/neues-event');
     }),
     "data-bs-toggle": "collapse",
     "data-bs-target": "#navbarNavAltMarkup"
-  }, " Neues Event "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": "nav-link",
+  }, " Neues Event ", 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('nav-link' + $setup.isActive('/freunde')),
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.routerLink('/freunde');
     }),
     "data-bs-toggle": "collapse",
     "data-bs-target": "#navbarNavAltMarkup"
-  }, " Freunde "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": "nav-link",
+  }, " Freunde ", 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('nav-link' + $setup.isActive('/impressum')),
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $setup.routerLink('/impressum');
     }),
     "data-bs-toggle": "collapse",
     "data-bs-target": "#navbarNavAltMarkup"
-  }, " Impressum "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, " Impressum ", 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "search",
     placeholder: "Suche",
@@ -28933,6 +28948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.handleFile($event);
     })
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" date "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    id: "event-form-date-input",
     type: "date",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("form-control ".concat($setup.errorClass('date'))),
     "aria-label": "Datum",

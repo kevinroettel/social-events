@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a 
-                        class="nav-link" 
+                        :class="'nav-link' + isActive('/')" 
                         @click="routerLink('/')"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
@@ -25,7 +25,7 @@
                     </a>
                     
                     <a 
-                        class="nav-link" 
+                        :class="'nav-link' + isActive('/neues-event')" 
                         @click="routerLink('/neues-event')"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
@@ -34,7 +34,7 @@
                     </a>
                     
                     <a 
-                        class="nav-link" 
+                        :class="'nav-link' + isActive('/freunde')" 
                         @click="routerLink('/freunde')"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
@@ -43,7 +43,7 @@
                     </a>
 
                     <a 
-                        class="nav-link" 
+                        :class="'nav-link' + isActive('/impressum')" 
                         @click="routerLink('/impressum')"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
@@ -105,16 +105,17 @@
     </nav>
 </template>
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from '../../stores/UserStore.js';
 
 const userStore = useUserStore();
 const router = useRouter();
+const route = useRoute();
 
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const searchQuery = ref(null);
-const visible = ref(false);
+const currentPage = ref(false);
 
 const submitLogoutForm = (event) => {
     event.preventDefault();
@@ -129,6 +130,10 @@ const startSearch = () => {
 
 const routerLink = (url) => {
     router.push(url);
+}
+
+const isActive = (url)  => {
+    return route.path == url ? ' active' : '';
 }
 
 </script>

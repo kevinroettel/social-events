@@ -38,7 +38,7 @@
                 <!-- date -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="date-input-label">Datum *</span>
-                    <input type="date" :class="`form-control ${errorClass('date')}`" aria-label="Datum" aria-describedby="date-input-label" v-model="event.date">
+                    <input id="event-form-date-input" type="date" :class="`form-control ${errorClass('date')}`" aria-label="Datum" aria-describedby="date-input-label" v-model="event.date">
                 </div>
 
                 <div class="row">
@@ -311,7 +311,15 @@ const showNotifcationWithSimilarArtists = (createdArtist) => {
     showNotifcation.value = true;
 }
 
+const disablePastDates = () => {
+    let today = new Date();
+    var maxDate = today.toISOString().substring(0, 10);
+    document.getElementById('event-form-date-input').setAttribute('min', maxDate);
+}
+
 onMounted(() => {
+    disablePastDates();
+
     if (route.params.eventId != null) {
         event.id = parseInt(route.params.eventId);
         isUpdate.value = true
