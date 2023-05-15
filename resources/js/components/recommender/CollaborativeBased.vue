@@ -1,7 +1,7 @@
 <template>
     <div class="card mb-3">
         <div class="card-header">
-            Nutzer wie Sie, waren auch hieran interessiert
+            Nutzer wie Sie, waren auch hieran interessiert (B)
         </div>
         <div class="card-body">
             <div v-if="similarEvents.length == 0">
@@ -26,65 +26,107 @@ const eventStore = useEventStore();
 
 const similarEvents = ref([]);
 
-const allUsers = ref([]);
-const allEvents = ref([]);
-const allRatings = ref([]);
-const similarityMatrix = ref([]);
+const interestedStatistics = ref(null);
+const eventCosineMatrix = ref(null);
 
-const getData = () => {
-    let events = eventStore.getAllEvents.concat(eventStore.getOldEvents)
-    allEvents.value.push(...events.map(e => e.id))
-
-    let usersWithWatchlists = userStore.getAllUsersWithWatchlistEntries
-    usersWithWatchlists.push({
-        username: userStore.getUserName,
-        watchlist: eventStore.getWatchlist.concat(eventStore.getOldWatchlist)
+const collaborativeBased = () => {
+    let allUsers = userStore.getAllUsersWithWatchlistEntries
+    
+    let currentUserWatchlist = eventStore.getWatchlist.map((entry) => {
+        return {
+            'event_id': entry.event.id,
+            'status': entry.status
+        }
     });
 
-    usersWithWatchlists.forEach((user) => {
-        let uId = user.id ?? userStore.getUserId
-        allUsers.value.push(uId)
-        
-        user.watchlist.forEach((entry) => {
-            if (!allEvents.value.includes(entry.event_id)) allEvents.value.push(entry.event_id);
-            let uId = user.id ?? userStore.getUserId
+    allUsers.push({
+        id: userStore.getUserId,
+        watchlist: currentUserWatchlist
+    });
+    
+    let allRatedEvents = [];
 
-            allRatings.value.push([
-                allUsers.value.indexOf(uId),
-                allEvents.value.indexOf(entry.event_id),
-                1
-            ]);
+    allUsers.forEach((user) => {
+        user.watchlist.forEach((entry) => {
+            if (!allRatedEvents.includes(entry.event_id)) {
+                allRatedEvents.push(entry.event_id);
+            }
         })
     })
 
-    for (let i = 0; i < allUsers.value.length; i++) {
-        let row = [];
+    let data = new Map(); // User Id, Map[EventId, "Rating"]
+    
+    allUsers.forEach((user) => {
+        let userItemList = new Map(); // [EventId, "Rating"]
 
-        for (let j = 0; j < allUsers.value.length; j++) {
-            let similarities = [];
+        allRatedEvents.forEach((ratedEvent) => {
+            userItemList.set(ratedEvent, 0);
+        })
 
-            for (let k = 0; k < allEvents.value.length; k++) {
-                
-                if (allRatings.value[i][k] && allRatings.value[j][k]) {
-                    similarities.push(allRatings.value[i][k] - allRatings.value[j][k])
-                }
-            }
+        user.watchlist.forEach((entry) => {
+            userItemList.set(entry.event_id, 1);
+        });
 
-            if (similarities.length > 0) {
-                let similarity = similarities.reduce((acc, cur) => acc + cur) / similarities.length;
-                row.push(`${allUsers.value[i]}, ${allUsers.value[j]}: ` + similarity)
-            } else {
-                row.push(0);
-            }
+        data.set(user.id, userItemList);
+    })
+
+    interestedStatistics.value = data;
+
+    eventCosineMatrix.value = new Map();
+
+    allRatedEvents.forEach((ratedEvent1) => {
+        let eventCosines = new Map(); // EventId, Cosine
+        let eventVector1 = getEventVector(ratedEvent1);
+        
+        allRatedEvents.forEach((ratedEvent2) => {
+            let eventVector2 = getEventVector(ratedEvent2);
+            let cosine = cosineSimilarity(eventVector1, eventVector2);
+            eventCosines.set(ratedEvent2, parseFloat(cosine.toFixed(2)));
+        });
+        
+        eventCosineMatrix.value.set(ratedEvent1, eventCosines); // EventId, Map[EventId, Cosine]
+    })
+    
+    eventStore.getWatchlist.forEach((entry) => {
+        let cosines = eventCosineMatrix.value.get(entry.event_id);
+        
+        for (let [event, cosine] of cosines.entries()) {
+            if (cosine < 0.5) continue;
+            if (entry.event_id == event) continue;
+            if (eventStore.checkIfEventIsInWatchlist(event)) continue;
+            if (similarEvents.value.includes(event)) continue;
+            
+            let eventData = eventStore.getEventById(event);
+            if (eventData == null) continue;
+
+            similarEvents.value.push(eventData)
         }
+    })
+}
 
-        similarityMatrix.value.push(row)
+const getEventVector = (event) => {
+    let eventVector = [];
+
+    for (let [user, eventStatistic] of interestedStatistics.value.entries()) {
+        eventVector.push(eventStatistic.get(event))
     }
 
-    console.log(similarityMatrix.value)
+    return eventVector;
+}
+
+const dotProduct = (vectorA, vectorB) => {
+    return vectorA.reduce((pv, cv, i) => pv += cv * vectorB[i], 0);
+}
+
+const magnitude = (vector) => {
+    return Math.sqrt(vector.reduce((pv, cv) => pv += cv * cv, 0));
+}
+
+const cosineSimilarity = (vectorA, vectorB) => {
+    return dotProduct(vectorA, vectorB) / (magnitude(vectorA) * magnitude(vectorB));
 }
 
 onMounted(() => {
-    getData();
-});
+    collaborativeBased();
+})
 </script>
