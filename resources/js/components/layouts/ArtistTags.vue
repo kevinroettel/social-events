@@ -83,7 +83,7 @@ const addTagToArtist = () => {
 const createTag = () => {
     axios.post(
         '/tags', {
-            name: newTag.value.name
+            name: (newTag.value.name != undefined ? newTag.value.name : newTag.value)
         }
     ).then((response) => {
         emit('tag-added', response.data);

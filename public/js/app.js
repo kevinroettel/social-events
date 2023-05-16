@@ -23808,7 +23808,7 @@ __webpack_require__.r(__webpack_exports__);
     };
     var createTag = function createTag() {
       axios.post('/tags', {
-        name: newTag.value.name
+        name: newTag.value.name != undefined ? newTag.value.name : newTag.value
       }).then(function (response) {
         emit('tag-added', response.data);
         newTag.value = null;
@@ -24981,7 +24981,7 @@ __webpack_require__.r(__webpack_exports__);
     var checkInputs = function checkInputs() {
       hasError.username = userData.username == null || userData.username == "";
       hasError.email = userData.email == null || userData.username == "";
-      if (userData.password != null) {
+      if (userData.password != null && userData.password != "") {
         var el = document.getElementById('password-errors');
         if (userData.password_confirmation != userData.password) {
           el.innerHTML = "Die Passwörter stimmen nicht überein.";

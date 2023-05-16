@@ -113,7 +113,7 @@ const checkInputs = () => {
     hasError.username = userData.username == null || userData.username == "";
     hasError.email = userData.email == null || userData.username == "";
 
-    if (userData.password != null) {
+    if (userData.password != null && userData.password != "") {
         let el = document.getElementById('password-errors');
         if (userData.password_confirmation != userData.password) {
             el.innerHTML = "Die Passwörter stimmen nicht überein.";
