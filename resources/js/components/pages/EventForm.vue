@@ -86,12 +86,15 @@
                     </button>
                 </div>
 
+                <!-- erstellen bei out of focus -->
+
                 <!-- artists -->
                 <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
                 <p v-if="notificationText != null">{{ notificationText }}</p>
                 <div v-if="event.id == null" class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
+                        id="event-artist-selection-field"
                         multiple
                         taggable 
                         :class="`form-control ${errorClass('artists')}`" 
@@ -99,7 +102,6 @@
                         aria-describedby="artist-select-label" 
                         :options="artistStore.artists" 
                         label="name" 
-                        
                         v-model="event.artists"
                         @option:created="showNotifcationWithSimilarArtists($event)"
                     >
@@ -293,6 +295,18 @@ const discardUpdate = () => {
     router.back();
 }
 
+// const addArtistToInput = () => {
+//     let select = document.getElementsByClassName('vs__search')[1];
+//     if (select == undefined) return
+
+//     let newOption = {id: select.value, name: select.value}
+//     if (!select.value) return false
+
+//     select.select(newOption)
+
+//     return false
+// }
+
 const showNotifcationWithSimilarArtists = (createdArtist) => {
     let similar = [];
     let allArtists = artistStore.getArtists;
@@ -326,4 +340,6 @@ onMounted(() => {
         getEventData();
     }
 })
+
+// todo: reload after save
 </script>

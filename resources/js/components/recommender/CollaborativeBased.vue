@@ -94,14 +94,30 @@ const collaborativeBased = () => {
             if (cosine < 0.5) continue;
             if (entry.event_id == event) continue;
             if (eventStore.checkIfEventIsInWatchlist(event)) continue;
-            if (similarEvents.value.includes(event)) continue;
+            // if (similarEvents.value.includes(event)) continue;
             
             let eventData = eventStore.getEventById(event);
             if (eventData == null) continue;
 
-            similarEvents.value.push(eventData)
+            addEventToSimilar(eventData);
+            // similarEvents.value.push(eventData)
         }
     })
+}
+
+const addEventToSimilar = (event) => {
+    let isAlreadyInSimilar = false;
+
+    similarEvents.value.forEach((similar) => {
+        if (similar.id == event.id) {
+            isAlreadyInSimilar = true;
+            return;
+        }
+    });
+
+    if (!isAlreadyInSimilar) {
+        similarEvents.value.push(event);
+    }
 }
 
 const getEventVector = (event) => {

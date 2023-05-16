@@ -25579,6 +25579,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     var discardUpdate = function discardUpdate() {
       router.back();
     };
+
+    // const addArtistToInput = () => {
+    //     let select = document.getElementsByClassName('vs__search')[1];
+    //     if (select == undefined) return
+
+    //     let newOption = {id: select.value, name: select.value}
+    //     if (!select.value) return false
+
+    //     select.select(newOption)
+
+    //     return false
+    // }
+
     var showNotifcationWithSimilarArtists = function showNotifcationWithSimilarArtists(createdArtist) {
       var similar = [];
       var allArtists = artistStore.getArtists;
@@ -25607,6 +25620,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         getEventData();
       }
     });
+
+    // todo: reload after save
+
     var __returned__ = {
       eventStore: eventStore,
       locationStore: locationStore,
@@ -26194,10 +26210,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             if (cosine < 0.5) continue;
             if (entry.event_id == event) continue;
             if (eventStore.checkIfEventIsInWatchlist(event)) continue;
-            if (similarEvents.value.includes(event)) continue;
+            // if (similarEvents.value.includes(event)) continue;
+
             var eventData = eventStore.getEventById(event);
             if (eventData == null) continue;
-            similarEvents.value.push(eventData);
+            addEventToSimilar(eventData);
+            // similarEvents.value.push(eventData)
           }
         } catch (err) {
           _iterator.e(err);
@@ -26205,6 +26223,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           _iterator.f();
         }
       });
+    };
+    var addEventToSimilar = function addEventToSimilar(event) {
+      var isAlreadyInSimilar = false;
+      similarEvents.value.forEach(function (similar) {
+        if (similar.id == event.id) {
+          isAlreadyInSimilar = true;
+          return;
+        }
+      });
+      if (!isAlreadyInSimilar) {
+        similarEvents.value.push(event);
+      }
     };
     var getEventVector = function getEventVector(event) {
       var eventVector = [];
@@ -26247,6 +26277,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       interestedStatistics: interestedStatistics,
       eventCosineMatrix: eventCosineMatrix,
       collaborativeBased: collaborativeBased,
+      addEventToSimilar: addEventToSimilar,
       getEventVector: getEventVector,
       dotProduct: dotProduct,
       magnitude: magnitude,
@@ -26891,7 +26922,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     modelValue: $setup.newTag,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.newTag = $event;
-    })
+    }),
+    placeholder: "Hier kannst du Tags eingeben um sie dem Künstler hinzuzufügen."
   }, null, 8 /* PROPS */, ["options", "modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-primary input-group-text",
@@ -28722,7 +28754,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("em", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(search), 1 /* TEXT */), _hoisted_24], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("em", _hoisted_25, "Fange an zu Tippen um eine Venue zu finden."))];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["class", "options", "modelValue"]), _hoisted_26]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" artists "), $setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_27, "Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.notificationText != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notificationText), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.event.id == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
+  }, 8 /* PROPS */, ["class", "options", "modelValue"]), _hoisted_26]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" erstellen bei out of focus "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" artists "), $setup.showNotifcation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_27, "Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.notificationText != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notificationText), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.event.id == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_select, {
+    id: "event-artist-selection-field",
     multiple: "",
     taggable: "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)("form-control ".concat($setup.errorClass('artists'))),

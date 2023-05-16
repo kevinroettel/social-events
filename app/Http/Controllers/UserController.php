@@ -95,6 +95,7 @@ class UserController extends Controller
         $user->address = ($validated['address'] ?? null);
         $user->city = ($validated['city'] ?? null);
         
+        // problem mit update
         if ($pictureIsString) {
             $user->profile_picture = $validated['profile_picture'];
         } else {

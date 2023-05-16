@@ -26,6 +26,7 @@
                     :options="availableTags"
                     label="name"
                     v-model="newTag"
+                    placeholder="Hier kannst du Tags eingeben um sie dem Künstler hinzuzufügen."
                 ></v-select>
                 
                 <button
