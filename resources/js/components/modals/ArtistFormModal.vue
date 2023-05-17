@@ -112,6 +112,8 @@ const resetForm = () => {
     isIdentical.value = false;
     hasError.name = false;
     hasError.tags = false;
+
+    getAllAvailableTags();
 }
 
 const getAllAvailableTags = () => {
