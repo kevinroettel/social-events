@@ -24659,6 +24659,7 @@ __webpack_require__.r(__webpack_exports__);
     var availableTags = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var newTag = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var artistId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var isIdentical = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
     var notificationText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
     var errorClass = function errorClass(input) {
       return hasError[input] ? 'is-invalid' : '';
@@ -24667,6 +24668,8 @@ __webpack_require__.r(__webpack_exports__);
       bootstrap__WEBPACK_IMPORTED_MODULE_2__.Modal.getInstance(artistmodal.value).hide();
       newArtist.name = null;
       newArtist.tags = [];
+      notificationText.value = null;
+      isIdentical.value = false;
       hasError.name = false;
       hasError.tags = false;
     };
@@ -24679,11 +24682,21 @@ __webpack_require__.r(__webpack_exports__);
     };
     var showNotifcationWithSimilarArtists = function showNotifcationWithSimilarArtists() {
       var similar = [];
+      var hasIdentical = false;
       var allArtists = artistStore.getArtists;
       allArtists.forEach(function (artist) {
         var similarity = (0,string_similarity__WEBPACK_IMPORTED_MODULE_3__.compareTwoStrings)(newArtist.name.toLowerCase(), artist.name.toLowerCase());
         if (similarity > 0.6) similar.push(artist.name);
+        if (similarity == 1.0) {
+          isIdentical.value = true;
+          hasIdentical = true;
+        }
       });
+      if (!hasIdentical) isIdentical.value = false;
+      if (isIdentical.value) {
+        notificationText.value = "Dein eingegebener Künstler ist wohl bereits vorhanden. Die brauchst ihn nicht zu erstellen.";
+        return;
+      }
       if (similar.length != 0) {
         notificationText.value = "Dein eingegebener Künstler ist sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
         similar.forEach(function (artist, index) {
@@ -24701,7 +24714,7 @@ __webpack_require__.r(__webpack_exports__);
       newArtist.tags.splice(index, 1);
     };
     var checkInputs = function checkInputs() {
-      if (newArtist.name == null) hasError.name = true;else hasError.name = false;
+      if (newArtist.name == null || isIdentical.value) hasError.name = true;else hasError.name = false;
       if (newArtist.tags.length == 0) hasError.tags = true;else hasError.tags = false;
       if (hasError.name || hasError.tags) return;
       saveArtist();
@@ -24740,6 +24753,7 @@ __webpack_require__.r(__webpack_exports__);
       availableTags: availableTags,
       newTag: newTag,
       artistId: artistId,
+      isIdentical: isIdentical,
       notificationText: notificationText,
       errorClass: errorClass,
       resetForm: resetForm,
@@ -27853,7 +27867,10 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, "Name *", -1 /* HOISTED */);
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Bevor Sie den Künstler erstellen, gehen Sie bitte sicher das sie ihn korrekt geschrieben haben.", -1 /* HOISTED */);
 var _hoisted_9 = {
-  key: 0
+  key: 0,
+  style: {
+    "color": "red"
+  }
 };
 var _hoisted_10 = {
   "class": "d-inline"
@@ -27871,6 +27888,7 @@ var _hoisted_14 = ["onClick"];
 var _hoisted_15 = {
   "class": "input-group mb-3"
 };
+var _hoisted_16 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_v_select = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("v-select");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -27915,8 +27933,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $setup.checkInputs();
     }),
-    "class": "btn btn-primary"
-  }, " Künstler Speichern "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-primary",
+    disabled: $setup.isIdentical
+  }, " Künstler Speichern ", 8 /* PROPS */, _hoisted_16), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $setup.resetForm();

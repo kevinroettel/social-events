@@ -12,7 +12,7 @@
                     </div>
 
                     <p>Bevor Sie den Künstler erstellen, gehen Sie bitte sicher das sie ihn korrekt geschrieben haben.</p>
-                    <p v-if="notificationText != null">{{ notificationText }}</p>
+                    <p v-if="notificationText != null" style="color: red">{{ notificationText }}</p>
 
                     <div class="d-inline">
                         <div class="input-group">
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <button type="submit" @click="checkInputs()" class="btn btn-primary">
+                        <button type="submit" @click="checkInputs()" class="btn btn-primary" :disabled="isIdentical">
                             Künstler Speichern
                         </button>
 
@@ -95,6 +95,7 @@ const artistmodal = ref(null);
 const availableTags = ref([]);
 const newTag = ref(null);
 const artistId = ref(null);
+const isIdentical = ref(false);
 
 const notificationText = ref(null);
 
@@ -107,6 +108,8 @@ const resetForm = () => {
     newArtist.name = null;
     newArtist.tags = [];
 
+    notificationText.value = null;
+    isIdentical.value = false;
     hasError.name = false;
     hasError.tags = false;
 }
@@ -123,13 +126,25 @@ const getAllAvailableTags = () => {
 
 const showNotifcationWithSimilarArtists = () => {
     let similar = [];
+    let hasIdentical = false;
     let allArtists = artistStore.getArtists;
 
     allArtists.forEach(artist => {
         let similarity = compareTwoStrings(newArtist.name.toLowerCase(), artist.name.toLowerCase());
 
         if (similarity > 0.6) similar.push(artist.name);
+        if (similarity == 1.0) {
+            isIdentical.value = true;
+            hasIdentical = true;
+        }
     });
+
+    if (!hasIdentical) isIdentical.value = false;
+
+    if (isIdentical.value) {
+        notificationText.value = "Dein eingegebener Künstler ist wohl bereits vorhanden. Die brauchst ihn nicht zu erstellen."
+        return;
+    }
 
     if (similar.length != 0) {
         notificationText.value = "Dein eingegebener Künstler ist sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
@@ -149,7 +164,7 @@ const removeTagFromArtist = (index) => {
 }
 
 const checkInputs = () => {
-    if (newArtist.name == null) hasError.name = true;
+    if (newArtist.name == null || isIdentical.value) hasError.name = true;
     else hasError.name = false;
 
     if (newArtist.tags.length == 0) hasError.tags = true;
