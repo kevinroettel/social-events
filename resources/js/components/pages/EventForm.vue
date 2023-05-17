@@ -154,7 +154,6 @@ import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
 import { toast } from "../helpers/toast";
-import { compareTwoStrings } from 'string-similarity';
 import { useRoute, useRouter } from "vue-router";
 
 const eventStore = useEventStore();
@@ -170,8 +169,6 @@ const allArtists = ref([]);
 
 const isUpdate = ref(false);
 const flyerUrl = ref(null);
-const showNotifcation = ref(false);
-const notificationText = ref(null);
 
 const event = reactive({
     id: null,
@@ -316,6 +313,4 @@ onMounted(() => {
         getEventData();
     }
 })
-
-// todo: reload after save
 </script>

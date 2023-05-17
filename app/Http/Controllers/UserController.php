@@ -95,14 +95,15 @@ class UserController extends Controller
         $user->address = ($validated['address'] ?? null);
         $user->city = ($validated['city'] ?? null);
         
-        // problem mit update
         if ($pictureIsString) {
-            $user->profile_picture = $validated['profile_picture'];
+            $user->profile_picture = $validated['profile_picture'] ?? null;
         } else {
-            $file = $validated['profile_picture'];
-            $name = "/avatars/avatar-" . $user->username . ".". $file->extension();
-            $file->storePubliclyAs('public', $name);
-            $user->profile_picture = $name;
+            $file = $validated['profile_picture'] ?? null;
+            if ($file != null) {
+                $name = "/avatars/avatar-" . $user->username . ".". $file->extension();
+                $file->storePubliclyAs('public', $name);
+                $user->profile_picture = $name;
+            }
         }
 
         if (isset($validated['password'])) {
