@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artist;
 
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,6 +62,11 @@ class ArtistController extends Controller
 
     public function addTagToArtist($artistId, $tagId) {
         $artist = Artist::find($artistId);
+
+        if (!is_numeric($tagId)) {
+            $tagId = TagController::createTagFromArtist($tagId);
+        }
+
         $artist->tags()->attach($tagId);
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade modal-xl" id="location-form-modal" ref="modal">
+    <div class="modal fade modal-xl" id="location-form-modal" ref="locationmodal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,10 +144,10 @@ const hasError = reactive({
     city: false,
 })
 
-const modal = ref(null);
+const locationmodal = ref(null);
 
 const resetForm = () => {
-    Modal.getInstance(modal.value).hide();
+    Modal.getInstance(locationmodal.value).hide();
 
     location.name = null;
     location.streetAndNumber = null;

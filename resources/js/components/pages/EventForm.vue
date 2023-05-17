@@ -4,6 +4,10 @@
             @location-saved="selectCreated($event)"
         />
 
+        <ArtistFormModal
+            @artist-saved="addArtist($event)"
+        />
+
         <LineUpModal
             v-if="isUpdate"
             :lineup="event.artists"
@@ -86,30 +90,27 @@
                     </button>
                 </div>
 
-                <!-- erstellen bei out of focus -->
-
                 <!-- artists -->
-                <p v-if="showNotifcation">Bevor Sie das Event erstellen, gehen Sie bitte sicher das sie alle Künstler korrekt geschrieben haben.</p>
-                <p v-if="notificationText != null">{{ notificationText }}</p>
                 <div v-if="event.id == null" class="input-group mb-3">
                     <span class="input-group-text" id="artist-select-label">Künstler *</span>
                     <v-select 
                         id="event-artist-selection-field"
                         multiple
-                        taggable 
                         :class="`form-control ${errorClass('artists')}`" 
                         aria-label="Künstler" 
                         aria-describedby="artist-select-label" 
-                        :options="artistStore.artists" 
+                        :options="allArtists" 
                         label="name" 
                         v-model="event.artists"
-                        @option:created="showNotifcationWithSimilarArtists($event)"
                     >
                         <!-- search ist hier ein spezifischer Enum Wert für v-select-->
                         <template v-slot:no-options="search">
-                            <em style="opacity: 0.5">Hier die Künstler eingeben.</em>
+                            <em style="opacity: 0.5">Es konnte kein Künstler gefunden werden. Bitte erstelle ihn.</em>
                         </template>
                     </v-select>
+                    <button type="button" class="btn btn-primary input-group-text create-new-artist-button" data-bs-toggle="modal" data-bs-target="#artist-form-modal">
+                        Neuen Künstler erstellen
+                    </button>
                 </div>
                 
                 <span v-else>
@@ -148,6 +149,7 @@ import { inject, onMounted, reactive, ref } from "vue";
 import LineUpModal from '../modals/LineUpModal.vue';
 import EventPreview from '../layouts/EventPreview.vue';
 import LocationFormModal from '../modals/LocationFormModal.vue';
+import ArtistFormModal from '../modals/ArtistFormModal.vue';
 import { useLocationStore } from '../../stores/LocationStore.js';
 import { useArtistStore } from '../../stores/ArtistStore.js';
 import { useEventStore } from "../../stores/EventStore";
@@ -163,6 +165,8 @@ const router = useRouter();
 const route = useRoute();
 
 const axios = inject('axios');
+
+const allArtists = ref([]);
 
 const isUpdate = ref(false);
 const flyerUrl = ref(null);
@@ -295,36 +299,6 @@ const discardUpdate = () => {
     router.back();
 }
 
-// const addArtistToInput = () => {
-//     let select = document.getElementsByClassName('vs__search')[1];
-//     if (select == undefined) return
-
-//     let newOption = {id: select.value, name: select.value}
-//     if (!select.value) return false
-
-//     select.select(newOption)
-
-//     return false
-// }
-
-const showNotifcationWithSimilarArtists = (createdArtist) => {
-    let similar = [];
-    let allArtists = artistStore.getArtists;
-
-    allArtists.forEach(artist => {
-        let similarity = compareTwoStrings(createdArtist.name.toLowerCase(), artist.name.toLowerCase());
-
-        if (similarity > 0.6) similar.push(artist.name);
-    });
-
-    if (similar.length != 0) {
-        notificationText.value = "Dein neu erstellter Künstler ist nämlich sehr ähnlich zu den folgenden vorhandenen Künstlern: ";
-        similar.forEach((artist, index) => notificationText.value += artist + (index == similar.length - 1 ? "" : ", "));
-    }
-
-    showNotifcation.value = true;
-}
-
 const disablePastDates = () => {
     let today = new Date();
     var maxDate = today.toISOString().substring(0, 10);
@@ -333,6 +307,8 @@ const disablePastDates = () => {
 
 onMounted(() => {
     disablePastDates();
+
+    allArtists.value = artistStore.getArtists
 
     if (route.params.eventId != null) {
         event.id = parseInt(route.params.eventId);
