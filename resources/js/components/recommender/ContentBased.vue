@@ -1,3 +1,4 @@
+<!-- https://medium.com/analytics-vidhya/building-a-text-similarity-checker-using-cosine-similarity-in-javascript-and-html-75722d485703 -->
 <template>
     <div class="card mb-3">
         <div class="card-header">
@@ -52,7 +53,7 @@ const getData = () => {
             let vectorB = wordMapToVector(wordCountB, dictonary);
 
             let cosine = cosineSimilarity(vectorA, vectorB);
-
+ 
             cosines.value.push({
                 entry: entry.event_id,
                 event: event.id,
@@ -146,21 +147,36 @@ onMounted(() => {
 })
 </script>
 
+
 <!-- 
-[5,3,4,1] 
-[4,5,3,2]
-= 0.93
+Event1
+Artist1
+Tag1 Tag2 Tag3
 
-[5,0,3,4,1,0]
-[4,4,5,3,2,3]
-= 0.77
+Event2
+Artist2
+Tag1 Tag2 Tag4
 
-[1,0,1,1,1,0]
-[1,1,1,0,1,1]
-= 0.67
+Event3
+Artist3
+Tag3 Tag5 Tag6
 
+Event4
+Artist4
+Tag5 Tag6 Tag7
 
-[0,0,0,1,0,1,0]
-[1,1,0,0,0,1,0]
-=  0.4
--->
+wordcounts {tag1: 1, tag3: 1, tag2: 1} {tag1: 1, tag2: 1, tag4: 1}
+dictornary: {tag1: true, tag3: true, tag2: true, tag4: true}
+vectors (4) [1, 1, 1, 0] (4) [1, 0, 1, 1]
+0.6666666666666667
+
+wordcounts {tag1: 1, tag3: 1, tag2: 1} {tag5: 1, tag6: 1, tag3: 1}
+dictornary: {tag1: true, tag3: true, tag2: true, tag5: true, tag6: true}
+vectors (5) [1, 1, 1, 0, 0] (5) [0, 1, 0, 1, 1]
+0.33333333333333337
+
+wordcounts {tag1: 1, tag3: 1, tag2: 1} {tag5: 1, tag7: 1, tag6: 1}
+dictornary: {tag1: true, tag3: true, tag2: true, tag5: true, tag7: true, …}
+vectors (6) [1, 1, 1, 0, 0, 0] (6) [0, 0, 0, 1, 1, 1]
+0
+ -->
