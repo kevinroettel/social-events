@@ -31,6 +31,24 @@ export const useEventStore = defineStore('events', {
         isWatchlistEmpty(state) {
             return state.watchlist.length == 0;
         },
+
+        getAllEventsCombined(state) {
+            let allEvents = [];
+
+            allEvents.push(...state.events);
+            allEvents.push(...state.oldEvents);
+
+            
+            state.watchlist.forEach((entry) => {
+                allEvents.push(entry.event)
+            })
+
+            state.oldWatchlist.forEach((entry) => {
+                allEvents.push(entry.event);
+            })
+            
+            return allEvents;
+        }
     },
 
     actions: {

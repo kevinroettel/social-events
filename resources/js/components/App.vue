@@ -56,17 +56,19 @@ const dataLoaded = computed(() => {
 })
 
 const getUserCoordinates = () => {
-    getLongAndLat(
-        null,
-        userStore.getUserCity,
-        userStore.getUserAddress
-    ).then((response) => {
-        if (response != null) {
-            userStore.setCoordinates(response.latitude, response.longitude);
-        }
-    }).catch((error) => {
-        console.log(error)
-    })
+    if (userStore.getUserAddress != null) {
+        getLongAndLat(
+            null,
+            userStore.getUserCity,
+            userStore.getUserAddress
+        ).then((response) => {
+            if (response != null) {
+                userStore.setCoordinates(response.latitude, response.longitude);
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 }
 
 const getEvents = () => {

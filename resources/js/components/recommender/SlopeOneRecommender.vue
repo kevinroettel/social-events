@@ -33,7 +33,11 @@ const freq = ref(null);
 const inputData = ref(null);
 const outputData = ref(null);
 
+const allEvents = ref(null);
+
 const getData = () => {
+    allEvents.value = eventStore.getAllEventsCombined
+
     diff.value = new Map();
     freq.value = new Map();
     outputData.value = new Map();
@@ -57,7 +61,9 @@ const getData = () => {
     predict();
     getEventsFromPredictions();
 
-    // printData(outputData.value)
+    printData(inputData.value)
+    console.log("---")
+    printData(outputData.value)
 }
 
 const userDataToMap = () => {
@@ -67,8 +73,7 @@ const userDataToMap = () => {
         let userItemList = new Map(); // [EventId, "Rating"]
 
         user.watchlist.forEach((entry) => {
-            // userItemList.set(entry.event_id, 1);
-            userItemList.set(entry.event_id, (entry.status == 'interested' ? 0.5 : 1));
+            userItemList.set(entry.event_id, 1);
         });
 
         data.set(user.id, userItemList);
@@ -144,7 +149,7 @@ const predict = () => {
             }
         }
 
-        for (let eventFromStore of eventStore.getAllEvents)  {
+        for (let eventFromStore of allEvents.value)  {
             if (events.has(eventFromStore.id)) {
                 clean.set(eventFromStore.id, events.get(eventFromStore.id));
             } else if (!clean.has(eventFromStore.id)) {
@@ -157,11 +162,11 @@ const predict = () => {
 }
 
 const getEventsFromPredictions = () => {
-    for (let users of outputData.value.entries()) {
-        for (let event of users[1]) {
-            if (event[1] > 0) {
-                addEventToSimilar(event[0]);
-            }
+    let predictedRatings = outputData.value.get(userStore.getUserId);
+
+    for (let predictedRating of predictedRatings) {
+        if (predictedRating[1] > 0) {
+            addEventToSimilar(predictedRating[0]);
         }
     }
 }

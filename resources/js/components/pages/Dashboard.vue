@@ -2,13 +2,13 @@
     <div>
         <Watchlist />
 
-        <ContentBased v-if="recommenderNumber == 0" />
+        <!-- <ContentBased v-if="recommenderNumber == 0" />
         
         <CollaborativeBased v-if="recommenderNumber == 1" />
         
-        <HybridRecommender v-if="recommenderNumber == 2" />
+        <HybridRecommender v-if="recommenderNumber == 2" /> -->
         
-        <!-- <SlopeOneRecommender /> -->
+        <SlopeOneRecommender />
 
         <!-- <JaccardIndex /> -->
 
@@ -19,7 +19,7 @@
 </template>
 <script setup>
 import Watchlist from '../recommender/Watchlist.vue';
-// import SlopeOneRecommender from '../recommender/SlopeOneRecommender.vue';
+import SlopeOneRecommender from '../recommender/SlopeOneRecommender.vue';
 import CollaborativeBased from '../recommender/CollaborativeBased.vue';
 import ContentBased from '../recommender/ContentBased.vue';
 import HybridRecommender from '../recommender/HybridRecommender.vue';
