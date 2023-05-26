@@ -25338,21 +25338,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../recommender/Watchlist.vue */ "./resources/js/components/recommender/Watchlist.vue");
-/* harmony import */ var _recommender_SlopeOneRecommender_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/SlopeOneRecommender.vue */ "./resources/js/components/recommender/SlopeOneRecommender.vue");
-/* harmony import */ var _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/CollaborativeBased.vue */ "./resources/js/components/recommender/CollaborativeBased.vue");
-/* harmony import */ var _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/ContentBased.vue */ "./resources/js/components/recommender/ContentBased.vue");
-/* harmony import */ var _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recommender/HybridRecommender.vue */ "./resources/js/components/recommender/HybridRecommender.vue");
-/* harmony import */ var _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../recommender/FriendWatchlists.vue */ "./resources/js/components/recommender/FriendWatchlists.vue");
-/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
+/* harmony import */ var _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../recommender/CollaborativeBased.vue */ "./resources/js/components/recommender/CollaborativeBased.vue");
+/* harmony import */ var _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recommender/ContentBased.vue */ "./resources/js/components/recommender/ContentBased.vue");
+/* harmony import */ var _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recommender/HybridRecommender.vue */ "./resources/js/components/recommender/HybridRecommender.vue");
+/* harmony import */ var _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recommender/AllEvents.vue */ "./resources/js/components/recommender/AllEvents.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
 
-
+// import SlopeOneRecommender from '../recommender/SlopeOneRecommender.vue';
 
 
 
 // import JaccardIndex from '../recommender/JaccardIndex.vue'; 
-
+// import FriendWatchlists from '../recommender/FriendWatchlists.vue'
 
 
 
@@ -25361,24 +25359,22 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
-    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_8__.useUserStore)();
-    var recommenderNumber = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(null);
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.onMounted)(function () {
+    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_6__.useUserStore)();
+    var recommenderNumber = (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
+    (0,vue__WEBPACK_IMPORTED_MODULE_5__.onMounted)(function () {
       recommenderNumber.value = userStore.getUserId % 3;
     });
     var __returned__ = {
       userStore: userStore,
       recommenderNumber: recommenderNumber,
       Watchlist: _recommender_Watchlist_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      SlopeOneRecommender: _recommender_SlopeOneRecommender_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      CollaborativeBased: _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      ContentBased: _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      HybridRecommender: _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      FriendWatchlists: _recommender_FriendWatchlists_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_7__.onMounted,
-      ref: vue__WEBPACK_IMPORTED_MODULE_7__.ref,
-      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_8__.useUserStore
+      CollaborativeBased: _recommender_CollaborativeBased_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      ContentBased: _recommender_ContentBased_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      HybridRecommender: _recommender_HybridRecommender_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      AllEvents: _recommender_AllEvents_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      onMounted: vue__WEBPACK_IMPORTED_MODULE_5__.onMounted,
+      ref: vue__WEBPACK_IMPORTED_MODULE_5__.ref,
+      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__.useUserStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -26576,104 +26572,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js ***!
-  \*********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
-/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'FriendWatchlists',
-  setup: function setup(__props, _ref) {
-    var expose = _ref.expose;
-    expose();
-    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_2__.useEventStore)();
-    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_3__.useUserStore)();
-    var events = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-    var friendsWatchlists = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-    var getData = function getData() {
-      friendsWatchlists.value = userStore.getFriendWatchlistEntries;
-
-      // calculates weights of event priorization
-      // interested friend adds 1, attending friend adds 2
-      friendsWatchlists.value.forEach(function (entry) {
-        if (events.value.length != 0) {
-          // if event hasnt been inserted into array yet, do it
-          if (!events.value.find(function (event) {
-            return event.event_id === entry.event_id;
-          })) {
-            events.value.push({
-              event_id: entry.event_id,
-              weight: entry.status == 'interested' ? 1 : 2
-            });
-          } else {
-            // goes through events and adds weight to event
-            events.value.forEach(function (event, index) {
-              if (event.event_id == entry.event_id) {
-                events[index].weight += entry.status == 'interested' ? 1 : 2;
-              }
-            });
-          }
-        } else {
-          // first event push
-          events.value.push({
-            event_id: entry.event_id,
-            weight: entry.status == 'interested' ? 1 : 2
-          });
-        }
-      });
-
-      // sort events descending by weight
-      events.value = events.value.sort(function (eventA, eventB) {
-        return eventB.weight - eventA.weight;
-      });
-
-      // gets eventdata from store, if null event is in the past and gets removed
-      var index = events.value.length - 1;
-      while (index >= 0) {
-        var eventData = eventStore.getEventById(events.value[index].event_id);
-        if (eventData === null) events.value.splice(index, 1);else events.value[index] = eventData;
-        index--;
-      }
-    };
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
-      getData();
-    });
-    var __returned__ = {
-      eventStore: eventStore,
-      userStore: userStore,
-      events: events,
-      friendsWatchlists: friendsWatchlists,
-      getData: getData,
-      EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
-      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_2__.useEventStore,
-      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_3__.useUserStore
-    };
-    Object.defineProperty(__returned__, '__isScriptSetup', {
-      enumerable: false,
-      value: true
-    });
-    return __returned__;
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js ***!
@@ -26922,351 +26820,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_3__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_3__.ref
-    };
-    Object.defineProperty(__returned__, '__isScriptSetup', {
-      enumerable: false,
-      value: true
-    });
-    return __returned__;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js ***!
-  \************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/EventTeaserCarousel.vue */ "./resources/js/components/layouts/EventTeaserCarousel.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../stores/UserStore */ "./resources/js/stores/UserStore.js");
-/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'SlopeOneRecommender',
-  setup: function setup(__props, _ref) {
-    var expose = _ref.expose;
-    expose();
-    var userStore = (0,_stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore)();
-    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_3__.useEventStore)();
-    var similarEvents = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
-    var allUsers = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var diff = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var freq = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var inputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var outputData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var allEvents = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
-    var getData = function getData() {
-      allEvents.value = eventStore.getAllEventsCombined;
-      diff.value = new Map();
-      freq.value = new Map();
-      outputData.value = new Map();
-      allUsers.value = userStore.getAllUsersWithWatchlistEntries;
-      var currentUserWatchlist = eventStore.getWatchlist.map(function (entry) {
-        return {
-          'event_id': entry.event.id,
-          'status': entry.status
-        };
-      });
-      allUsers.value.push({
-        id: userStore.getUserId,
-        watchlist: currentUserWatchlist
-      });
-      userDataToMap();
-      buildDifferencesMatrix();
-      predict();
-      getEventsFromPredictions();
-      printData(inputData.value);
-      console.log("---");
-      printData(outputData.value);
-    };
-    var userDataToMap = function userDataToMap() {
-      var data = new Map(); // User Id, Map[EventId, "Rating"]
-
-      allUsers.value.forEach(function (user) {
-        var userItemList = new Map(); // [EventId, "Rating"]
-
-        user.watchlist.forEach(function (entry) {
-          userItemList.set(entry.event_id, 1);
-        });
-        data.set(user.id, userItemList);
-      });
-      inputData.value = data;
-    };
-    var buildDifferencesMatrix = function buildDifferencesMatrix() {
-      var _iterator = _createForOfIteratorHelper(inputData.value.values()),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var userEntries = _step.value;
-          var _iterator3 = _createForOfIteratorHelper(userEntries.entries()),
-            _step3;
-          try {
-            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-              var _step3$value = _slicedToArray(_step3.value, 2),
-                event = _step3$value[0],
-                score = _step3$value[1];
-              if (!diff.value.has(event)) {
-                diff.value.set(event, new Map());
-                freq.value.set(event, new Map());
-              }
-              var _iterator4 = _createForOfIteratorHelper(userEntries.entries()),
-                _step4;
-              try {
-                for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                  var _step4$value = _slicedToArray(_step4.value, 2),
-                    event2 = _step4$value[0],
-                    score2 = _step4$value[1];
-                  var oldCount = 0;
-                  if (freq.value.get(event).has(event2)) {
-                    oldCount = freq.value.get(event).get(event2);
-                  }
-                  var oldDiff = 0.0;
-                  if (diff.value.get(event).has(event2)) {
-                    oldDiff = diff.value.get(event).get(event2);
-                  }
-                  var observedDiff = score - score2;
-                  freq.value.get(event).set(event2, oldCount + 1);
-                  diff.value.get(event).set(event2, oldDiff + observedDiff);
-                }
-              } catch (err) {
-                _iterator4.e(err);
-              } finally {
-                _iterator4.f();
-              }
-            }
-          } catch (err) {
-            _iterator3.e(err);
-          } finally {
-            _iterator3.f();
-          }
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-      var _iterator2 = _createForOfIteratorHelper(diff.value.keys()),
-        _step2;
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var j = _step2.value;
-          var _iterator5 = _createForOfIteratorHelper(diff.value.get(j).keys()),
-            _step5;
-          try {
-            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-              var i = _step5.value;
-              var oldValue = diff.value.get(j).get(i);
-              var count = freq.value.get(j).get(i);
-              diff.value.get(j).set(i, oldValue / count);
-            }
-          } catch (err) {
-            _iterator5.e(err);
-          } finally {
-            _iterator5.f();
-          }
-        }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
-      }
-    };
-    var predict = function predict() {
-      var uPred = new Map(); // [Event, double]
-      var uFreq = new Map(); // [Event, integer]
-      var _iterator6 = _createForOfIteratorHelper(diff.value.keys()),
-        _step6;
-      try {
-        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-          var j = _step6.value;
-          uFreq.set(j, 0);
-          uPred.set(j, 0.0);
-        }
-      } catch (err) {
-        _iterator6.e(err);
-      } finally {
-        _iterator6.f();
-      }
-      var _iterator7 = _createForOfIteratorHelper(inputData.value.entries()),
-        _step7;
-      try {
-        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-          var _step7$value = _slicedToArray(_step7.value, 2),
-            user = _step7$value[0],
-            events = _step7$value[1];
-          var _iterator8 = _createForOfIteratorHelper(events.keys()),
-            _step8;
-          try {
-            for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-              var _j = _step8.value;
-              var _iterator11 = _createForOfIteratorHelper(diff.value.keys()),
-                _step11;
-              try {
-                for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-                  var k = _step11.value;
-                  try {
-                    var predictedValue = diff.value.get(k).get(_j) + events.get(_j);
-                    var finalValue = predictedValue * freq.value.get(k).get(_j);
-                    uPred.set(k, uPred.get(k) + finalValue);
-                    uFreq.set(k, uFreq.get(k) + freq.value.get(k).get(_j));
-                  } catch (error) {
-                    console.warn(error);
-                  }
-                }
-              } catch (err) {
-                _iterator11.e(err);
-              } finally {
-                _iterator11.f();
-              }
-            }
-          } catch (err) {
-            _iterator8.e(err);
-          } finally {
-            _iterator8.f();
-          }
-          var clean = new Map(); // [item, double]
-          var _iterator9 = _createForOfIteratorHelper(uPred.keys()),
-            _step9;
-          try {
-            for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-              var _j2 = _step9.value;
-              if (uFreq.get(_j2) > 0) {
-                clean.set(_j2, uPred.get(_j2) / uFreq.get(_j2));
-              }
-            }
-          } catch (err) {
-            _iterator9.e(err);
-          } finally {
-            _iterator9.f();
-          }
-          var _iterator10 = _createForOfIteratorHelper(allEvents.value),
-            _step10;
-          try {
-            for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-              var eventFromStore = _step10.value;
-              if (events.has(eventFromStore.id)) {
-                clean.set(eventFromStore.id, events.get(eventFromStore.id));
-              } else if (!clean.has(eventFromStore.id)) {
-                clean.set(eventFromStore.id, 0);
-              }
-            }
-          } catch (err) {
-            _iterator10.e(err);
-          } finally {
-            _iterator10.f();
-          }
-          outputData.value.set(user, clean);
-        }
-      } catch (err) {
-        _iterator7.e(err);
-      } finally {
-        _iterator7.f();
-      }
-    };
-    var getEventsFromPredictions = function getEventsFromPredictions() {
-      var predictedRatings = outputData.value.get(userStore.getUserId);
-      var _iterator12 = _createForOfIteratorHelper(predictedRatings),
-        _step12;
-      try {
-        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-          var predictedRating = _step12.value;
-          if (predictedRating[1] > 0) {
-            addEventToSimilar(predictedRating[0]);
-          }
-        }
-      } catch (err) {
-        _iterator12.e(err);
-      } finally {
-        _iterator12.f();
-      }
-    };
-    var addEventToSimilar = function addEventToSimilar(eventId) {
-      var eventFromStore = eventStore.getEventById(eventId);
-      if (eventFromStore.event != undefined) eventFromStore = eventFromStore.event;
-      if (eventFromStore == null) return; // Old Event, doesn't need to be recommended
-      else if (eventStore.checkIfEventIsInWatchlist(eventId)) return; // Event is already in Watchlist
-
-      var isInSimilar = false;
-      similarEvents.value.forEach(function (event) {
-        if (event.id == eventId) isInSimilar = true;
-      });
-      if (!isInSimilar) {
-        similarEvents.value.push(eventFromStore);
-      }
-    };
-    var printData = function printData(userMap) {
-      var _iterator13 = _createForOfIteratorHelper(userMap.entries()),
-        _step13;
-      try {
-        for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
-          var _step13$value = _slicedToArray(_step13.value, 2),
-            user = _step13$value[0],
-            predictions = _step13$value[1];
-          console.log(user + ":");
-          var _iterator14 = _createForOfIteratorHelper(predictions),
-            _step14;
-          try {
-            for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
-              var _step14$value = _slicedToArray(_step14.value, 2),
-                event = _step14$value[0],
-                value = _step14$value[1];
-              console.log(" " + event + " --> " + value);
-            }
-          } catch (err) {
-            _iterator14.e(err);
-          } finally {
-            _iterator14.f();
-          }
-        }
-      } catch (err) {
-        _iterator13.e(err);
-      } finally {
-        _iterator13.f();
-      }
-    };
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
-      getData();
-    });
-    var __returned__ = {
-      userStore: userStore,
-      eventStore: eventStore,
-      similarEvents: similarEvents,
-      allUsers: allUsers,
-      diff: diff,
-      freq: freq,
-      inputData: inputData,
-      outputData: outputData,
-      allEvents: allEvents,
-      getData: getData,
-      userDataToMap: userDataToMap,
-      buildDifferencesMatrix: buildDifferencesMatrix,
-      predict: predict,
-      getEventsFromPredictions: getEventsFromPredictions,
-      addEventToSimilar: addEventToSimilar,
-      printData: printData,
-      EventTeaserCarousel: _layouts_EventTeaserCarousel_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_1__.onMounted,
-      ref: vue__WEBPACK_IMPORTED_MODULE_1__.ref,
-      useUserStore: _stores_UserStore__WEBPACK_IMPORTED_MODULE_2__.useUserStore,
-      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_3__.useEventStore
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -28953,7 +28506,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ContentBased v-if=\"recommenderNumber == 0\" />\r\n        \r\n        <CollaborativeBased v-if=\"recommenderNumber == 1\" />\r\n        \r\n        <HybridRecommender v-if=\"recommenderNumber == 2\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["SlopeOneRecommender"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <JaccardIndex /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["FriendWatchlists"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Watchlist"]), $setup.recommenderNumber == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ContentBased"], {
+    key: 0
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.recommenderNumber == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["CollaborativeBased"], {
+    key: 1
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.recommenderNumber == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["HybridRecommender"], {
+    key: 2
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <SlopeOneRecommender /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <JaccardIndex /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <FriendWatchlists /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["AllEvents"])]);
 }
 
 /***/ }),
@@ -29896,42 +29455,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35 ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render)
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-var _hoisted_1 = {
-  "class": "card mb-3"
-};
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "card-header"
-}, " Vorschläge basierend auf interessen deiner Freunde ", -1 /* HOISTED */);
-var _hoisted_3 = {
-  "class": "card-body"
-};
-var _hoisted_4 = {
-  key: 0
-};
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Events basierend auf den Präferenzen deiner Freunde anzeigen.", -1 /* HOISTED */);
-var _hoisted_6 = [_hoisted_5];
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.events.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
-    key: 1,
-    events: $setup.events
-  }, null, 8 /* PROPS */, ["events"]))])]);
-}
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268 ***!
@@ -29958,42 +29481,6 @@ var _hoisted_4 = {
   key: 0
 };
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Events basierend auf ihren Präferenzen anzeigen.", -1 /* HOISTED */);
-var _hoisted_6 = [_hoisted_5];
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
-    key: 1,
-    events: $setup.similarEvents
-  }, null, 8 /* PROPS */, ["events"]))])]);
-}
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26 ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render)
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-var _hoisted_1 = {
-  "class": "card mb-3"
-};
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "card-header"
-}, " Nutzer wie Sie, waren auch hieran interessiert ", -1 /* HOISTED */);
-var _hoisted_3 = {
-  "class": "card-body"
-};
-var _hoisted_4 = {
-  key: 0
-};
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Zurzeit können wir dir keine Event-Voschläge generieren.", -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$setup.similarEvents.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["EventTeaserCarousel"], {
@@ -55097,34 +54584,6 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/FriendWatchlists.vue":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/recommender/FriendWatchlists.vue ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FriendWatchlists.vue?vue&type=template&id=7612cd35 */ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35");
-/* harmony import */ var _FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FriendWatchlists.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
-
-
-
-
-;
-const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/FriendWatchlists.vue"]])
-/* hot reload */
-if (false) {}
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
-
-/***/ }),
-
 /***/ "./resources/js/components/recommender/HybridRecommender.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/recommender/HybridRecommender.vue ***!
@@ -55145,34 +54604,6 @@ __webpack_require__.r(__webpack_exports__);
 
 ;
 const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/HybridRecommender.vue"]])
-/* hot reload */
-if (false) {}
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
-
-/***/ }),
-
-/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue":
-/*!*********************************************************************!*\
-  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SlopeOneRecommender.vue?vue&type=template&id=6358bf26 */ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26");
-/* harmony import */ var _SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js");
-/* harmony import */ var C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
-
-
-
-
-;
-const __exports__ = /*#__PURE__*/(0,C_laragon_www_social_events_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/recommender/SlopeOneRecommender.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -55689,22 +55120,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js ***!
-  \*****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FriendWatchlists.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=script&setup=true&lang=js");
- 
-
-/***/ }),
-
 /***/ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js":
 /*!******************************************************************************************************!*\
   !*** ./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js ***!
@@ -55717,22 +55132,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HybridRecommender.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=script&setup=true&lang=js");
- 
-
-/***/ }),
-
-/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js":
-/*!********************************************************************************************************!*\
-  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js ***!
-  \********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=script&setup=true&lang=js");
  
 
 /***/ }),
@@ -56281,22 +55680,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35 ***!
-  \************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__.render)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FriendWatchlists_vue_vue_type_template_id_7612cd35__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FriendWatchlists.vue?vue&type=template&id=7612cd35 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/FriendWatchlists.vue?vue&type=template&id=7612cd35");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268":
 /*!*************************************************************************************************!*\
   !*** ./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268 ***!
@@ -56309,22 +55692,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HybridRecommender_vue_vue_type_template_id_1e7c6268__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HybridRecommender.vue?vue&type=template&id=1e7c6268 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/HybridRecommender.vue?vue&type=template&id=1e7c6268");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26 ***!
-  \***************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__.render)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SlopeOneRecommender_vue_vue_type_template_id_6358bf26__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SlopeOneRecommender.vue?vue&type=template&id=6358bf26 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/recommender/SlopeOneRecommender.vue?vue&type=template&id=6358bf26");
 
 
 /***/ }),
