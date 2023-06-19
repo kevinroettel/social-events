@@ -2,7 +2,7 @@
 <template>
     <div class="card mb-3">
         <div class="card-header">
-            Vorschläge basierend auf ihren Events (A)
+            Vorschläge basierend auf ihren Events
         </div>
         <div class="card-body">
             <div v-if="similarEvents.length == 0">

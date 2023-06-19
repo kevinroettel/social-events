@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <button type="submit" @click="checkInputs()" class="btn btn-primary" :disabled="isIdentical">
+                        <button type="submit" @click="checkInputs()" class="btn btn-primary" :disabled="isIdentical || isUnfinished">
                             Künstler Speichern
                         </button>
 
@@ -96,6 +96,7 @@ const availableTags = ref([]);
 const newTag = ref(null);
 const artistId = ref(null);
 const isIdentical = ref(false);
+const isUnfinished = ref(true);
 
 const notificationText = ref(null);
 
@@ -110,6 +111,7 @@ const resetForm = () => {
 
     notificationText.value = null;
     isIdentical.value = false;
+    isUnfinished.value = true;
     hasError.name = false;
     hasError.tags = false;
 
@@ -159,10 +161,14 @@ const showNotifcationWithSimilarArtists = () => {
 const addTagToArtist = () => {
     newArtist.tags.push(newTag.value);
     newTag.value = null;
+
+    isUnfinished.value = false;
 }
 
 const removeTagFromArtist = (index) => {
     newArtist.tags.splice(index, 1);
+
+    if (newArtist.tags.length == 0) isUnfinished.value = true;
 }
 
 const checkInputs = () => {

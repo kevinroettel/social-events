@@ -43,6 +43,15 @@
                     </a>
 
                     <a 
+                        :class="'nav-link' + isActive('/kalender')" 
+                        @click="routerLink('/kalender')"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                    >
+                        Kalender
+                    </a>
+
+                    <a 
                         :class="'nav-link' + isActive('/impressum')" 
                         @click="routerLink('/impressum')"
                         data-bs-toggle="collapse"
