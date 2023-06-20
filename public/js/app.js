@@ -25343,18 +25343,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../stores/EventStore */ "./resources/js/stores/EventStore.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Calendar',
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
+    var eventStore = (0,_stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore)();
     var today = new Date();
+    var calenderEvents = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
     var current = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
       month: today.getMonth(),
       year: today.getFullYear()
     });
-    var calDate = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1);
     var months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
     var daysInMonth = function daysInMonth() {
       return 32 - new Date(current.year, current.month, 32).getDate();
@@ -25362,63 +25368,86 @@ __webpack_require__.r(__webpack_exports__);
     var getFirstDay = function getFirstDay() {
       return new Date(current.year, current.month).getDay();
     };
-
-    // const previousMonth = () => {
-    //     current.year = (current.month === 0) ? current.year - 1 : current.year;
-    //     current.month = (current.month === 0) ? 11 : current.month - 1;
-    //     showCalendar(current.month, current.year);
-    // }
-
-    // const nextMonth = () => {
-    //     current.year = (current.month === 11) ? current.year + 1 : current.year;
-    //     current.month = (current.month + 1) % 12;
-    //     showCalendar(current.month, current.year);
-    // }
-
-    var showCalendar = function showCalendar(month, year) {
-      var tableBody = document.getElementById('calender-body');
-      tableBody.innerHTML = "";
-      document.getElementById('month-and-year').innerHTML = months[month] + " " + year;
-      var date = 1;
-      for (var i = 1; i < 7; i++) {
-        var row = document.createElement("tr");
-        for (var j = 1; j <= 7; j++) {
-          if (i === 1 && j < getFirstDay()) {
-            var cell = document.createElement("td");
-            var cellText = document.createTextNode("");
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-          } else if (date > daysInMonth(month, year)) {
-            console.log(date, daysInMonth(month, year));
-            break;
-          } else {
-            var _cell = document.createElement("td");
-            var _cellText = document.createTextNode(date);
-            if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-              _cell.classList.add("bg-info");
-            }
-            _cell.appendChild(_cellText);
-            row.appendChild(_cell);
-            date++;
-          }
-        }
-        tableBody.appendChild(row);
-      }
+    var previousMonth = function previousMonth() {
+      current.year = current.month === 0 ? current.year - 1 : current.year;
+      current.month = current.month === 0 ? 11 : current.month - 1;
     };
+    var nextMonth = function nextMonth() {
+      current.year = current.month === 11 ? current.year + 1 : current.year;
+      current.month = (current.month + 1) % 12;
+    };
+    var buildDayId = function buildDayId(date) {
+      return "calender-".concat(current.year, "-").concat(("0" + (current.month + 1)).slice(-2), "-").concat(("0" + (date - 1)).slice(-2));
+    };
+    var getCurrentDayClass = function getCurrentDayClass(date) {
+      if (date === today.getDate() && current.year === today.getFullYear() && current.month === today.getMonth()) return "bg-light";
+    };
+    var fillCalender = function fillCalender() {
+      eventStore.getWatchlist.forEach(function (entry) {
+        createEventElement(entry.event.id, entry.event.date, entry.event.name, entry.event.location.name, entry.status == 'attending' ? 'primary' : 'info');
+      });
+      eventStore.getAllEvents.forEach(function (event) {
+        createEventElement(event.id, event.date, event.name, event.location.name, 'white');
+      });
+
+      // todo: add friend watchlist entries
+    };
+
+    var createEventElement = function createEventElement(id, date, name, location, color) {
+      var calenderCell = document.getElementById("calender-".concat(date));
+      if (calenderCell == null) return;
+      console.log("calender-".concat(date), calenderCell);
+      var eventsParagraph = document.createElement("p");
+      eventsParagraph.setAttribute('id', "calender-event-".concat(id));
+      eventsParagraph.classList.add("bg-" + color);
+      calenderEvents.value.push("calender-event-".concat(id));
+      var textNode = document.createTextNode("".concat(name, ", ").concat(location));
+      eventsParagraph.appendChild(textNode);
+      eventsParagraph.addEventListener("click", function () {
+        router.push("/event/".concat(id));
+      });
+      calenderCell.appendChild(eventsParagraph);
+    };
+    var destroyAllEventElements = function destroyAllEventElements() {
+      calenderEvents.value.forEach(function (paragraph) {
+        var el = document.getElementById(paragraph);
+        if (el != null) el.remove();
+      });
+      calenderEvents.value = [];
+    };
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeUpdate)(function () {
+      destroyAllEventElements();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onUpdated)(function () {
+      fillCalender();
+    });
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
-      // showCalendar(current.month, current.year);
+      fillCalender();
     });
     var __returned__ = {
+      router: router,
+      eventStore: eventStore,
       today: today,
+      calenderEvents: calenderEvents,
       current: current,
-      calDate: calDate,
       months: months,
       daysInMonth: daysInMonth,
       getFirstDay: getFirstDay,
-      showCalendar: showCalendar,
+      previousMonth: previousMonth,
+      nextMonth: nextMonth,
+      buildDayId: buildDayId,
+      getCurrentDayClass: getCurrentDayClass,
+      fillCalender: fillCalender,
+      createEventElement: createEventElement,
+      destroyAllEventElements: destroyAllEventElements,
+      onBeforeUpdate: vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeUpdate,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
+      onUpdated: vue__WEBPACK_IMPORTED_MODULE_0__.onUpdated,
       reactive: vue__WEBPACK_IMPORTED_MODULE_0__.reactive,
-      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref
+      ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
+      useEventStore: _stores_EventStore__WEBPACK_IMPORTED_MODULE_1__.useEventStore,
+      useRouter: vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -28175,29 +28204,55 @@ var _hoisted_2 = {
   id: "month-and-year"
 };
 var _hoisted_3 = {
-  id: "calender"
+  id: "calender",
+  "class": "w-100",
+  style: {
+    "height": "50vh"
+  }
 };
-var _hoisted_4 = {
-  id: "calender-body"
-};
+var _hoisted_4 = ["set"];
 var _hoisted_5 = {
   key: 0
 };
 var _hoisted_6 = {
   key: 1
 };
+var _hoisted_7 = {
+  "class": "calender-date border-0"
+};
+var _hoisted_8 = ["id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.months[$setup.current.month]) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.current.year), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'], function (day) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(day), 1 /* TEXT */);
-  }), 64 /* STABLE_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(7, function (i) {
+  }), 64 /* STABLE_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", {
+    id: "calender-body",
+    "class": "table-bordered",
+    set: _ctx.calDate = 1
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(6, function (i) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
       key: i
-    }, [$setup.calDate < $setup.daysInMonth($setup.current.month, $setup.current.year) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: 0
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(7, function (j) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [i === 1 && j < $setup.getFirstDay() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, "none")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.calDate++), 1 /* TEXT */))]);
-    }), 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
-  }), 64 /* STABLE_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button id=\"previous-month\" @click=\"previousMonth()\">Zurück</button>\r\n        <button id=\"next-month\" @click=\"nextMonth()\">Weiter</button> ")]);
+    }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(7, function (j) {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: j
+      }, [i === 1 && j < $setup.getFirstDay() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_5)) : _ctx.calDate > $setup.daysInMonth() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_6)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
+        key: 2,
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($setup.getCurrentDayClass(_ctx.calDate))
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.calDate++), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        id: $setup.buildDayId(_ctx.calDate),
+        "class": "border-0"
+      }, null, 8 /* PROPS */, _hoisted_8)], 2 /* CLASS */))], 64 /* STABLE_FRAGMENT */);
+    }), 64 /* STABLE_FRAGMENT */))]);
+  }), 64 /* STABLE_FRAGMENT */))], 8 /* PROPS */, _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    id: "previous-month",
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.previousMonth();
+    })
+  }, "Zurück"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    id: "next-month",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.nextMonth();
+    })
+  }, "Weiter")]);
 }
 
 /***/ }),
