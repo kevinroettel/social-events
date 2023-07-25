@@ -74,7 +74,7 @@ const getCurrentDayClass = (date) => {
     if (date === today.getDate() && 
         current.year === today.getFullYear() && 
         current.month === today.getMonth()) 
-        return "bg-light"
+        return "bg-light border border-dark border-2"
 }
 
 const fillCalender = () => {
