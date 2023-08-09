@@ -1,9 +1,9 @@
 <template>
     <div class="card event-teaser-card">
         <div @click="showEventPage()">
-            <div class="small-flyer-overflow">
-                <img class="card-img-top" :src="'/storage' + (event.flyer ?? '/fallback-flyer.jpg')" alt="Card image cap">
-            </div>
+            <EventImage
+                :source="event.flyer"
+            />
             <div class="card-body">
                 <div class="card-text-headline">{{ event.name }}</div>
                 <p class="card-text">{{ getFormattedDate(event.date) }}</p>
@@ -20,6 +20,7 @@
 </template>
 <script setup>
 import EventStatusButtons from './EventStatusButtons.vue';
+import EventImage from './EventImage.vue';
 import { getFormattedDate } from '../helpers/dateFormat.js';
 import { inject } from 'vue';
 import { useRouter } from 'vue-router';
