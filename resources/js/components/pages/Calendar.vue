@@ -6,7 +6,7 @@
         <table id="calender" class="w-100" style="height: 50vh;">
             <thead>
                 <tr>
-                    <th v-for="day in ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']">{{ day }}</th>
+                    <th v-for="day in ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']" class="col-1">{{ day }}</th>
                 </tr>
             </thead>
             <tbody id="calender-body" class="table-bordered" :set="calDate = 1">
@@ -86,7 +86,7 @@ const fillCalender = () => {
     });
 
     eventStore.getAllEvents.forEach((event) => {
-        createEventElement(event.id, event.date, event.name, event.location.name, 'white');
+        createEventElement(event.id, event.date, event.name, event.location.name, 'light');
     });
 
     // todo: add friend watchlist entries
